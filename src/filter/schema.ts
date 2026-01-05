@@ -1,6 +1,8 @@
 import { z, ZodArray, ZodType } from "zod";
 
-export const defineArrayFieldSchema = <T extends ZodArray<ZodType>>(type: T) =>
+export const defineArrayConditionsSchema = <T extends ZodArray<ZodType>>(
+  type: T
+) =>
   z.object({
     eq: type.optional(),
     arrayContains: type.optional(),
@@ -10,12 +12,12 @@ export const defineArrayFieldSchema = <T extends ZodArray<ZodType>>(type: T) =>
     isNotEmpty: z.boolean().optional(),
   });
 
-export const BooleanFieldSchema = z.object({
+export const BooleanConditionsSchema = z.object({
   eq: z.boolean().optional(),
   ne: z.boolean().optional(),
 });
 
-export const StringFieldSchema = z.object({
+export const StringConditionsSchema = z.object({
   eq: z.string().optional(),
   ne: z.string().optional(),
   inArray: z.array(z.string()).optional(),
@@ -26,7 +28,7 @@ export const StringFieldSchema = z.object({
   notIlike: z.string().optional(),
 });
 
-export const NumberFieldSchema = z.object({
+export const NumberConditionsSchema = z.object({
   eq: z.number().optional(),
   ne: z.number().optional(),
   lt: z.number().optional(),
@@ -49,7 +51,7 @@ export const NumberFieldSchema = z.object({
     .optional(),
 });
 
-export const DateFieldSchema = z.object({
+export const DateConditionsSchema = z.object({
   eq: z.date().optional(),
   ne: z.date().optional(),
   lt: z.date().optional(),
@@ -72,12 +74,12 @@ export const DateFieldSchema = z.object({
     .optional(),
 });
 
-export const NullableFieldSchema = z.object({
+export const NullableConditionsSchema = z.object({
   isNull: z.boolean().optional(),
   isNotNull: z.boolean().optional(),
 });
 
-const defineScalarFieldSchema = <T extends ZodType>(type: T) =>
+const defineScalarConditionsSchema = <T extends ZodType>(type: T) =>
   z.object({
     eq: type.optional(),
     ne: type.optional(),
@@ -113,6 +115,9 @@ const defineScalarFieldSchema = <T extends ZodType>(type: T) =>
  * Due to TS limitations DON'T USE THIS TO TYPE YOUR FILTERS, it is only for validation
  *
  */
-export const genericOperationSchema = defineArrayFieldSchema(z.array(z.any()))
-  .extend(defineScalarFieldSchema(z.any()).shape)
+export const genericOperationSchema = z
+  .object({
+    ...defineArrayConditionsSchema(z.array(z.any())).shape,
+    ...defineScalarConditionsSchema(z.any()).shape,
+  })
   .strict();

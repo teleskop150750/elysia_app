@@ -6,10 +6,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts"
   },
+  "type": "module",
   "imports": {
     "#root/*": "./src/*"
   },
   "dependencies": {
+    "@elysiajs/openapi": "^1.4.13",
     "elysia": "latest",
     "kysely": "^0.28.9",
     "kysely-bun-sql": "^0.2.0",

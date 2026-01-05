@@ -1,9 +1,9 @@
-import { DB } from "./db"; // this is the Database interface we defined earlier
+import type { DB } from "./db.d.ts"; // this is the Database interface we defined earlier
 import { BunPostgresDialect } from "kysely-bun-sql";
-import { Kysely, PostgresDialect } from "kysely";
+import { Kysely } from "kysely";
 
 const dialect = new BunPostgresDialect({
-  url: process.env.DATABASE_URL,
+  url: process.env["DATABASE_URL"],
   clientOptions: {
     max: 10,
   },

@@ -1,11 +1,9 @@
 import { Elysia } from "elysia";
-import { db } from "./db";
+import { auto } from "./api/auto";
 
 const app = new Elysia()
+  .use(auto)
   .get("/", () => "Hello Elysia")
-  .all("/demo", () => {
-    return db.selectFrom("auto.marks").selectAll().execute();
-  })
   .listen(3000);
 
 console.log(

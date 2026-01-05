@@ -13,33 +13,33 @@ type IEB = ExpressionBuilder<DB, any>;
 type IEW = ExpressionWrapper<DB, any, any>;
 
 const OPERATION_CONDITION_MAP = {
-  eq: (ed: IEB, field: string, val: any) => ed(field, "=", val),
-  ne: (ed: IEB, field: string, val: any) => ed(field, "!=", val),
-  lt: (ed: IEB, field: string, val: any) => ed(field, "<", val),
-  lte: (ed: IEB, field: string, val: any) => ed(field, "<=", val),
-  gt: (ed: IEB, field: string, val: any) => ed(field, ">", val),
-  gte: (ed: IEB, field: string, val: any) => ed(field, ">=", val),
-  inArray: (ed: IEB, field: string, val: any[]) => ed(field, "in", val),
-  notInArray: (ed: IEB, field: string, val: any[]) => ed(field, "not in", val),
-  isNull: (ed: IEB, field: string) => ed(field, "is", null),
-  isNotNull: (ed: IEB, field: string) => ed(field, "is not", null),
-  between: (ed: IEB, field: string, min: any, max: any) =>
-    ed.and([ed(field, ">=", min), ed(field, "<=", max)]),
-  notBetween: (ed: IEB, field: string, min: any, max: any) =>
-    ed.or([ed(field, "<", min), ed(field, ">", max)]),
-  like: (ed: IEB, field: string, val: string) => ed(field, "like", val),
-  ilike: (ed: IEB, field: string, val: string) => ed(field, "ilike", val),
-  notLike: (ed: IEB, field: string, val: string) => ed(field, "not like", val),
-  notIlike: (ed: IEB, field: string, val: string) =>
-    ed(field, "not ilike", val),
+  eq: (eb: IEB, field: string, val: any) => eb(field, "=", val),
+  ne: (eb: IEB, field: string, val: any) => eb(field, "!=", val),
+  lt: (eb: IEB, field: string, val: any) => eb(field, "<", val),
+  lte: (eb: IEB, field: string, val: any) => eb(field, "<=", val),
+  gt: (eb: IEB, field: string, val: any) => eb(field, ">", val),
+  gte: (eb: IEB, field: string, val: any) => eb(field, ">=", val),
+  inArray: (eb: IEB, field: string, val: any[]) => eb(field, "in", val),
+  notInArray: (eb: IEB, field: string, val: any[]) => eb(field, "not in", val),
+  isNull: (eb: IEB, field: string) => eb(field, "is", null),
+  isNotNull: (eb: IEB, field: string) => eb(field, "is not", null),
+  between: (eb: IEB, field: string, min: any, max: any) =>
+    eb.and([eb(field, ">=", min), eb(field, "<=", max)]),
+  notBetween: (eb: IEB, field: string, min: any, max: any) =>
+    eb.or([eb(field, "<", min), eb(field, ">", max)]),
+  like: (eb: IEB, field: string, val: string) => eb(field, "like", val),
+  ilike: (eb: IEB, field: string, val: string) => eb(field, "ilike", val),
+  notLike: (eb: IEB, field: string, val: string) => eb(field, "not like", val),
+  notIlike: (eb: IEB, field: string, val: string) =>
+    eb(field, "not ilike", val),
   //array operations
-  arrayContains: (ed: IEB, field: string, val: any[]) => ed(field, "@>", val),
-  arrayContained: (ed: IEB, field: string, val: any[]) => ed(field, "<@", val),
-  arrayOverlaps: (ed: IEB, field: string, val: any[]) => ed(field, "&&", val),
-  isEmpty: (ed: IEB, field: string) =>
-    ed(sql`jsonb_array_length(${ed.ref(field)})`, "=", 0),
-  isNotEmpty: (ed: IEB, field: string) =>
-    ed(sql`jsonb_array_length(${ed.ref(field)})`, ">", 0),
+  arrayContains: (eb: IEB, field: string, val: any[]) => eb(field, "@>", val),
+  arrayContained: (eb: IEB, field: string, val: any[]) => eb(field, "<@", val),
+  arrayOverlaps: (eb: IEB, field: string, val: any[]) => eb(field, "&&", val),
+  isEmpty: (eb: IEB, field: string) =>
+    eb(sql`jsonb_array_length(${eb.ref(field)})`, "=", 0),
+  isNotEmpty: (eb: IEB, field: string) =>
+    eb(sql`jsonb_array_length(${eb.ref(field)})`, ">", 0),
 } as const satisfies Record<IConditionKey, (...args: any[]) => IEW>;
 
 export function filterToWhereBase(

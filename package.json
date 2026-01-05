@@ -2,14 +2,20 @@
   "name": "app",
   "version": "1.0.50",
   "scripts": {
+    "kysely": "kysely-codegen --out-file ./src/db/db.d.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
-    "elysia": "latest"
+    "elysia": "latest",
+    "kysely": "^0.28.9",
+    "kysely-bun-sql": "^0.2.0",
+    "pg": "^8.16.3",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "kysely-codegen": "^0.19.0"
   },
   "module": "src/index.js"
 }

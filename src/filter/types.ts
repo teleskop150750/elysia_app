@@ -80,9 +80,9 @@ export type ITableFilterBase = Partial<Record<string, ITableFieldConditions>>;
 
 export type ITableFilter<T extends ITableFilterBase = ITableFilterBase> = {
   FIELDS: T;
-  AND?: ITableFilter<T>[] | undefined;
-  OR?: ITableFilter<T>[] | undefined;
-  NOT?: ITableFilter<T> | undefined;
+  AND?: ITableFilter<T>[] | undefined | null;
+  OR?: ITableFilter<T>[] | undefined | null;
+  NOT?: ITableFilter<T> | undefined | null;
 };
 
 // export type IScalarFieldOperations<T> = {

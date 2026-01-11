@@ -1,7 +1,7 @@
-import { Elysia } from 'elysia'
-import { auto } from './api/auto/index.ts'
-import { openapi } from '@elysiajs/openapi'
-import z from 'zod'
+import { Elysia } from "elysia";
+import { auto } from "./api/auto/index.ts";
+import { openapi } from "@elysiajs/openapi";
+import z from "zod";
 
 const app = new Elysia()
   .use(
@@ -12,11 +12,11 @@ const app = new Elysia()
     }),
   )
   .use(auto)
-  .get('/', () => 'Hello Elysia')
-  .listen(3000)
+  .get("/", () => "Hello Elysia")
+  .listen(3000);
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
-)
+);
 
-export default app.compile()
+export default app.compile();

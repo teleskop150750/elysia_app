@@ -3,632 +3,632 @@
  * Please do not edit it manually.
  */
 
-import type { ColumnType } from 'kysely'
+import type { ColumnType } from "kysely";
 
 export type ConfigurationAutoClassEnum =
-  | 'A'
-  | 'B'
-  | 'C'
-  | 'D'
-  | 'E'
-  | 'F'
-  | 'J'
-  | 'M'
-  | 'S'
+  | "A"
+  | "B"
+  | "C"
+  | "D"
+  | "E"
+  | "F"
+  | "J"
+  | "M"
+  | "S";
 
-export type ConfigurationSteeringWheelEnum = 'LEFT' | 'RIGHT'
+export type ConfigurationSteeringWheelEnum = "LEFT" | "RIGHT";
 
 export type Generated<T> =
   T extends ColumnType<infer S, infer I, infer U>
     ? ColumnType<S, I | undefined, U>
-    : ColumnType<T, T | undefined, T>
+    : ColumnType<T, T | undefined, T>;
 
-export type GenerationGroupEnum = 'BUSINESS' | 'CITY' | 'FAMILY'
+export type GenerationGroupEnum = "BUSINESS" | "CITY" | "FAMILY";
 
-export type GenerationSegmentEnum = 'ECONOMY' | 'MEDIUM' | 'PREMIUM'
+export type GenerationSegmentEnum = "ECONOMY" | "MEDIUM" | "PREMIUM";
 
 export type Int8 = ColumnType<
   string,
   bigint | number | string,
   bigint | number | string
->
+>;
 
-export type Json = JsonValue
+export type Json = JsonValue;
 
-export type JsonArray = JsonValue[]
+export type JsonArray = JsonValue[];
 
 export type JsonObject = {
-  [x: string]: JsonValue | undefined
-}
+  [x: string]: JsonValue | undefined;
+};
 
-export type JsonPrimitive = boolean | number | string | null
+export type JsonPrimitive = boolean | number | string | null;
 
-export type JsonValue = JsonArray | JsonObject | JsonPrimitive
+export type JsonValue = JsonArray | JsonObject | JsonPrimitive;
 
-export type ModelSectionEnum = 'ALL' | 'NEW' | 'USED'
+export type ModelSectionEnum = "ALL" | "NEW" | "USED";
 
-export type Numeric = ColumnType<string, number | string, number | string>
+export type Numeric = ColumnType<string, number | string, number | string>;
 
 export type TechParamChargingPortTypeEnum =
-  | 'CCS_COMBO_1'
-  | 'CCS_COMBO_2'
-  | 'CHADEMO'
-  | 'GBT_AC'
-  | 'GBT_DC'
-  | 'TESLA_SG'
-  | 'TYPE_1'
-  | 'TYPE_2'
+  | "CCS_COMBO_1"
+  | "CCS_COMBO_2"
+  | "CHADEMO"
+  | "GBT_AC"
+  | "GBT_DC"
+  | "TESLA_SG"
+  | "TYPE_1"
+  | "TYPE_2";
 
-export type TechParamConsumptionCalcEnum = 'CLTC' | 'EPA' | 'NEDC' | 'WLTP'
+export type TechParamConsumptionCalcEnum = "CLTC" | "EPA" | "NEDC" | "WLTP";
 
 export type TechParamCylindersOrderEnum =
-  | 'IN-LINE'
-  | 'OPPOSITE'
-  | 'ROTARY'
-  | 'V-SHAPED'
-  | 'V-SHAPED-SA'
-  | 'W-SHAPED'
+  | "IN-LINE"
+  | "OPPOSITE"
+  | "ROTARY"
+  | "V-SHAPED"
+  | "V-SHAPED-SA"
+  | "W-SHAPED";
 
 export type TechParamEngineTypeEnum =
-  | 'DIESEL'
-  | 'ELECTRO'
-  | 'GASOLINE'
-  | 'H2'
-  | 'HYBRID'
-  | 'LPG'
+  | "DIESEL"
+  | "ELECTRO"
+  | "GASOLINE"
+  | "H2"
+  | "HYBRID"
+  | "LPG";
 
 export type TechParamEvBatteryTypeEnum =
-  | 'hydrogen-fuel-cell'
-  | 'lead-acid'
-  | 'lfp'
-  | 'li-ion'
-  | 'li-nmc'
-  | 'li-pol'
-  | 'Na-ion'
-  | 'nicd'
-  | 'nih2'
-  | 'nimh'
+  | "hydrogen-fuel-cell"
+  | "lead-acid"
+  | "lfp"
+  | "li-ion"
+  | "li-nmc"
+  | "li-pol"
+  | "Na-ion"
+  | "nicd"
+  | "nih2"
+  | "nimh";
 
 export type TechParamGearTypeEnum =
-  | 'ALL_WHEEL_DRIVE'
-  | 'FORWARD_CONTROL'
-  | 'REAR_DRIVE'
+  | "ALL_WHEEL_DRIVE"
+  | "FORWARD_CONTROL"
+  | "REAR_DRIVE";
 
 export type TechParamPetrolTypeEnum =
-  | '76 RON'
-  | '80 RON'
-  | '92 RON'
-  | '95 RON'
-  | '98 RON'
-  | 'Diesel'
-  | 'GAS'
-  | 'hydrogen'
+  | "76 RON"
+  | "80 RON"
+  | "92 RON"
+  | "95 RON"
+  | "98 RON"
+  | "Diesel"
+  | "GAS"
+  | "hydrogen";
 
 export type TechParamTransmissionEnum =
-  | 'AUTOMATIC'
-  | 'MECHANICAL'
-  | 'ROBOT'
-  | 'VARIATOR'
+  | "AUTOMATIC"
+  | "MECHANICAL"
+  | "ROBOT"
+  | "VARIATOR";
 
-export type TechParamValvetrainEnum = 'DOHC' | 'OHC' | 'OHV' | 'SOHC' | 'SV'
+export type TechParamValvetrainEnum = "DOHC" | "OHC" | "OHV" | "SOHC" | "SV";
 
-export type Timestamp = ColumnType<Date, Date | string, Date | string>
+export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export interface AutoBodies {
-  body_group_id: string
-  id: string
-  type: string
+  body_group_id: string;
+  id: string;
+  type: string;
 }
 
 export interface AutoBodyGroups {
-  id: string
-  type: string
+  id: string;
+  type: string;
 }
 
 export interface AutoComplectations {
-  base: Generated<boolean>
-  configuration_id: string
-  crawlee_status: Generated<string | null>
-  equipment_id: string | null
-  id: string
-  offers_price_from: Generated<Numeric | null>
-  offers_price_to: Generated<Numeric | null>
-  slug: string
-  tech_param_id: string
+  base: Generated<boolean>;
+  configuration_id: string;
+  crawlee_status: Generated<string | null>;
+  equipment_id: string | null;
+  id: string;
+  offers_price_from: Generated<Numeric | null>;
+  offers_price_to: Generated<Numeric | null>;
+  slug: string;
+  tech_param_id: string;
 }
 
 export interface AutoConfigurationPromos {
-  configuration_id: string
-  id: string
-  name: string
-  s3_key: string | null
-  s3_status: Generated<string | null>
-  url: string
+  configuration_id: string;
+  id: string;
+  name: string;
+  s3_key: string | null;
+  s3_status: Generated<string | null>;
+  url: string;
 }
 
 export interface AutoConfigurations {
-  auto_class: ConfigurationAutoClassEnum | null
-  autoru_id: Int8
-  available_steering_wheel: Generated<Json>
-  back_wheel_base: number | null
-  body_code: string | null
-  body_id: string
-  body_size: number
-  body_type: string
-  body_type_group: string
-  body_type_id: string | null
-  boot_volume_max: number | null
-  boot_volume_min: number | null
-  crawlee_status: Generated<string | null>
-  doors_count: number
-  front_brake: string
-  front_suspension: string
-  front_wheel_base: number | null
-  generation_id: string
-  hash_entity: string | null
-  height: number
-  human_name: string
-  id: string
-  max_price: Generated<number>
-  min_price: Generated<number>
-  name: string | null
-  new_offers_count: Generated<number>
-  new_offers_max_price: Generated<number>
-  new_offers_min_price: Generated<number>
-  offers_max_price: Generated<number>
-  offers_min_price: Generated<number>
-  photo: string
-  s3_status: Generated<string | null>
-  seats: Generated<Json>
-  slug: string
-  steering_wheel: ConfigurationSteeringWheelEnum
-  tank_volume: number | null
-  total_offers_count: Generated<number>
-  turning_circle: number | null
-  used_offers_count: Generated<number>
-  used_offers_max_price: Generated<number>
-  used_offers_min_price: Generated<number>
-  wheel_base: number
-  width: number
-  width_mirrors: number | null
+  auto_class: ConfigurationAutoClassEnum | null;
+  autoru_id: Int8;
+  available_steering_wheel: Generated<Json>;
+  back_wheel_base: number | null;
+  body_code: string | null;
+  body_id: string;
+  body_size: number;
+  body_type: string;
+  body_type_group: string;
+  body_type_id: string | null;
+  boot_volume_max: number | null;
+  boot_volume_min: number | null;
+  crawlee_status: Generated<string | null>;
+  doors_count: number;
+  front_brake: string;
+  front_suspension: string;
+  front_wheel_base: number | null;
+  generation_id: string;
+  hash_entity: string | null;
+  height: number;
+  human_name: string;
+  id: string;
+  max_price: Generated<number>;
+  min_price: Generated<number>;
+  name: string | null;
+  new_offers_count: Generated<number>;
+  new_offers_max_price: Generated<number>;
+  new_offers_min_price: Generated<number>;
+  offers_max_price: Generated<number>;
+  offers_min_price: Generated<number>;
+  photo: string;
+  s3_status: Generated<string | null>;
+  seats: Generated<Json>;
+  slug: string;
+  steering_wheel: ConfigurationSteeringWheelEnum;
+  tank_volume: number | null;
+  total_offers_count: Generated<number>;
+  turning_circle: number | null;
+  used_offers_count: Generated<number>;
+  used_offers_max_price: Generated<number>;
+  used_offers_min_price: Generated<number>;
+  wheel_base: number;
+  width: number;
+  width_mirrors: number | null;
 }
 
 export interface AutoCountries {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
 export interface AutoEquipmentOption {
-  equipment_id: string
-  id: string
-  option_id: string
-  price: number | null
+  equipment_id: string;
+  id: string;
+  option_id: string;
+  price: number | null;
 }
 
 export interface AutoEquipments {
-  crawlee_status: Generated<string | null>
-  id: string
-  name: string
-  new_offers_count: Generated<number>
-  new_offers_max_price: Generated<number>
-  new_offers_min_price: Generated<number>
-  offers_max_price: Generated<number>
-  offers_min_price: Generated<number>
-  slug: string
-  total_offers_count: Generated<number>
-  used_offers_count: Generated<number>
-  used_offers_max_price: Generated<number>
-  used_offers_min_price: Generated<number>
+  crawlee_status: Generated<string | null>;
+  id: string;
+  name: string;
+  new_offers_count: Generated<number>;
+  new_offers_max_price: Generated<number>;
+  new_offers_min_price: Generated<number>;
+  offers_max_price: Generated<number>;
+  offers_min_price: Generated<number>;
+  slug: string;
+  total_offers_count: Generated<number>;
+  used_offers_count: Generated<number>;
+  used_offers_max_price: Generated<number>;
+  used_offers_min_price: Generated<number>;
 }
 
 export interface AutoGenerations {
-  autoru_id: Int8
-  cyrillic_name: string
-  group: GenerationGroupEnum
-  id: string
-  is_no_complect: Generated<boolean>
-  is_restyle: Generated<boolean>
-  model_id: string
-  name: string
-  photo: string
-  s3_status: Generated<string | null>
-  segment: GenerationSegmentEnum
-  slug: string
-  year_from: number
-  year_to: number
+  autoru_id: Int8;
+  cyrillic_name: string;
+  group: GenerationGroupEnum;
+  id: string;
+  is_no_complect: Generated<boolean>;
+  is_restyle: Generated<boolean>;
+  model_id: string;
+  name: string;
+  photo: string;
+  s3_status: Generated<string | null>;
+  segment: GenerationSegmentEnum;
+  slug: string;
+  year_from: number;
+  year_to: number;
 }
 
 export interface AutoMarks {
-  autoru_id: Int8
-  autoru_slug: string
-  black_logo: string
-  country_id: string | null
-  crawlee_status: Generated<string | null>
-  cyrillic_name: string
-  id: string
-  logo: string
-  name: string
-  popular: Generated<boolean>
-  slug: string
-  year_from: number
-  year_to: number
+  autoru_id: Int8;
+  autoru_slug: string;
+  black_logo: string;
+  country_id: string | null;
+  crawlee_status: Generated<string | null>;
+  cyrillic_name: string;
+  id: string;
+  logo: string;
+  name: string;
+  popular: Generated<boolean>;
+  slug: string;
+  year_from: number;
+  year_to: number;
 }
 
 export interface AutoModelRatings {
-  appearance: Generated<number>
-  comfort: Generated<number>
-  driveability: Generated<number>
-  id: string
-  model_id: string
-  reliability: Generated<number>
-  safety: Generated<number>
-  total: Generated<number>
+  appearance: Generated<number>;
+  comfort: Generated<number>;
+  driveability: Generated<number>;
+  id: string;
+  model_id: string;
+  reliability: Generated<number>;
+  safety: Generated<number>;
+  total: Generated<number>;
 }
 
 export interface AutoModels {
-  autoru_slug: string
-  crawlee_status: Generated<string | null>
-  cyrillic_name: string
-  id: string
-  mark_id: string
-  name: string
-  popular: Generated<boolean>
-  section: ModelSectionEnum | null
-  slug: string
-  year_from: number
-  year_to: number
+  autoru_slug: string;
+  crawlee_status: Generated<string | null>;
+  cyrillic_name: string;
+  id: string;
+  mark_id: string;
+  name: string;
+  popular: Generated<boolean>;
+  section: ModelSectionEnum | null;
+  slug: string;
+  year_from: number;
+  year_to: number;
 }
 
 export interface AutoNameplates {
-  autoru_id: Int8
-  id: string
-  model_id: string
-  name: string
-  no_model: Generated<boolean>
-  slug: string
+  autoru_id: Int8;
+  id: string;
+  model_id: string;
+  name: string;
+  no_model: Generated<boolean>;
+  slug: string;
 }
 
 export interface AutoOptionGroups {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
 export interface AutoOptions {
-  group_id: string | null
-  id: string
-  name: string
+  group_id: string | null;
+  id: string;
+  name: string;
 }
 
 export interface AutoPackageOption {
-  id: string
-  option_id: string
-  package_id: string
+  id: string;
+  option_id: string;
+  package_id: string;
 }
 
 export interface AutoPackages {
-  autoru_id: Int8
-  equipment_id: string
-  id: string
-  name: string
-  price: Numeric | null
+  autoru_id: Int8;
+  equipment_id: string;
+  id: string;
+  name: string;
+  price: Numeric | null;
 }
 
 export interface AutoTechInfoGroups {
-  id: string
-  name: string | null
-  type: string
+  id: string;
+  name: string | null;
+  type: string;
 }
 
 export interface AutoTechInfos {
-  group_id: string
-  id: string
-  name: string | null
-  type: string
-  units: string | null
+  group_id: string;
+  id: string;
+  name: string | null;
+  type: string;
+  units: string | null;
 }
 
 export interface AutoTechParams {
-  acceleration: number | null
-  autoru_id: Int8
-  back_brake: string | null
-  back_suspension: string | null
-  battery_capacity: number | null
-  battery_capacity_useful: number | null
-  battery_charge_cycles: Numeric | null
-  battery_temp: Generated<Json | null>
-  charge_time: number | null
-  charging_port_type: TechParamChargingPortTypeEnum | null
-  charging_port_types: Generated<Json | null>
-  clearance: Generated<Json | null>
-  compression: number | null
-  configuration_id: string
-  consump_kwt: number | null
-  consumption_calc: TechParamConsumptionCalcEnum | null
-  consumption_city: number | null
-  consumption_hiway: number | null
-  consumption_mixed: number | null
-  cylinders_order: TechParamCylindersOrderEnum | null
-  cylinders_value: number
-  diameter: string | null
-  disk_size: string | null
-  displacement: number
-  electric_range: number | null
-  emission_euro_class: string | null
-  engine_alias: string | null
-  engine_aliases: Generated<Json | null>
-  engine_feeding: string | null
-  engine_id: Generated<Json | null>
-  engine_model: string | null
-  engine_order: string | null
-  engine_type: TechParamEngineTypeEnum
-  ev_battery_type: TechParamEvBatteryTypeEnum | null
-  feeding: string | null
-  fuel_emission: number | null
-  fuel_tank_volume: number | null
-  full_charge_time: number | null
-  full_weight: number | null
-  gear_type: TechParamGearTypeEnum
-  gear_type_autoru: string | null
-  gear_value: number | null
-  hash_entity: string | null
-  human_name: string
-  id: string
-  landing_wheels_size: Generated<Json | null>
-  max_power_in: Generated<Json | null>
-  max_speed: number | null
-  moment: number | null
-  moment_rpm: Generated<Json | null>
-  name: string | null
-  nameplate_engine: string | null
-  nameplate_id: string | null
-  nut_bolt_size: string | null
-  optional_tires_size: Generated<Json | null>
-  origin_tires_size: Generated<Json | null>
-  origin_wheels_size: Generated<Json | null>
-  petrol_type: TechParamPetrolTypeEnum | null
-  power: number
-  power_docs: number
-  power_kvt: number
-  power_rpm: Generated<Json | null>
-  quick_charge_description: string | null
-  quick_charge_time: number | null
-  slug: string
-  tightening_torque: string | null
-  tire_pressure: string | null
-  total_range: number | null
-  transmission: TechParamTransmissionEnum
-  transmission_autoru: string | null
-  trunk_volume_max: number | null
-  trunk_volume_min: number | null
-  valves: number | null
-  valvetrain: TechParamValvetrainEnum | null
-  weight: Numeric | null
-  wheel_size: string | null
-  year_start: number
-  year_stop: number
+  acceleration: number | null;
+  autoru_id: Int8;
+  back_brake: string | null;
+  back_suspension: string | null;
+  battery_capacity: number | null;
+  battery_capacity_useful: number | null;
+  battery_charge_cycles: Numeric | null;
+  battery_temp: Generated<Json | null>;
+  charge_time: number | null;
+  charging_port_type: TechParamChargingPortTypeEnum | null;
+  charging_port_types: Generated<Json | null>;
+  clearance: Generated<Json | null>;
+  compression: number | null;
+  configuration_id: string;
+  consump_kwt: number | null;
+  consumption_calc: TechParamConsumptionCalcEnum | null;
+  consumption_city: number | null;
+  consumption_hiway: number | null;
+  consumption_mixed: number | null;
+  cylinders_order: TechParamCylindersOrderEnum | null;
+  cylinders_value: number;
+  diameter: string | null;
+  disk_size: string | null;
+  displacement: number;
+  electric_range: number | null;
+  emission_euro_class: string | null;
+  engine_alias: string | null;
+  engine_aliases: Generated<Json | null>;
+  engine_feeding: string | null;
+  engine_id: Generated<Json | null>;
+  engine_model: string | null;
+  engine_order: string | null;
+  engine_type: TechParamEngineTypeEnum;
+  ev_battery_type: TechParamEvBatteryTypeEnum | null;
+  feeding: string | null;
+  fuel_emission: number | null;
+  fuel_tank_volume: number | null;
+  full_charge_time: number | null;
+  full_weight: number | null;
+  gear_type: TechParamGearTypeEnum;
+  gear_type_autoru: string | null;
+  gear_value: number | null;
+  hash_entity: string | null;
+  human_name: string;
+  id: string;
+  landing_wheels_size: Generated<Json | null>;
+  max_power_in: Generated<Json | null>;
+  max_speed: number | null;
+  moment: number | null;
+  moment_rpm: Generated<Json | null>;
+  name: string | null;
+  nameplate_engine: string | null;
+  nameplate_id: string | null;
+  nut_bolt_size: string | null;
+  optional_tires_size: Generated<Json | null>;
+  origin_tires_size: Generated<Json | null>;
+  origin_wheels_size: Generated<Json | null>;
+  petrol_type: TechParamPetrolTypeEnum | null;
+  power: number;
+  power_docs: number;
+  power_kvt: number;
+  power_rpm: Generated<Json | null>;
+  quick_charge_description: string | null;
+  quick_charge_time: number | null;
+  slug: string;
+  tightening_torque: string | null;
+  tire_pressure: string | null;
+  total_range: number | null;
+  transmission: TechParamTransmissionEnum;
+  transmission_autoru: string | null;
+  trunk_volume_max: number | null;
+  trunk_volume_min: number | null;
+  valves: number | null;
+  valvetrain: TechParamValvetrainEnum | null;
+  weight: Numeric | null;
+  wheel_size: string | null;
+  year_start: number;
+  year_stop: number;
 }
 
 export interface AvitoBodies {
-  avito_url: string
-  crawlee_status: Generated<string | null>
-  generation_id: string
-  id: string
-  img: string | null
-  slug: string
-  title: string
+  avito_url: string;
+  crawlee_status: Generated<string | null>;
+  generation_id: string;
+  id: string;
+  img: string | null;
+  slug: string;
+  title: string;
 }
 
 export interface AvitoGenerations {
-  crawlee_status: Generated<string | null>
-  id: string
-  model_id: string
-  slug: string
-  subtitle: string
-  title: string
+  crawlee_status: Generated<string | null>;
+  id: string;
+  model_id: string;
+  slug: string;
+  subtitle: string;
+  title: string;
 }
 
 export interface AvitoMarks {
-  avito_id: Int8
-  avito_url: string
-  crawlee_status: Generated<string | null>
-  id: string
-  name: string
-  slug: string
+  avito_id: Int8;
+  avito_url: string;
+  crawlee_status: Generated<string | null>;
+  id: string;
+  name: string;
+  slug: string;
 }
 
 export interface AvitoModels {
-  avito_id: Int8
-  avito_url: string
-  crawlee_status: Generated<string | null>
-  id: string
-  mark_id: string
-  name: string
-  slug: string
+  avito_id: Int8;
+  avito_url: string;
+  crawlee_status: Generated<string | null>;
+  id: string;
+  mark_id: string;
+  name: string;
+  slug: string;
 }
 
 export interface Errors {
-  configuration: Generated<Json | null>
-  id: number
-  mark: Generated<Json | null>
-  model: Generated<Json | null>
+  configuration: Generated<Json | null>;
+  id: number;
+  mark: Generated<Json | null>;
+  model: Generated<Json | null>;
 }
 
 export interface OfferOfferCounters {
-  all: Generated<number>
-  avito_all: Generated<number>
-  avito_card_view_phone_show_conversion_all: Generated<number>
-  avito_card_view_phone_show_conversion_daily: Generated<number>
-  avito_daily: Generated<number>
-  card_view_call_conversion_daily: Generated<number>
-  card_view_chat_conversion_all: Generated<number>
-  chats_all: Generated<number>
-  daily: Generated<number>
-  drom_all: Generated<number>
-  drom_card_view_phone_show_conversion_all: Generated<number>
-  drom_card_view_phone_show_conversion_daily: Generated<number>
-  drom_daily: Generated<number>
-  favorite_all: Generated<number>
-  favorite_daily: Generated<number>
-  favorite_remove_all: Generated<number>
-  favorite_remove_daily: Generated<number>
-  favorite_total_all: Generated<number>
-  favorite_total_daily: Generated<number>
-  id: string
-  offer_id: string
+  all: Generated<number>;
+  avito_all: Generated<number>;
+  avito_card_view_phone_show_conversion_all: Generated<number>;
+  avito_card_view_phone_show_conversion_daily: Generated<number>;
+  avito_daily: Generated<number>;
+  card_view_call_conversion_daily: Generated<number>;
+  card_view_chat_conversion_all: Generated<number>;
+  chats_all: Generated<number>;
+  daily: Generated<number>;
+  drom_all: Generated<number>;
+  drom_card_view_phone_show_conversion_all: Generated<number>;
+  drom_card_view_phone_show_conversion_daily: Generated<number>;
+  drom_daily: Generated<number>;
+  favorite_all: Generated<number>;
+  favorite_daily: Generated<number>;
+  favorite_remove_all: Generated<number>;
+  favorite_remove_daily: Generated<number>;
+  favorite_total_all: Generated<number>;
+  favorite_total_daily: Generated<number>;
+  id: string;
+  offer_id: string;
 }
 
 export interface OfferOfferDiscounts {
-  id: string
-  offer_id: string
-  price: number | null
-  type: string | null
+  id: string;
+  offer_id: string;
+  price: number | null;
+  type: string | null;
 }
 
 export interface OfferOfferDocument {
-  accidents_resolution: string | null
-  custom_cleared: boolean | null
-  id: string
-  legal_resolution: string | null
-  offer_id: string
-  owners_number: number | null
-  owners_resolution: string | null
-  pts: string | null
-  pts_original: boolean | null
-  pts_resolution_ok: boolean | null
-  vin: string | null
-  vin_resolution: string | null
-  year: number | null
+  accidents_resolution: string | null;
+  custom_cleared: boolean | null;
+  id: string;
+  legal_resolution: string | null;
+  offer_id: string;
+  owners_number: number | null;
+  owners_resolution: string | null;
+  pts: string | null;
+  pts_original: boolean | null;
+  pts_resolution_ok: boolean | null;
+  vin: string | null;
+  vin_resolution: string | null;
+  year: number | null;
 }
 
 export interface OfferOfferImages {
-  ai_status: Generated<string | null>
-  compressed_size: number | null
-  exterior: number | null
-  height: number | null
-  id: string
-  interior: number | null
-  name: string
-  offer_id: string
-  orientation: string | null
-  photo_class: string | null
-  s3_key: string | null
-  s3_status: Generated<string | null>
-  size: number | null
-  type: string | null
-  url: string
-  width: number | null
+  ai_status: Generated<string | null>;
+  compressed_size: number | null;
+  exterior: number | null;
+  height: number | null;
+  id: string;
+  interior: number | null;
+  name: string;
+  offer_id: string;
+  orientation: string | null;
+  photo_class: string | null;
+  s3_key: string | null;
+  s3_status: Generated<string | null>;
+  size: number | null;
+  type: string | null;
+  url: string;
+  width: number | null;
 }
 
 export interface OfferOfferOption {
-  id: string
-  offer_id: string
-  option_id: string
+  id: string;
+  offer_id: string;
+  option_id: string;
 }
 
 export interface OfferOfferPriceHistorys {
-  create_timestamp: Int8 | null
-  eur: Int8 | null
-  id: string
-  offer_id: string
-  rur: Int8 | null
-  usd: Int8 | null
+  create_timestamp: Int8 | null;
+  eur: Int8 | null;
+  id: string;
+  offer_id: string;
+  rur: Int8 | null;
+  usd: Int8 | null;
 }
 
 export interface OfferOfferPrices {
-  currency: string | null
-  eur: Generated<number | null>
-  id: string
-  offer_id: string
-  price: Generated<number | null>
-  rur: Generated<number | null>
-  usd: Generated<number | null>
-  with_nds: Generated<boolean | null>
+  currency: string | null;
+  eur: Generated<number | null>;
+  id: string;
+  offer_id: string;
+  price: Generated<number | null>;
+  rur: Generated<number | null>;
+  usd: Generated<number | null>;
+  with_nds: Generated<boolean | null>;
 }
 
 export interface OfferOffers {
-  autoru_id: Int8
-  autoru_sale_id: string | null
-  availability: string | null
-  color_hex: string | null
-  complectation_id: string
-  condition: string | null
-  hash: string
-  id: string
-  is_favorite: Generated<boolean>
-  mileage: Generated<number>
-  predicted_car_condition: string | null
-  section: string | null
-  seller_type: string | null
-  status: string | null
-  title: string | null
-  url: string
+  autoru_id: Int8;
+  autoru_sale_id: string | null;
+  availability: string | null;
+  color_hex: string | null;
+  complectation_id: string;
+  condition: string | null;
+  hash: string;
+  id: string;
+  is_favorite: Generated<boolean>;
+  mileage: Generated<number>;
+  predicted_car_condition: string | null;
+  section: string | null;
+  seller_type: string | null;
+  status: string | null;
+  title: string | null;
+  url: string;
 }
 
 export interface OfferUrls {
-  crawlee_status: Generated<string | null>
-  created_at: Generated<Timestamp>
-  id: string
-  section: string | null
-  title: string | null
-  url: string
+  crawlee_status: Generated<string | null>;
+  created_at: Generated<Timestamp>;
+  id: string;
+  section: string | null;
+  title: string | null;
+  url: string;
 }
 
 export interface OfferVendorColorImages {
-  color_id: string
-  id: string
-  name: string
-  url: string
+  color_id: string;
+  id: string;
+  name: string;
+  url: string;
 }
 
 export interface OfferVendorColors {
-  autoru_body_color_id: Int8 | null
-  autoru_configuration_id: Int8 | null
-  autoru_mark_color_id: Int8 | null
-  color_type: string | null
-  configuration_id: string
-  hex_codes: Generated<Json>
-  id: string
-  main_color: Generated<boolean>
-  name_ru: string
-  stock_color_hex_code: string | null
-  stock_color_name_ru: string | null
+  autoru_body_color_id: Int8 | null;
+  autoru_configuration_id: Int8 | null;
+  autoru_mark_color_id: Int8 | null;
+  color_type: string | null;
+  configuration_id: string;
+  hex_codes: Generated<Json>;
+  id: string;
+  main_color: Generated<boolean>;
+  name_ru: string;
+  stock_color_hex_code: string | null;
+  stock_color_name_ru: string | null;
 }
 
 export interface DB {
-  'auto.bodies': AutoBodies
-  'auto.body_groups': AutoBodyGroups
-  'auto.complectations': AutoComplectations
-  'auto.configuration_promos': AutoConfigurationPromos
-  'auto.configurations': AutoConfigurations
-  'auto.countries': AutoCountries
-  'auto.equipment_option': AutoEquipmentOption
-  'auto.equipments': AutoEquipments
-  'auto.generations': AutoGenerations
-  'auto.marks': AutoMarks
-  'auto.model_ratings': AutoModelRatings
-  'auto.models': AutoModels
-  'auto.nameplates': AutoNameplates
-  'auto.option_groups': AutoOptionGroups
-  'auto.options': AutoOptions
-  'auto.package_option': AutoPackageOption
-  'auto.packages': AutoPackages
-  'auto.tech_info_groups': AutoTechInfoGroups
-  'auto.tech_infos': AutoTechInfos
-  'auto.tech_params': AutoTechParams
-  'avito.bodies': AvitoBodies
-  'avito.generations': AvitoGenerations
-  'avito.marks': AvitoMarks
-  'avito.models': AvitoModels
-  errors: Errors
-  'offer.offer_counters': OfferOfferCounters
-  'offer.offer_discounts': OfferOfferDiscounts
-  'offer.offer_document': OfferOfferDocument
-  'offer.offer_images': OfferOfferImages
-  'offer.offer_option': OfferOfferOption
-  'offer.offer_price_historys': OfferOfferPriceHistorys
-  'offer.offer_prices': OfferOfferPrices
-  'offer.offers': OfferOffers
-  'offer.urls': OfferUrls
-  'offer.vendor_color_images': OfferVendorColorImages
-  'offer.vendor_colors': OfferVendorColors
+  "auto.bodies": AutoBodies;
+  "auto.body_groups": AutoBodyGroups;
+  "auto.complectations": AutoComplectations;
+  "auto.configuration_promos": AutoConfigurationPromos;
+  "auto.configurations": AutoConfigurations;
+  "auto.countries": AutoCountries;
+  "auto.equipment_option": AutoEquipmentOption;
+  "auto.equipments": AutoEquipments;
+  "auto.generations": AutoGenerations;
+  "auto.marks": AutoMarks;
+  "auto.model_ratings": AutoModelRatings;
+  "auto.models": AutoModels;
+  "auto.nameplates": AutoNameplates;
+  "auto.option_groups": AutoOptionGroups;
+  "auto.options": AutoOptions;
+  "auto.package_option": AutoPackageOption;
+  "auto.packages": AutoPackages;
+  "auto.tech_info_groups": AutoTechInfoGroups;
+  "auto.tech_infos": AutoTechInfos;
+  "auto.tech_params": AutoTechParams;
+  "avito.bodies": AvitoBodies;
+  "avito.generations": AvitoGenerations;
+  "avito.marks": AvitoMarks;
+  "avito.models": AvitoModels;
+  errors: Errors;
+  "offer.offer_counters": OfferOfferCounters;
+  "offer.offer_discounts": OfferOfferDiscounts;
+  "offer.offer_document": OfferOfferDocument;
+  "offer.offer_images": OfferOfferImages;
+  "offer.offer_option": OfferOfferOption;
+  "offer.offer_price_historys": OfferOfferPriceHistorys;
+  "offer.offer_prices": OfferOfferPrices;
+  "offer.offers": OfferOffers;
+  "offer.urls": OfferUrls;
+  "offer.vendor_color_images": OfferVendorColorImages;
+  "offer.vendor_colors": OfferVendorColors;
 }

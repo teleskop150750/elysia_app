@@ -1,17 +1,17 @@
-import { Elysia } from 'elysia'
-import { MarksFilterSchema } from './schema.ts'
+import { Elysia } from "elysia";
+import { MarksFilterSchema } from "./schema.ts";
 // import { getConfigurationsWithRelationsNested } from "./queries.ts";
-import * as qb from 'drizzle-orm'
+import * as qb from "drizzle-orm";
 import {
   AutoConfigurationsTable,
   AutoMarksTable,
   AutoModelsTable,
   AutoGenerationsTable,
   AutoCountriesTable,
-} from '~/db/schema.ts'
-import { db } from '~/db/drizzle.ts'
+} from "~/db/schema.ts";
+import { db } from "~/db/drizzle.ts";
 export const auto = new Elysia().all(
-  '/demo',
+  "/demo",
   ({ body }) => {
     return (
       db
@@ -31,10 +31,10 @@ export const auto = new Elysia().all(
         // )
         // .groupBy(AutoMarksTable.id)
         .limit(10)
-    )
+    );
     // return getConfigurationsWithRelationsNested(body, 50);
   },
   {
     // body: MarksFilterSchema,
   },
-)
+);

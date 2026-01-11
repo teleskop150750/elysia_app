@@ -300,7 +300,7 @@ Sponsors
 
 A dialect is the glue between Kysely and the underlying database engine. Check the [API docs](https://kysely-org.github.io/kysely-apidoc/interfaces/Dialect.html) to learn how to build your own.
 
-## Core dialects[​](#core-dialects 'Direct link to Core dialects')
+## Core dialects[​](#core-dialects "Direct link to Core dialects")
 
 | Dialect                      | Link                                                                      |
 | ---------------------------- | ------------------------------------------------------------------------- |
@@ -309,14 +309,14 @@ A dialect is the glue between Kysely and the underlying database engine. Check t
 | Microsoft SQL Server (MSSQL) | <https://kysely-org.github.io/kysely-apidoc/classes/MssqlDialect.html>    |
 | SQLite                       | <https://kysely-org.github.io/kysely-apidoc/classes/SqliteDialect.html>   |
 
-## Organization dialects[​](#organization-dialects 'Direct link to Organization dialects')
+## Organization dialects[​](#organization-dialects "Direct link to Organization dialects")
 
 | Dialect              | Link                                               |
 | -------------------- | -------------------------------------------------- |
 | Postgres.js          | <https://github.com/kysely-org/kysely-postgres-js> |
 | SingleStore Data API | <https://github.com/kysely-org/kysely-singlestore> |
 
-## Community dialects[​](#community-dialects 'Direct link to Community dialects')
+## Community dialects[​](#community-dialects "Direct link to Community dialects")
 
 | Dialect                       | Link                                                                          |
 | ----------------------------- | ----------------------------------------------------------------------------- |
@@ -5763,31 +5763,31 @@ The following page gives a **simplified** overview of Kysely's execution flow, f
 
 This breakdown explains the journey from a type-safe method call in your application to receiving results from the database, as depicted in the diagram.
 
-1. ### Immutable query building[​](#immutable-query-building 'Direct link to Immutable query building')
+1. ### Immutable query building[​](#immutable-query-building "Direct link to Immutable query building")
 
    The process starts in your `App`. You interact with the `QueryBuilder` by calling its methods (`selectFrom`, `where`, etc.). Each call returns a _new_ `QueryBuilder` instance containing an updated, immutable `QueryAST` (Abstract Syntax Tree), which is the internal representation of your SQL query.
 
    <!-- -->
 
-2. ### Initiating execution[​](#initiating-execution 'Direct link to Initiating execution')
+2. ### Initiating execution[​](#initiating-execution "Direct link to Initiating execution")
 
    When you chain the final `.execute()` call, the `QueryBuilder` begins a multi-step execution process, commanding the `QueryExecutor` to perform distinct tasks.
 
    <!-- -->
 
-3. ### Query Transformation[​](#query-transformation 'Direct link to Query Transformation')
+3. ### Query Transformation[​](#query-transformation "Direct link to Query Transformation")
 
    First, the `QueryBuilder` instructs the `QueryExecutor` to process the `QueryAST`. The `QueryExecutor` iterates through all registered plugins, calling `transformQuery` on each. This allows plugins to modify the query structure before compilation. The final, transformed `QueryAST` is returned to the `QueryBuilder`.
 
    <!-- -->
 
-4. ### Query Compilation[​](#query-compilation 'Direct link to Query Compilation')
+4. ### Query Compilation[​](#query-compilation "Direct link to Query Compilation")
 
    Next, the `QueryBuilder` tells the `QueryExecutor` to compile the transformed AST. The `QueryExecutor` delegates this to the `Dialect`-specific `QueryCompiler`. The compiler traverses the AST and produces a `CompiledQuery` object (containing the final SQL string and parameters). This `CompiledQuery` is then returned to the `QueryBuilder`.
 
    <!-- -->
 
-5. ### Execution & Connection Handling[​](#execution--connection-handling 'Direct link to Execution & Connection Handling')
+5. ### Execution & Connection Handling[​](#execution--connection-handling "Direct link to Execution & Connection Handling")
 
    The `QueryBuilder` now asks the `QueryExecutor` to execute the `CompiledQuery`.
    - The `QueryExecutor` requests a connection from Kysely's `Driver`.
@@ -5796,19 +5796,19 @@ This breakdown explains the journey from a type-safe method call in your applica
 
    <!-- -->
 
-6. ### Database Query[​](#database-query 'Direct link to Database Query')
+6. ### Database Query[​](#database-query "Direct link to Database Query")
 
    The `QueryExecutor` passes the `CompiledQuery` to the `DatabaseConnection` object, which executes it. The `DatabaseConnection` uses the underlying `DatabaseDriver` to send the SQL and parameters to the database for execution. The `DatabaseDriver` sends the raw results back. The `DatabaseConnection` standardizes these into a `QueryResult` object and returns it to the `QueryExecutor`. Immediately after, the connection is released back to the pool.
 
    <!-- -->
 
-7. ### Result Transformation[​](#result-transformation 'Direct link to Result Transformation')
+7. ### Result Transformation[​](#result-transformation "Direct link to Result Transformation")
 
    The `QueryResult` is then passed through the plugin system again. The `QueryExecutor` calls the `transformResult` method on each plugin, allowing for final modifications to the results before they are returned to the `App`.
 
    <!-- -->
 
-8. ### Returning to the App[​](#returning-to-the-app 'Direct link to Returning to the App')
+8. ### Returning to the App[​](#returning-to-the-app "Direct link to Returning to the App")
 
    The final, transformed `QueryResult` is passed up from the `QueryExecutor` to the `QueryBuilder`. The `QueryBuilder` then resolves the promise from the initial `.execute()` call, delivering the final, typed results to your `App`.
 
@@ -5836,7 +5836,7 @@ There are several ways to do this using third-party libraries:
 
 # Getting started
 
-## Prerequisites[​](#prerequisites 'Direct link to Prerequisites')
+## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
 - [TypeScript](https://www.typescriptlang.org/)
   - Minimum supported version [4.6](https://devblogs.microsoft.com/typescript/announcing-typescript-4-6/#indexed-access-inference-improvements).
@@ -5861,7 +5861,7 @@ There are several ways to do this using third-party libraries:
     }
     ```
 
-## Installation[​](#installation 'Direct link to Installation')
+## Installation[​](#installation "Direct link to Installation")
 
 Kysely can be installed using any of the following package managers:
 
@@ -5925,7 +5925,7 @@ terminal
 bun install kysely
 ```
 
-## Types[​](#types 'Direct link to Types')
+## Types[​](#types "Direct link to Types")
 
 For Kysely's type-safety and autocompletion to work, it needs to know your database structure. This requires a TypeScript `Database` interface, that contains table names as keys and table schema interfaces as values.
 
@@ -6016,7 +6016,7 @@ Runtime types
 
 Kysely only deals with types in the TypeScript level. The runtime JavaScript types are decided by the underlying third-party driver such as `pg` or `mysql2` and it's up to you to select the correct TypeScript types in the database interface. Kysely never touches the runtime output types in any way. Find out more at ["Data types"](https://kysely.dev/docs/recipes/data-types).
 
-## Dialects[​](#dialects 'Direct link to Dialects')
+## Dialects[​](#dialects "Direct link to Dialects")
 
 For Kysely's query compilation and execution to work, it needs to understand your database's SQL specification and how to communicate with it. This requires a `Dialect` implementation.<br /><br />There are 4 built-in dialects for PostgreSQL, MySQL, Microsoft SQL Server (MSSQL), and SQLite. Additionally, the community has implemented several dialects to choose from. Find out more at<!-- --> ["Dialects"](https://kysely.dev/docs/dialects.md).
 
@@ -6081,7 +6081,7 @@ Kysely can also work in compile-only mode that doesn't require a database driver
 
 ["Splitting query building and execution"](https://kysely.dev/docs/recipes/splitting-query-building-and-execution.md).
 
-## Instantiation[​](#instantiation 'Direct link to Instantiation')
+## Instantiation[​](#instantiation "Direct link to Instantiation")
 
 **Let's create a Kysely instance\*\***&#x20;using the built-in&#x20;**`PostgresDialect`**&#x20;dialect\***\*:**
 
@@ -6131,7 +6131,7 @@ When needed, you can dispose of the Kysely instance, release resources and close
 
 function.
 
-## Querying[​](#querying 'Direct link to Querying')
+## Querying[​](#querying "Direct link to Querying")
 
 **Let's implement the person repository:**
 
@@ -6206,7 +6206,7 @@ This is a simplified example with basic CRUD operations. Kysely supports many mo
 
 Find out more at [Examples](https://kysely.dev/docs/category/examples).
 
-## Summary[​](#summary 'Direct link to Summary')
+## Summary[​](#summary "Direct link to Summary")
 
 We've seen how to install and instantiate Kysely, its dialects and underlying drivers. We've also seen how to use Kysely to query a database.<br /><br />**Let's put it all to the test:**
 
@@ -6282,15 +6282,15 @@ Kysely provides LLM-friendly documentation to help AI tools like **Cursor**, **W
 
 `llms.txt` documentation is automatically generated and kept up-to-date with each push on GitHub and is based on the [llms.txt standard](https://llmstxt.org/).
 
-## Documentation Structure[​](#documentation-structure 'Direct link to Documentation Structure')
+## Documentation Structure[​](#documentation-structure "Direct link to Documentation Structure")
 
 The [llms.txt](https://kysely.dev/llms.txt) file acts as a summary and index to all the docs pages.
 
 The [llms-full.txt](https://kysely.dev/llms-full.txt) file includes all of the Kysely docs in a single file.
 
-## Usage with AI Tools[​](#usage-with-ai-tools 'Direct link to Usage with AI Tools')
+## Usage with AI Tools[​](#usage-with-ai-tools "Direct link to Usage with AI Tools")
 
-### Cursor[​](#cursor 'Direct link to Cursor')
+### Cursor[​](#cursor "Direct link to Cursor")
 
 In Cursor, you can reference the documentation using the `@Docs` feature:
 
@@ -6298,14 +6298,14 @@ In Cursor, you can reference the documentation using the `@Docs` feature:
 2. Reference the Kysely documentation URL: `https://kysely.dev/llms-full.txt`
 3. Ask questions about Kysely queries, types, or database operations
 
-### Windsurf[​](#windsurf 'Direct link to Windsurf')
+### Windsurf[​](#windsurf "Direct link to Windsurf")
 
 For Windsurf users:
 
 1. Reference the documentation using `@https://kysely.dev/llms-full.txt`
 2. Or add it to your `.windsurfrules` file for persistent access
 
-### ChatGPT & Claude[​](#chatgpt--claude 'Direct link to ChatGPT & Claude')
+### ChatGPT & Claude[​](#chatgpt--claude "Direct link to ChatGPT & Claude")
 
 When using ChatGPT or Claude:
 
@@ -6313,14 +6313,14 @@ When using ChatGPT or Claude:
 2. Reference the documentation URL: `https://kysely.dev/llms-full.txt`
 3. The AI will fetch and use the documentation to provide accurate answers
 
-### GitHub Copilot[​](#github-copilot 'Direct link to GitHub Copilot')
+### GitHub Copilot[​](#github-copilot "Direct link to GitHub Copilot")
 
 While Copilot doesn't directly support external documentation, you can:
 
 1. Include relevant documentation snippets in your comments
 2. Reference query builder methods and types accurately for better suggestions
 
-### Claude Code[​](#claude-code 'Direct link to Claude Code')
+### Claude Code[​](#claude-code "Direct link to Claude Code")
 
 For Claude Code users:
 
@@ -6328,7 +6328,7 @@ For Claude Code users:
 2. Ask Claude Code to analyze the documentation for specific Kysely patterns
 3. Use commands like: `claude -p "Using the Kysely docs at https://kysely.dev/llms-full.txt, help me build a type-safe query"`
 
-## Example Prompts[​](#example-prompts 'Direct link to Example Prompts')
+## Example Prompts[​](#example-prompts "Direct link to Example Prompts")
 
 Here are some example prompts you can use with AI tools:
 
@@ -6346,7 +6346,7 @@ Supabase is an open-source Firebase alternative that provides a suite of tools f
 
 We provide a bridge library called `kysely-supabase` that allows you to translate `supabase`'s generated TypeScript types into types compatible with Kysely.
 
-## Prerequisites[​](#prerequisites 'Direct link to Prerequisites')
+## Prerequisites[​](#prerequisites "Direct link to Prerequisites")
 
 1. `supabase` CLI installed and a Supabase project set up.
 
@@ -6354,21 +6354,21 @@ We provide a bridge library called `kysely-supabase` that allows you to translat
 
 3. A PostgreSQL driver installed - e.g. `pg` or `postgres`. The latter requires `kysely-postgres-js` to be installed as well.
 
-## Installation[​](#installation 'Direct link to Installation')
+## Installation[​](#installation "Direct link to Installation")
 
 ```
 npm i -D kysely-supabase
 ```
 
-## Usage[​](#usage 'Direct link to Usage')
+## Usage[​](#usage "Direct link to Usage")
 
-### Generate TypeScript types using `supabase` CLI[​](#generate-typescript-types-using-supabase-cli 'Direct link to generate-typescript-types-using-supabase-cli')
+### Generate TypeScript types using `supabase` CLI[​](#generate-typescript-types-using-supabase-cli "Direct link to generate-typescript-types-using-supabase-cli")
 
 ```
 npx supabase gen types typescript --local > path/to/supabase/generated/types/file
 ```
 
-### Translate Supabase types to Kysely types[​](#translate-supabase-types-to-kysely-types 'Direct link to Translate Supabase types to Kysely types')
+### Translate Supabase types to Kysely types[​](#translate-supabase-types-to-kysely-types "Direct link to Translate Supabase types to Kysely types")
 
 src/types.ts
 
@@ -6379,7 +6379,7 @@ import type { KyselifyDatabase } from 'kysely-supabase'
 export type Database = KyselifyDatabase<SupabaseDatabase>
 ```
 
-### Pass translated types to Kysely constructor[​](#pass-translated-types-to-kysely-constructor 'Direct link to Pass translated types to Kysely constructor')
+### Pass translated types to Kysely constructor[​](#pass-translated-types-to-kysely-constructor "Direct link to Pass translated types to Kysely constructor")
 
 src/db.ts
 
@@ -6416,7 +6416,7 @@ All API documentation is written in the typing files and you can simply hover ov
 
 If you start using Kysely and can't find something you'd want to use, please open an issue or join our [Discord server](https://discord.gg/xyBJ3GwvAm).
 
-## Looking for help?[​](#looking-for-help 'Direct link to Looking for help?')
+## Looking for help?[​](#looking-for-help "Direct link to Looking for help?")
 
 If you start using Kysely and can't find something you'd want to use, please [open an issue](https://github.com/kysely-org/kysely/issues) or [join our Discord server](https://discord.gg/xyBJ3GwvAm).
 
@@ -6424,7 +6424,7 @@ If you start using Kysely and can't find something you'd want to use, please [op
 
 # Migrations
 
-## Migration files[​](#migration-files 'Direct link to Migration files')
+## Migration files[​](#migration-files "Direct link to Migration files")
 
 Migration files should look like this:
 
@@ -6446,7 +6446,7 @@ Migrations should never depend on the current code of your app because they need
 
 Migrations can use the `Kysely.schema` module to modify the schema. Migrations can also run normal queries to read/modify data.
 
-## Execution order[​](#execution-order 'Direct link to Execution order')
+## Execution order[​](#execution-order "Direct link to Execution order")
 
 Migrations will be run in the alpha-numeric order of your migration names. An excellent way to name your migrations is to prefix them with an ISO 8601 date string.
 
@@ -6464,11 +6464,11 @@ const migrator = new Migrator({
 })
 ```
 
-## Single file vs multiple file migrations[​](#single-file-vs-multiple-file-migrations 'Direct link to Single file vs multiple file migrations')
+## Single file vs multiple file migrations[​](#single-file-vs-multiple-file-migrations "Direct link to Single file vs multiple file migrations")
 
 You don't need to store your migrations as separate files if you don't want to. You can easily implement your own MigrationProvider and give it to the Migrator class when you instantiate one.
 
-## PostgreSQL migration example[​](#postgresql-migration-example 'Direct link to PostgreSQL migration example')
+## PostgreSQL migration example[​](#postgresql-migration-example "Direct link to PostgreSQL migration example")
 
 ```
 import { Kysely, sql } from 'kysely'
@@ -6508,7 +6508,7 @@ export async function down(db: Kysely<any>): Promise<void> {
 }
 ```
 
-## SQLite migration example[​](#sqlite-migration-example 'Direct link to SQLite migration example')
+## SQLite migration example[​](#sqlite-migration-example "Direct link to SQLite migration example")
 
 ```
 import { Kysely, sql } from 'kysely'
@@ -6548,13 +6548,13 @@ export async function down(db: Kysely<any>): Promise<void> {
 }
 ```
 
-## CLI (optional)[​](#cli-optional 'Direct link to CLI (optional)')
+## CLI (optional)[​](#cli-optional "Direct link to CLI (optional)")
 
 Kysely offers a CLI you can use for migrations (and more). It can help you create and run migrations. It is not part of the core, and your mileage may vary.
 
 For more information, visit <https://github.com/kysely-org/kysely-ctl>.
 
-## Running migrations[​](#running-migrations 'Direct link to Running migrations')
+## Running migrations[​](#running-migrations "Direct link to Running migrations")
 
 You can then use:
 
@@ -6623,7 +6623,7 @@ migrateToLatest()
 
 The migration methods use a lock on the database level and parallel calls are executed serially. This means that you can safely call migrateToLatest and other migration methods from multiple server instances simultaneously and the migrations are guaranteed to only be executed once. The locks are also automatically released if the migration process crashes or the connection to the database fails.
 
-## Reference documentation[​](#reference-documentation 'Direct link to Reference documentation')
+## Reference documentation[​](#reference-documentation "Direct link to Reference documentation")
 
 [Migrator](https://kysely-org.github.io/kysely-apidoc/classes/Migrator.html)
 
@@ -6741,7 +6741,7 @@ const person = await db
 .executeTakeFirst()
 ```
 
-## Codesandbox[​](#codesandbox 'Direct link to Codesandbox')
+## Codesandbox[​](#codesandbox "Direct link to Codesandbox")
 
 We also have a minimal [code sandbox example](https://codesandbox.io/s/kysely-demo-9l099t?file=/src/index.tsx:0-36).
 
@@ -6761,17 +6761,17 @@ const db = new Kysely<Database>({
 })
 ```
 
-## Built-in plugins[​](#built-in-plugins 'Direct link to Built-in plugins')
+## Built-in plugins[​](#built-in-plugins "Direct link to Built-in plugins")
 
-### Camel case plugin[​](#camel-case-plugin 'Direct link to Camel case plugin')
+### Camel case plugin[​](#camel-case-plugin "Direct link to Camel case plugin")
 
 A plugin that converts snake_case identifiers in the database into camelCase in the JavaScript side. [Learn more](https://kysely-org.github.io/kysely-apidoc/classes/CamelCasePlugin.html).
 
-### Deduplicate joins plugin[​](#deduplicate-joins-plugin 'Direct link to Deduplicate joins plugin')
+### Deduplicate joins plugin[​](#deduplicate-joins-plugin "Direct link to Deduplicate joins plugin")
 
 A plugin that removes duplicate joins from queries. You can read more about it in the [examples](https://kysely.dev/docs/recipes/deduplicate-joins.md) section or check the [API docs](https://kysely-org.github.io/kysely-apidoc/classes/DeduplicateJoinsPlugin.html).
 
-### Handle `in ()` and `not in ()` plugin[​](#handle-in--and-not-in--plugin 'Direct link to handle-in--and-not-in--plugin')
+### Handle `in ()` and `not in ()` plugin[​](#handle-in--and-not-in--plugin "Direct link to handle-in--and-not-in--plugin")
 
 A plugin that allows handling `in ()` and `not in ()` with a chosen strategy. [Learn more](https://kysely-org.github.io/kysely-apidoc/classes/HandleEmptyInListsPlugin.html).
 
@@ -6855,7 +6855,7 @@ When talking about data types in Kysely we need to make a distinction between th
 1. Typescript types
 2. Runtime JavaScript types
 
-## Typescript types[​](#typescript-types 'Direct link to Typescript types')
+## Typescript types[​](#typescript-types "Direct link to Typescript types")
 
 In Kysely, you only define TypeScript types for your tables and columns. Since TypeScript is entirely a compile-time concept, TypeScript types **can't** affect runtime JavaScript types. If you define your column to be a `string` in TypeScript but the database returns a `number`, the runtime type doesn't magically change to `string`. You'll see a `string` in the TypeScript code, but observe a number when you run the program.
 
@@ -6863,17 +6863,17 @@ info
 
 It's up to **you** to select correct TypeScript types for your columns based on what the driver returns.
 
-## Runtime JavaScript types[​](#runtime-javascript-types 'Direct link to Runtime JavaScript types')
+## Runtime JavaScript types[​](#runtime-javascript-types "Direct link to Runtime JavaScript types")
 
 The database driver, such as `pg` or `mysql2`, decides the runtime JavaScript types the queries return. Kysely never touches the runtime types the driver returns. In fact, Kysely doesn't touch the data returned by the driver in any way. It simply executes the query and returns whatever the driver returns. An exception to this rule is when you use a plugin like `CamelCasePlugin`, in which case Kysely does change the column names.
 
 You need to read the underlying driver's documentation or otherwise figure out what the driver returns and then align the TypeScript types to match them.
 
-### Configuring runtime JavaScript types[​](#configuring-runtime-javascript-types 'Direct link to Configuring runtime JavaScript types')
+### Configuring runtime JavaScript types[​](#configuring-runtime-javascript-types "Direct link to Configuring runtime JavaScript types")
 
 Most drivers provide a way to change the returned types. For example `pg` returns `bigint` and `numeric` types as strings by default, but often you want to configure it to return numbers instead.
 
-#### Postgres[​](#postgres 'Direct link to Postgres')
+#### Postgres[​](#postgres "Direct link to Postgres")
 
 When using the `pg` driver, you can use the [pg-types](https://github.com/brianc/node-pg-types) package to configure the types. For example here's how you'd configure the `bigint` to be returned as a number:
 
@@ -6896,7 +6896,7 @@ export const db = new Kysely<Database>({
 
 See the documentation [here](https://github.com/brianc/node-pg-types) on how to figure out the correct type id.
 
-#### MySQL[​](#mysql 'Direct link to MySQL')
+#### MySQL[​](#mysql "Direct link to MySQL")
 
 When using the `mysql2` driver, you an use the [typeCast](https://github.com/mysqljs/mysql?tab=readme-ov-file#custom-type-casting) pool property.
 
@@ -6923,7 +6923,7 @@ export const db = new Kysely<Database>({
 })
 ```
 
-## Type generators[​](#type-generators 'Direct link to Type generators')
+## Type generators[​](#type-generators "Direct link to Type generators")
 
 There are third-party type generators such as [kysely-codegen](https://github.com/RobinBlomberg/kysely-codegen) and [kanel-kysely](https://kristiandupont.github.io/kanel/kanel-kysely.html) that automatically generate TypeScript types based on the database schema. Find out more at ["Generating types"](https://kysely.dev/docs/generating-types).
 
@@ -7091,7 +7091,7 @@ An [`Expression<T>`](https://kysely-org.github.io/kysely-apidoc/interfaces/Expre
 
 `Expression<T>` represents an arbitrary SQL expression, like a binary expression (e.g. `a + b`), or a function call (e.g. `concat(arg1, ' ', arg2, ...)`). It can be any combination of those, no matter how complex. `T` is the output type of the expression.
 
-## Expression builder[​](#expression-builder 'Direct link to Expression builder')
+## Expression builder[​](#expression-builder "Direct link to Expression builder")
 
 Expressions are usually built using an instance of [`ExpressionBuilder<DB, TB>`](https://kysely-org.github.io/kysely-apidoc/interfaces/ExpressionBuilder.html). `DB` is the same database type you give to `Kysely` when you create an instance. `TB` is the union of all table names that are visible in the context. For example `ExpressionBuilder<DB, 'person' | 'pet'>` means you can reference `person` and `pet` columns in the created expressions.
 
@@ -7213,7 +7213,7 @@ qb = qb.where(eb.not(eb.exists(
 )))
 ```
 
-## Creating reusable helpers[​](#creating-reusable-helpers 'Direct link to Creating reusable helpers')
+## Creating reusable helpers[​](#creating-reusable-helpers "Direct link to Creating reusable helpers")
 
 The expression builder can be used to create reusable helper functions. Let's say we have a complex `where` expression we want to reuse in multiple queries:
 
@@ -7281,7 +7281,7 @@ const doggoPersons = await db
 
 Learn more about reusable helper functions [here](https://kysely.dev/docs/recipes/reusable-helpers).
 
-## Conditional expressions[​](#conditional-expressions 'Direct link to Conditional expressions')
+## Conditional expressions[​](#conditional-expressions "Direct link to Conditional expressions")
 
 In the following, we'll only cover `where` expressions. The same logic applies to `having`, `on`, `orderBy`, `groupBy` etc.
 
@@ -7341,7 +7341,7 @@ The Kysely API is designed around two interfaces [`Expression<T>`](https://kysel
 
 Most of the time you can create your helpers using the [sql template tag](https://kysely-org.github.io/kysely-apidoc/interfaces/Sql.html) and the `RawBuilder<T>` and `AliasedRawBuilder<T, A>` class instances it returns, but it's good to first understand how the underlying interfaces they implement, `Expression<T>` and `AliasedExpression<T, A>`, work.
 
-## Expression[​](#expression 'Direct link to Expression')
+## Expression[​](#expression "Direct link to Expression")
 
 [`Expression<T>`](https://kysely-org.github.io/kysely-apidoc/interfaces/Expression.html) is a simple interface that has a type `T` and a single method `toOperationNode()`. `T` tells Kysely's type system the type of the expression. `toOperationNode()` returns instructions on what SQL should be produced once the expression is compiled.
 
@@ -7454,7 +7454,7 @@ async function test(db: Kysely<DB>) {
 }
 ```
 
-## AliasedExpression[​](#aliasedexpression 'Direct link to AliasedExpression')
+## AliasedExpression[​](#aliasedexpression "Direct link to AliasedExpression")
 
 While `Expression<T>` holds the type and compilation instructions of an SQL expression, [`AliasedExpression<T, A>`](https://kysely-org.github.io/kysely-apidoc/interfaces/AliasedExpression.html) also holds an alias (a name) for that expression. `AliasedExpression<T, A>` can be used in places where you need a name for the expression, like in a `SELECT` statement or a `FROM` statement. `AliasedExpression<T, A>` is how kysely is able to infer the name and type of result columns.
 
@@ -7567,7 +7567,7 @@ async function test(db: Kysely<DB>) {
 }
 ```
 
-## A more complex example[​](#a-more-complex-example 'Direct link to A more complex example')
+## A more complex example[​](#a-more-complex-example "Direct link to A more complex example")
 
 Consider this query:
 
@@ -7649,11 +7649,11 @@ db.insertInto('t')
   )
 ```
 
-## Extending using inheritance[​](#extending-using-inheritance 'Direct link to Extending using inheritance')
+## Extending using inheritance[​](#extending-using-inheritance "Direct link to Extending using inheritance")
 
 You usually don't want to do this because of the complexity of the types and TypeScript's limitations when it comes to inheritence and return types. You'll quickly run into problems. Even though Kysely uses classes, it is not designed from the OOP point of view. Classes are used because they are supported natively by TypeScript. They provide private variables and a nice discoverable API.
 
-## Extending using module augmentation[​](#extending-using-module-augmentation 'Direct link to Extending using module augmentation')
+## Extending using module augmentation[​](#extending-using-module-augmentation "Direct link to Extending using module augmentation")
 
 > DISCLAIMER: We do not support this method. Use at your own risk.
 
@@ -7727,7 +7727,7 @@ It is possible to set up logs for all queries using the `log` property when inst
 
 There are 2 ways to configure logging:
 
-## 1. Provide an array with log level/s[​](#1-provide-an-array-with-log-levels 'Direct link to 1. Provide an array with log level/s')
+## 1. Provide an array with log level/s[​](#1-provide-an-array-with-log-levels "Direct link to 1. Provide an array with log level/s")
 
 You can provide an array of log levels to the `log` property when instantiating `Kysely`.
 
@@ -7743,7 +7743,7 @@ const db = new Kysely({
 });
 ```
 
-## 2. Provide a custom logging function[​](#2-provide-a-custom-logging-function 'Direct link to 2. Provide a custom logging function')
+## 2. Provide a custom logging function[​](#2-provide-a-custom-logging-function "Direct link to 2. Provide a custom logging function")
 
 You can provide a custom logging function to the `log` property when instantiating `Kysely`. The custom logging function receives a log event as an argument.
 
@@ -7802,7 +7802,7 @@ Having said all that, there are ways to nest related rows in your queries. You j
 
 This recipe is supported on MySQL versions starting from 8.0.14. This is due to the way subqueries use outer references in this recipe (cf. [MySQL 8.0.14 changelog](https://dev.mysql.com/doc/relnotes/mysql/8.0/en/news-8-0-14.html#mysqld-8-0-14-optimizer) | [MariaDB is not supported yet](https://jira.mariadb.org/browse/MDEV-19078)).
 
-## The `json` data type and functions[​](#the-json-data-type-and-functions 'Direct link to the-json-data-type-and-functions')
+## The `json` data type and functions[​](#the-json-data-type-and-functions "Direct link to the-json-data-type-and-functions")
 
 PostgreSQL and MySQL have rich JSON support through their `json` data types and functions. `pg` and `mysql2`, the node drivers, automatically parse returned `json` columns as json objects. With the combination of these two things, we can write some super efficient queries with nested relations.
 
@@ -8105,7 +8105,7 @@ const persons = await db
   .execute()
 ```
 
-## Reusable helpers using `ExpressionBuilder`[​](#reusable-helpers-using-expressionbuilder 'Direct link to reusable-helpers-using-expressionbuilder')
+## Reusable helpers using `ExpressionBuilder`[​](#reusable-helpers-using-expressionbuilder "Direct link to reusable-helpers-using-expressionbuilder")
 
 Here's an example of a helper function that uses the expression builder instead of raw SQL:
 
@@ -8179,7 +8179,7 @@ const persons = await db
   .execute()
 ```
 
-## Dealing with nullable expressions[​](#dealing-with-nullable-expressions 'Direct link to Dealing with nullable expressions')
+## Dealing with nullable expressions[​](#dealing-with-nullable-expressions "Direct link to Dealing with nullable expressions")
 
 If you want your helpers to work with nullable expressions (nullable columns etc.), you can do something like this:
 
@@ -8194,7 +8194,7 @@ function toInt<T extends string | null>(expr: Expression<T>) {
 }
 ```
 
-## Passing select queries as expressions[​](#passing-select-queries-as-expressions 'Direct link to Passing select queries as expressions')
+## Passing select queries as expressions[​](#passing-select-queries-as-expressions "Direct link to Passing select queries as expressions")
 
 Let's say we have the following query:
 
@@ -8241,7 +8241,7 @@ There are two common ways to use schemas:
 
 Kysely offers tools for both of these cases.
 
-## 1[​](#1 'Direct link to 1')
+## 1[​](#1 "Direct link to 1")
 
 When you have an enumarable set of schemas, you can add them to your database interface like this:
 
@@ -8266,7 +8266,7 @@ db.selectFrom('user.user')
   .selectAll()
 ```
 
-## 2[​](#2 'Direct link to 2')
+## 2[​](#2 "Direct link to 2")
 
 In the multitenant case you have a schema per tenant and you can't add each of them to the database interface, nor would it make sense to do so. In this case you can use the [withSchema](https://kysely-org.github.io/kysely-apidoc/classes/Kysely.html#withSchema) method.
 
@@ -8354,7 +8354,7 @@ This Kysely instance will compile to PostgreSQL sql dialect. You can brew "dummy
 
 > "Cold" Kysely instances are not required for the following sections. You can use "hot" kysely instances, with real drivers, if you want to.
 
-## Compile a query[​](#compile-a-query 'Direct link to Compile a query')
+## Compile a query[​](#compile-a-query "Direct link to Compile a query")
 
 To compile a query, simply call `.compile()` at the end of the query building chain:
 
@@ -8382,7 +8382,7 @@ const compiledQuery = sql<Selectable<Person>>`select * from person where id = ${
 console.log(compiledQuery) // { sql: 'select * from person where id = $1', parameters: [1], query: { ... } }
 ```
 
-## Infer result type[​](#infer-result-type 'Direct link to Infer result type')
+## Infer result type[​](#infer-result-type "Direct link to Infer result type")
 
 Kysely supports inferring a (compiled) query's result type even when detached from query building chains. This allows splitting query building, compilation and execution code without losing type-safety.
 
@@ -8401,7 +8401,7 @@ const compiledQuery = query.compile()
 type CompiledQueryReturnType = InferResult<typeof compiledQuery> // { first_name: string }[]
 ```
 
-## Execute compiled queries[​](#execute-compiled-queries 'Direct link to Execute compiled queries')
+## Execute compiled queries[​](#execute-compiled-queries "Direct link to Execute compiled queries")
 
 The `CompiledQuery` object returned by `.compile()` can be executed via "hot" Kysely instances (real drivers in use):
 

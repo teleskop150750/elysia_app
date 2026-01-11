@@ -1,7 +1,7 @@
-import { Elysia } from "elysia";
-import { auto } from "./api/auto/index.ts";
 import { openapi } from "@elysiajs/openapi";
+import { Elysia } from "elysia";
 import z from "zod";
+import { auto } from "./api/auto/index.ts";
 
 const app = new Elysia()
   .use(
@@ -15,6 +15,7 @@ const app = new Elysia()
   .get("/", () => "Hello Elysia")
   .listen(3000);
 
+// eslint-disable-next-line no-console
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
 );

@@ -513,7 +513,7 @@ export const AutoTechParamsTable = AutoSchema.table(
     t.index("idx_tech_params_configuration_id").on(table.configuration_id),
   ],
 );
-// #regionend TechParams
+// #endregion TechParams
 
 // #region Equipments
 export const AutoOptionGroupsTable = AutoSchema.table("option_groups", {
@@ -606,7 +606,7 @@ export const AutoPackageOptionTable = AutoSchema.table(
     t.index("idx_package_option_option_id").on(table.option_id),
   ],
 );
-// #regionend Equipments
+// #endregion Equipments
 
 // #region Complectations
 export const AutoComplectationsTable = AutoSchema.table(
@@ -634,7 +634,7 @@ export const AutoComplectationsTable = AutoSchema.table(
     t.index("idx_complectations_equipment_id").on(table.equipment_id),
   ],
 );
-// #regionend Complectations
+// #endregion Complectations
 
 export const AutoTechInfoGroupsTable = AutoSchema.table("tech_info_groups", {
   id: t.uuid().primaryKey().$defaultFn(v7),

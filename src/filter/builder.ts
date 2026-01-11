@@ -6,12 +6,6 @@ import type { DB } from '~/db/db.js'
 
 type IEB = ExpressionBuilder<DB, any>
 
-function pgArrayFromValues(values: unknown[]) {
-  // ARRAY[$1, $2, ...] — не требует передачи "параметр-массивом" и тип выводится из контекста сравнения с колонкой
-  return sql`ARRAY[${sql.join(values)}]`
-  // return sql`array[${sql.join(values.map((v) => sql.val(v)), sql`, `)}]`;
-}
-
 const OPERATION_CONDITION_MAP = {
   eq: (eb: IEB, field: string, val: any) => eb(field, '=', val),
   ne: (eb: IEB, field: string, val: any) => eb(field, '!=', val),

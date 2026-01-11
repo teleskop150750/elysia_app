@@ -1,3 +1,5 @@
 import { defineConfig } from 'nitro'
 
-export default defineConfig({})
+export default defineConfig({
+  preset: 'standard',
+})

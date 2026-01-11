@@ -1,16 +1,16 @@
-import type { IConditionKey, ITableFilter } from "./types.ts";
+import type { IOperatorKey, IFilterExpression } from "./types.ts";
 import { objEntries, objKeys } from "../utils/index.ts";
-import type {
-  Expression,
-  ExpressionBuilder,
-  SqlBool,
-  ExpressionWrapper,
-} from "kysely";
+import type { Expression, ExpressionBuilder, SqlBool } from "kysely";
 import { sql } from "kysely";
 import type { DB } from "#root/db/db.js";
 
 type IEB = ExpressionBuilder<DB, any>;
-type IEW = ExpressionWrapper<DB, any, any>;
+
+function pgArrayFromValues(values: unknown[]) {
+  // ARRAY[$1, $2, ...] — не требует передачи "параметр-массивом" и тип выводится из контекста сравнения с колонкой
+  return sql`ARRAY[${sql.join(values)}]`;
+  // return sql`array[${sql.join(values.map((v) => sql.val(v)), sql`, `)}]`;
+}
 
 const OPERATION_CONDITION_MAP = {
   eq: (eb: IEB, field: string, val: any) => eb(field, "=", val),
@@ -19,88 +19,96 @@ const OPERATION_CONDITION_MAP = {
   lte: (eb: IEB, field: string, val: any) => eb(field, "<=", val),
   gt: (eb: IEB, field: string, val: any) => eb(field, ">", val),
   gte: (eb: IEB, field: string, val: any) => eb(field, ">=", val),
-  inArray: (eb: IEB, field: string, val: any[]) => eb(field, "in", val),
-  notInArray: (eb: IEB, field: string, val: any[]) => eb(field, "not in", val),
+
+  inArray: (eb: IEB, field: string, val: any[]) => {
+    // const arr = (val ?? []).filter((v) => v !== undefined);
+    if (val.length === 0) return sql<SqlBool>`false`;
+    return sql<SqlBool>`${eb.ref(field)} = any(${sql`ARRAY[${sql.join(
+      val
+    )}]`})`;
+  },
+  notInArray: (eb: IEB, field: string, val: any[]) => {
+    // const arr = (val ?? []).filter((v) => v !== undefined);
+    if (val.length === 0) return sql<SqlBool>`true`;
+    return sql<SqlBool>`${eb.ref(field)} <> all(${sql`ARRAY[${sql.join(
+      val
+    )}]`})`;
+  },
+
   isNull: (eb: IEB, field: string) => eb(field, "is", null),
   isNotNull: (eb: IEB, field: string) => eb(field, "is not", null),
+
   between: (eb: IEB, field: string, min: any, max: any) =>
     eb.and([eb(field, ">=", min), eb(field, "<=", max)]),
   notBetween: (eb: IEB, field: string, min: any, max: any) =>
     eb.or([eb(field, "<", min), eb(field, ">", max)]),
+
   like: (eb: IEB, field: string, val: string) => eb(field, "like", val),
   ilike: (eb: IEB, field: string, val: string) => eb(field, "ilike", val),
   notLike: (eb: IEB, field: string, val: string) => eb(field, "not like", val),
   notIlike: (eb: IEB, field: string, val: string) =>
     eb(field, "not ilike", val),
-  //array operations
+
+  // array ops (Postgres)
   arrayContains: (eb: IEB, field: string, val: any[]) => eb(field, "@>", val),
   arrayContained: (eb: IEB, field: string, val: any[]) => eb(field, "<@", val),
   arrayOverlaps: (eb: IEB, field: string, val: any[]) => eb(field, "&&", val),
+
+  // jsonb array helpers
   isEmpty: (eb: IEB, field: string) =>
     eb(sql`jsonb_array_length(${eb.ref(field)})`, "=", 0),
   isNotEmpty: (eb: IEB, field: string) =>
     eb(sql`jsonb_array_length(${eb.ref(field)})`, ">", 0),
-} as const satisfies Record<IConditionKey, (...args: any[]) => IEW>;
+} as const satisfies Record<IOperatorKey, (...args: any[]) => Expression<any>>;
 
 export function filterToWhereBase(
   eb: IEB,
-  filter: ITableFilter
+  filter: IFilterExpression
 ): Expression<SqlBool> | undefined {
   const conditions: Expression<SqlBool>[] = [];
-  for (const schenaKey of objKeys(filter)) {
-    switch (schenaKey) {
+
+  for (const schemaKey of objKeys(filter)) {
+    switch (schemaKey) {
       case "AND": {
         const AND = filter.AND;
-        if (!Array.isArray(AND))
-          throw new Error("'and' operator must be a non-empty array");
+        if (!Array.isArray(AND) || AND.length === 0) break;
+
         const and = AND.map((v) => filterToWhereBase(eb, v)).filter(
-          (el) => el !== undefined
+          (el): el is Expression<SqlBool> => el !== undefined
         );
 
-        switch (and.length) {
-          case 0: {
-            break;
-          }
-          case 1: {
-            conditions.push(and[0]!);
-            break;
-          }
-          default: {
-            conditions.push(eb.and(and));
-          }
-        }
+        if (and.length === 1) conditions.push(and[0]);
+        else if (and.length > 1) conditions.push(eb.and(and));
         break;
       }
+
       case "OR": {
         const OR = filter.OR;
-        if (!Array.isArray(OR))
-          throw new Error("'or' operator must be a non-empty array");
+        if (!Array.isArray(OR) || OR.length === 0) break;
+
         const or = OR.map((v) => filterToWhereBase(eb, v)).filter(
-          (el) => el !== undefined
+          (el): el is Expression<SqlBool> => el !== undefined
         );
-        switch (or.length) {
-          case 0: {
-            break;
-          }
-          case 1: {
-            conditions.push(or[0]!);
-            break;
-          }
-          default: {
-            conditions.push(eb.or(or));
-          }
-        }
+
+        if (or.length === 1) conditions.push(or[0]);
+        else if (or.length > 1) conditions.push(eb.or(or));
         break;
       }
+
       case "NOT": {
         const NOT = filter.NOT;
         if (!NOT) break;
+
         const not = filterToWhereBase(eb, NOT);
         if (not) conditions.push(eb.not(not));
         break;
       }
+
       case "FIELDS": {
-        for (const [field, conditionsMap] of objEntries(filter.FIELDS)) {
+        const FIELDS = filter.FIELDS;
+        if (!FIELDS) break;
+
+        for (const [field, conditionsMap] of objEntries(FIELDS)) {
           for (const [condition, val] of objEntries(conditionsMap!)) {
             if (condition === "between" || condition === "notBetween") {
               conditions.push(
@@ -117,24 +125,20 @@ export function filterToWhereBase(
         }
         break;
       }
+
       default:
-        throw new Error(`Invalid filter key ${schenaKey}`);
+        throw new Error(`Invalid filter key ${schemaKey}`);
     }
   }
 
-  switch (conditions.length) {
-    case 0:
-      return undefined;
-    case 1:
-      return conditions[0]!;
-    default:
-      return eb.and(conditions);
-  }
+  if (conditions.length === 0) return undefined;
+  if (conditions.length === 1) return conditions[0]!;
+  return eb.and(conditions);
 }
 
 export function filterToWhere(
   eb: IEB,
-  filter: ITableFilter | undefined
+  filter: IFilterExpression | undefined
 ): Expression<SqlBool> {
   if (!filter) return sql`true`;
   return filterToWhereBase(eb, filter) || sql`true`;

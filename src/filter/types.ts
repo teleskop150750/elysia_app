@@ -1,4 +1,4 @@
-export type IArrayConditions<T extends any[]> = {
+export type IArrayOperators<T extends any[]> = {
   eq?: T;
   arrayContains?: T;
   arrayContained?: T;
@@ -7,17 +7,17 @@ export type IArrayConditions<T extends any[]> = {
   isNotEmpty?: true;
 };
 
-export type INullableConditions = {
+export type INullableOperators = {
   isNull?: true;
   isNotNull?: true;
 };
 
-export type IBooleanConditions = {
+export type IBooleanOperators = {
   eq?: boolean;
   ne?: boolean;
 };
 
-export type IStringConditions = {
+export type IStringOperators = {
   eq?: string;
   ne?: string;
   inArray?: string[];
@@ -28,7 +28,7 @@ export type IStringConditions = {
   notIlike?: string;
 };
 
-export type INumberConditions = {
+export type INumberOperators = {
   eq?: number;
   ne?: number;
   lt?: number;
@@ -47,7 +47,7 @@ export type INumberConditions = {
   };
 };
 
-export type IDateConditions = {
+export type IDateOperators = {
   eq?: string;
   ne?: string;
   lt?: string;
@@ -66,24 +66,25 @@ export type IDateConditions = {
   };
 };
 
-export type IConditionKey =
-  | keyof INullableConditions
-  | keyof IBooleanConditions
-  | keyof IStringConditions
-  | keyof INumberConditions
-  | keyof IDateConditions
-  | keyof IArrayConditions<any>;
+export type IOperatorKey =
+  | keyof INullableOperators
+  | keyof IBooleanOperators
+  | keyof IStringOperators
+  | keyof INumberOperators
+  | keyof IDateOperators
+  | keyof IArrayOperators<any>;
 
-export type ITableFieldConditions = Partial<Record<IConditionKey, any>>;
+export type IFieldOperators = Partial<Record<IOperatorKey, any>>;
 
-export type ITableFilterBase = Partial<Record<string, ITableFieldConditions>>;
+export type IFilterFieldsBase = Partial<Record<string, IFieldOperators>>;
 
-export type ITableFilter<T extends ITableFilterBase = ITableFilterBase> = {
-  FIELDS: T;
-  AND?: ITableFilter<T>[] | undefined | null;
-  OR?: ITableFilter<T>[] | undefined | null;
-  NOT?: ITableFilter<T> | undefined | null;
-};
+export type IFilterExpression<T extends IFilterFieldsBase = IFilterFieldsBase> =
+  {
+    FIELDS?: T | undefined | null;
+    AND?: IFilterExpression<T>[] | undefined | null;
+    OR?: IFilterExpression<T>[] | undefined | null;
+    NOT?: IFilterExpression<T> | undefined | null;
+  };
 
 // export type IScalarFieldOperations<T> = {
 //   eq?: T;

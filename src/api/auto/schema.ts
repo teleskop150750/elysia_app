@@ -1,14 +1,14 @@
 import { z } from "zod";
-import { StringConditionsSchema } from "#root/filter/schema.js";
-import type { ITableFilter } from "#root/filter/types.js";
+import { StringOperatorsSchema } from "#root/filter/schema.js";
+import type { IFilterExpression } from "#root/filter/types.js";
 
 export const MarksFilterBaseSchema = z.object({
-  id: StringConditionsSchema.optional(),
-  name: StringConditionsSchema.optional(),
+  "auto.configurations.id": StringOperatorsSchema.optional(),
+  "auto.configurations.name": StringOperatorsSchema.optional(),
 });
 
 export type IMarksFilterBase = z.infer<typeof MarksFilterBaseSchema>;
-export type IMarksFilter = ITableFilter<IMarksFilterBase>;
+export type IMarksFilter = IFilterExpression<IMarksFilterBase>;
 
 // Filters support recursive AND OR and NOT filters
 export const MarksFilterSchema = z.object({

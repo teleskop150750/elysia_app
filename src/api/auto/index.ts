@@ -1,17 +1,11 @@
 import { Elysia } from "elysia";
-import { db } from "#root/db/index.ts";
 import { MarksFilterSchema } from "./schema.ts";
-import { filterToWhere } from "#root/filter/builder.ts";
+import { getConfigurationsWithRelationsNested } from "./queries.ts";
 
 export const auto = new Elysia().all(
   "/demo",
   ({ body }) => {
-    console.error("body", body);
-    return db
-      .selectFrom("auto.marks")
-      .selectAll()
-      .where((eb) => filterToWhere(eb, body))
-      .execute();
+    return getConfigurationsWithRelationsNested(body, 50);
   },
   {
     body: MarksFilterSchema,

@@ -3,8 +3,8 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "target": "esnext",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "paths": {
       "#root/*": [
         "./src/*"

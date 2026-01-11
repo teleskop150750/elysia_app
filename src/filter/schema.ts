@@ -1,6 +1,6 @@
 import { z, ZodArray, ZodType } from "zod";
 
-export const defineArrayConditionsSchema = <T extends ZodArray<ZodType>>(
+export const defineArrayOperatorsSchema = <T extends ZodArray<ZodType>>(
   type: T
 ) =>
   z.object({
@@ -12,12 +12,12 @@ export const defineArrayConditionsSchema = <T extends ZodArray<ZodType>>(
     isNotEmpty: z.boolean().optional(),
   });
 
-export const BooleanConditionsSchema = z.object({
+export const BooleanOperatorsSchema = z.object({
   eq: z.boolean().optional(),
   ne: z.boolean().optional(),
 });
 
-export const StringConditionsSchema = z.object({
+export const StringOperatorsSchema = z.object({
   eq: z.string().optional(),
   ne: z.string().optional(),
   inArray: z.array(z.string()).optional(),
@@ -28,7 +28,7 @@ export const StringConditionsSchema = z.object({
   notIlike: z.string().optional(),
 });
 
-export const NumberConditionsSchema = z.object({
+export const NumberOperatorsSchema = z.object({
   eq: z.number().optional(),
   ne: z.number().optional(),
   lt: z.number().optional(),
@@ -51,7 +51,7 @@ export const NumberConditionsSchema = z.object({
     .optional(),
 });
 
-export const DateConditionsSchema = z.object({
+export const DateOperatorsSchema = z.object({
   eq: z.date().optional(),
   ne: z.date().optional(),
   lt: z.date().optional(),
@@ -74,12 +74,12 @@ export const DateConditionsSchema = z.object({
     .optional(),
 });
 
-export const NullableConditionsSchema = z.object({
+export const NullableOperatorsSchema = z.object({
   isNull: z.boolean().optional(),
   isNotNull: z.boolean().optional(),
 });
 
-const defineScalarConditionsSchema = <T extends ZodType>(type: T) =>
+const defineScalarOperatorsSchema = <T extends ZodType>(type: T) =>
   z.object({
     eq: type.optional(),
     ne: type.optional(),
@@ -117,7 +117,10 @@ const defineScalarConditionsSchema = <T extends ZodType>(type: T) =>
  */
 export const genericOperationSchema = z
   .object({
-    ...defineArrayConditionsSchema(z.array(z.any())).shape,
-    ...defineScalarConditionsSchema(z.any()).shape,
+    ...defineArrayOperatorsSchema(z.array(z.any())).shape,
+    ...defineScalarOperatorsSchema(z.any()).shape,
   })
   .strict();
+
+// Backward-compatible aliases (old naming)
+export const defineArrayConditionsSchema = defineArrayOperatorsSchema;

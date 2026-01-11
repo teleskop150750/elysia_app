@@ -12,13 +12,16 @@
   },
   "dependencies": {
     "@elysiajs/openapi": "^1.4.13",
+    "drizzle-orm": "^0.45.1",
     "elysia": "latest",
     "kysely": "^0.28.9",
     "kysely-bun-sql": "^0.2.0",
     "pg": "^8.16.3",
+    "uuid": "^13.0.0",
     "zod": "^4.3.5"
   },
   "devDependencies": {
+    "@types/bun": "^1.3.5",
     "bun-types": "latest",
     "kysely-codegen": "^0.19.0"
   },

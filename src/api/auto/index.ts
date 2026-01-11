@@ -8,8 +8,8 @@ import {
   AutoModelsTable,
   AutoGenerationsTable,
   AutoCountriesTable,
-} from '#root/db/schema.ts'
-import { db } from '#root/db/drizzle.ts'
+} from '~/db/schema.ts'
+import { db } from '~/db/drizzle.ts'
 export const auto = new Elysia().all(
   '/demo',
   ({ body }) => {

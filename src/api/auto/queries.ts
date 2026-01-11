@@ -1,7 +1,7 @@
-import { dbKysely } from '#root/db/index.ts'
-import { filterToWhere } from '#root/filter/builder.ts'
-import type { IFilterExpression } from '#root/filter/types.ts'
-import { objEntries } from '#root/utils/index.ts'
+import { dbKysely } from '~/db/index.ts'
+import { filterToWhere } from '~/filter/builder.ts'
+import type { IFilterExpression } from '~/filter/types.ts'
+import { objEntries } from '~/utils/index.ts'
 
 function narrowFilterToTablePrefix(
   filter: IFilterExpression | undefined | null,

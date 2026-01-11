@@ -2,7 +2,7 @@ import type { IOperatorKey, IFilterExpression } from './types.ts'
 import { objEntries, objKeys } from '../utils/index.ts'
 import type { Expression, ExpressionBuilder, SqlBool } from 'kysely'
 import { sql } from 'kysely'
-import type { DB } from '#root/db/db.js'
+import type { DB } from '~/db/db.js'
 
 type IEB = ExpressionBuilder<DB, any>
 
@@ -74,9 +74,15 @@ export function filterToWhereBase(
         const and = AND.map((v) => filterToWhereBase(eb, v)).filter(
           (el): el is Expression<SqlBool> => el !== undefined,
         )
-
-        if (and.length === 1) conditions.push(and[0])
-        else if (and.length > 1) conditions.push(eb.and(and))
+        switch (and.length) {
+          case 0:
+            break
+          case 1:
+            conditions.push(and[0]!)
+            break
+          default:
+            conditions.push(eb.and(and))
+        }
         break
       }
 
@@ -87,9 +93,15 @@ export function filterToWhereBase(
         const or = OR.map((v) => filterToWhereBase(eb, v)).filter(
           (el): el is Expression<SqlBool> => el !== undefined,
         )
-
-        if (or.length === 1) conditions.push(or[0])
-        else if (or.length > 1) conditions.push(eb.or(or))
+        switch (or.length) {
+          case 0:
+            break
+          case 1:
+            conditions.push(or[0]!)
+            break
+          default:
+            conditions.push(eb.or(or))
+        }
         break
       }
 
@@ -129,9 +141,14 @@ export function filterToWhereBase(
     }
   }
 
-  if (conditions.length === 0) return undefined
-  if (conditions.length === 1) return conditions[0]!
-  return eb.and(conditions)
+  switch (conditions.length) {
+    case 0:
+      return undefined
+    case 1:
+      return conditions[0]!
+    default:
+      return eb.and(conditions)
+  }
 }
 
 export function filterToWhere(

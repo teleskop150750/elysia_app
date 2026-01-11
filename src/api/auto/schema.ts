@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { StringOperatorsSchema } from '#root/filter/schema.js'
-import type { IFilterExpression } from '#root/filter/types.js'
+import { StringOperatorsSchema } from '~/filter/schema.js'
+import type { IFilterExpression } from '~/filter/types.js'
 
 export const MarksFilterBaseSchema = z.object({
   'auto.configurations.id': StringOperatorsSchema.optional(),

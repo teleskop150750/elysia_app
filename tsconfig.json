@@ -1,14 +1,10 @@
 {
-  // "extends": "./tsconfig.base.json",
   "extends": "nitro/tsconfig",
   "compilerOptions": {
-    // "allowImportingTsExtensions": true,
-    // "target": "esnext",
-    // "module": "preserve",
-    // "moduleResolution": "bundler",
+    "types": ["vite/client"],
     "paths": {
-      "#root/*": ["./src/*"]
+      "~/*": ["./src/*"]
     }
   },
-  "include": ["vite.config.ts", "src/**/*.ts"]
+  "include": ["src/**/*.ts", "src/env.d.ts"]
 }

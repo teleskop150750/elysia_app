@@ -20,9 +20,6 @@
     "typecheck": "tsc --noEmit"
   },
   "type": "module",
-  "imports": {
-    "#root/*": "./src/*"
-  },
   "dependencies": {
     "@elysiajs/openapi": "^1.4.13",
     "drizzle-orm": "1.0.0-beta.10-42c284e",

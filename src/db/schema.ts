@@ -1,44 +1,44 @@
 // import { eq, sql } from "drizzle-orm";
-import * as t from "drizzle-orm/pg-core";
-import { v7 } from "uuid";
+import * as t from 'drizzle-orm/pg-core'
+import { v7 } from 'uuid'
 
 const CASCADE = {
-  onDelete: "cascade",
-  onUpdate: "cascade",
-} as const;
+  onDelete: 'cascade',
+  onUpdate: 'cascade',
+} as const
 
 const crawlee = {
-  crawlee_status: t.varchar().default("NEW"),
-} as const;
+  crawlee_status: t.varchar().default('NEW'),
+} as const
 const s3 = {
-  s3_status: t.varchar().default("NEW"),
-} as const;
+  s3_status: t.varchar().default('NEW'),
+} as const
 
 const bigint = t.customType<{
-  data: string;
+  data: string
 }>({
-  dataType: () => "bigint",
-});
+  dataType: () => 'bigint',
+})
 
-export const ErrorsTable = t.pgTable("errors", {
+export const ErrorsTable = t.pgTable('errors', {
   id: t.integer().primaryKey(),
   mark: t.jsonb().$type<number[]>().default([]),
   model: t.jsonb().$type<number[]>().default([]),
   configuration: t.jsonb().$type<number[]>().default([]),
-});
+})
 
 // ==============================
 // СХЕМА AUTO
 // ==============================
-export const AutoSchema = t.pgSchema("auto");
+export const AutoSchema = t.pgSchema('auto')
 
-export const AutoCountriesTable = AutoSchema.table("countries", {
+export const AutoCountriesTable = AutoSchema.table('countries', {
   id: t.uuid().primaryKey().$defaultFn(v7),
   name: t.varchar().notNull().unique(),
-});
+})
 
 export const AutoMarksTable = AutoSchema.table(
-  "marks",
+  'marks',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     autoru_slug: t.varchar().notNull().unique(),
@@ -54,17 +54,17 @@ export const AutoMarksTable = AutoSchema.table(
     country_id: t.uuid().references(() => AutoCountriesTable.id, CASCADE),
     ...crawlee,
   },
-  (table) => [t.index("idx_marks_country_id").on(table.country_id)],
-);
+  (table) => [t.index('idx_marks_country_id').on(table.country_id)],
+)
 
-export const model_section_enum = t.pgEnum("model_section_enum", [
-  "ALL",
-  "NEW",
-  "USED",
-]);
+export const model_section_enum = t.pgEnum('model_section_enum', [
+  'ALL',
+  'NEW',
+  'USED',
+])
 
 export const AutoModelsTable = AutoSchema.table(
-  "models",
+  'models',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     autoru_slug: t.varchar().notNull(),
@@ -82,11 +82,11 @@ export const AutoModelsTable = AutoSchema.table(
     ...crawlee,
   },
   (table) => [
-    t.uniqueIndex("auto_models_unique").on(table.mark_id, table.slug),
+    t.uniqueIndex('auto_models_unique').on(table.mark_id, table.slug),
   ],
-);
+)
 
-export const AutoModelRatingsTable = AutoSchema.table("model_ratings", {
+export const AutoModelRatingsTable = AutoSchema.table('model_ratings', {
   id: t.uuid().primaryKey().$defaultFn(v7),
   total: t.integer().notNull().default(0),
   appearance: t.integer().notNull().default(0),
@@ -99,7 +99,7 @@ export const AutoModelRatingsTable = AutoSchema.table("model_ratings", {
     .notNull()
     .references(() => AutoModelsTable.id, CASCADE)
     .unique(),
-});
+})
 
 // export const mainNameplatesTable = autoSchema.table(
 //   "main_nameplates",
@@ -117,7 +117,7 @@ export const AutoModelRatingsTable = AutoSchema.table("model_ratings", {
 // );
 
 export const AutoNameplatesTable = AutoSchema.table(
-  "nameplates",
+  'nameplates',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     autoru_id: bigint().notNull().unique(),
@@ -130,24 +130,24 @@ export const AutoNameplatesTable = AutoSchema.table(
       .references(() => AutoModelsTable.id, CASCADE),
   },
   (table) => [
-    t.uniqueIndex("auto_nameplates_unique").on(table.model_id, table.slug),
+    t.uniqueIndex('auto_nameplates_unique').on(table.model_id, table.slug),
   ],
-);
+)
 
-export const generation_group_enum = t.pgEnum("generation_group_enum", [
-  "BUSINESS",
-  "CITY",
-  "FAMILY",
-]);
+export const generation_group_enum = t.pgEnum('generation_group_enum', [
+  'BUSINESS',
+  'CITY',
+  'FAMILY',
+])
 
-export const generation_segment_enum = t.pgEnum("generation_segment_enum", [
-  "ECONOMY",
-  "MEDIUM",
-  "PREMIUM",
-]);
+export const generation_segment_enum = t.pgEnum('generation_segment_enum', [
+  'ECONOMY',
+  'MEDIUM',
+  'PREMIUM',
+])
 
 export const AutoGenerationsTable = AutoSchema.table(
-  "generations",
+  'generations',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     autoru_id: bigint().notNull().unique(),
@@ -167,16 +167,16 @@ export const AutoGenerationsTable = AutoSchema.table(
       .references(() => AutoModelsTable.id, CASCADE),
     ...s3,
   },
-  (table) => [t.index("idx_generations_model_id").on(table.model_id)],
-);
+  (table) => [t.index('idx_generations_model_id').on(table.model_id)],
+)
 
-export const AutoBodyGroupsTable = AutoSchema.table("body_groups", {
+export const AutoBodyGroupsTable = AutoSchema.table('body_groups', {
   id: t.uuid().primaryKey().$defaultFn(v7),
   type: t.varchar().notNull().unique(),
-});
+})
 
 export const AutoBodiesTable = AutoSchema.table(
-  "bodies",
+  'bodies',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     type: t.varchar().notNull().unique(),
@@ -185,20 +185,20 @@ export const AutoBodiesTable = AutoSchema.table(
       .notNull()
       .references(() => AutoBodyGroupsTable.id, CASCADE),
   },
-  (table) => [t.index("idx_bodies_body_group_id").on(table.body_group_id)],
-);
+  (table) => [t.index('idx_bodies_body_group_id').on(table.body_group_id)],
+)
 
 export const configuration_auto_class_enum = t.pgEnum(
-  "configuration_auto_class_enum",
-  ["A", "B", "C", "D", "E", "F", "J", "M", "S"],
-);
+  'configuration_auto_class_enum',
+  ['A', 'B', 'C', 'D', 'E', 'F', 'J', 'M', 'S'],
+)
 export const configuration_steering_wheel_enum = t.pgEnum(
-  "configuration_steering_wheel_enum",
-  ["LEFT", "RIGHT"],
-);
+  'configuration_steering_wheel_enum',
+  ['LEFT', 'RIGHT'],
+)
 
 export const AutoConfigurationsTable = AutoSchema.table(
-  "configurations",
+  'configurations',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     hash_entity: t.varchar(),
@@ -271,13 +271,13 @@ export const AutoConfigurationsTable = AutoSchema.table(
   (table) => [
     // t.index("idx_configurations_crawlee_status").on(table.crawlee_status),
     // t.index("idx_configurations_s3_status").on(table.s3_status),
-    t.index("idx_configurations_generation_id").on(table.generation_id),
-    t.index("idx_configurations_body_id").on(table.body_id),
+    t.index('idx_configurations_generation_id').on(table.generation_id),
+    t.index('idx_configurations_body_id').on(table.body_id),
   ],
-);
+)
 
 export const AutoConfigurationPromosTable = AutoSchema.table(
-  "configuration_promos",
+  'configuration_promos',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     name: t.varchar().notNull(),
@@ -291,82 +291,82 @@ export const AutoConfigurationPromosTable = AutoSchema.table(
   },
   (table) => [
     t
-      .uniqueIndex("auto_configuration_promos_unique")
+      .uniqueIndex('auto_configuration_promos_unique')
       .on(table.configuration_id, table.url, table.name),
     // t.index("idx_configuration_promos_s3_status").on(table.s3_status),
   ],
-);
+)
 
 export const tech_param_charging_port_type_enum = t.pgEnum(
-  "tech_param_charging_port_type_enum",
+  'tech_param_charging_port_type_enum',
   [
-    "CCS_COMBO_1",
-    "CCS_COMBO_2",
-    "CHADEMO",
-    "GBT_AC",
-    "GBT_DC",
-    "TESLA_SG",
-    "TYPE_1",
-    "TYPE_2",
+    'CCS_COMBO_1',
+    'CCS_COMBO_2',
+    'CHADEMO',
+    'GBT_AC',
+    'GBT_DC',
+    'TESLA_SG',
+    'TYPE_1',
+    'TYPE_2',
   ],
-);
+)
 
 export const tech_param_consumption_calc_enum = t.pgEnum(
-  "tech_param_consumption_calc_enum",
-  ["CLTC", "EPA", "NEDC", "WLTP"],
-);
+  'tech_param_consumption_calc_enum',
+  ['CLTC', 'EPA', 'NEDC', 'WLTP'],
+)
 export const tech_param_cylinders_order_enum = t.pgEnum(
-  "tech_param_cylinders_order_enum",
-  ["IN-LINE", "OPPOSITE", "ROTARY", "V-SHAPED", "V-SHAPED-SA", "W-SHAPED"],
-);
+  'tech_param_cylinders_order_enum',
+  ['IN-LINE', 'OPPOSITE', 'ROTARY', 'V-SHAPED', 'V-SHAPED-SA', 'W-SHAPED'],
+)
 export const tech_param_engine_type_enum = t.pgEnum(
-  "tech_param_engine_type_enum",
-  ["DIESEL", "ELECTRO", "GASOLINE", "H2", "HYBRID", "LPG"],
-);
+  'tech_param_engine_type_enum',
+  ['DIESEL', 'ELECTRO', 'GASOLINE', 'H2', 'HYBRID', 'LPG'],
+)
 export const tech_param_ev_battery_type_enum = t.pgEnum(
-  "tech_param_ev_battery_type_enum",
+  'tech_param_ev_battery_type_enum',
   [
-    "Na-ion",
-    "hydrogen-fuel-cell",
-    "lead-acid",
-    "lfp",
-    "li-ion",
-    "li-nmc",
-    "li-pol",
-    "nicd",
-    "nih2",
-    "nimh",
+    'Na-ion',
+    'hydrogen-fuel-cell',
+    'lead-acid',
+    'lfp',
+    'li-ion',
+    'li-nmc',
+    'li-pol',
+    'nicd',
+    'nih2',
+    'nimh',
   ],
-);
-export const tech_param_gear_type_enum = t.pgEnum("tech_param_gear_type_enum", [
-  "ALL_WHEEL_DRIVE",
-  "FORWARD_CONTROL",
-  "REAR_DRIVE",
-]);
+)
+export const tech_param_gear_type_enum = t.pgEnum('tech_param_gear_type_enum', [
+  'ALL_WHEEL_DRIVE',
+  'FORWARD_CONTROL',
+  'REAR_DRIVE',
+])
 export const tech_param_petrol_type_enum = t.pgEnum(
-  "tech_param_petrol_type_enum",
+  'tech_param_petrol_type_enum',
   [
-    "76 RON",
-    "80 RON",
-    "92 RON",
-    "95 RON",
-    "98 RON",
-    "Diesel",
-    "GAS",
-    "hydrogen",
+    '76 RON',
+    '80 RON',
+    '92 RON',
+    '95 RON',
+    '98 RON',
+    'Diesel',
+    'GAS',
+    'hydrogen',
   ],
-);
+)
 export const tech_param_transmission_enum = t.pgEnum(
-  "tech_param_transmission_enum",
-  ["AUTOMATIC", "MECHANICAL", "ROBOT", "VARIATOR"],
-);
+  'tech_param_transmission_enum',
+  ['AUTOMATIC', 'MECHANICAL', 'ROBOT', 'VARIATOR'],
+)
 export const tech_param_valvetrain_enum = t.pgEnum(
-  "tech_param_valvetrain_enum",
-  ["DOHC", "OHC", "OHV", "SOHC", "SV"],
-);
+  'tech_param_valvetrain_enum',
+  ['DOHC', 'OHC', 'OHV', 'SOHC', 'SV'],
+)
 
 export const AutoTechParamsTable = AutoSchema.table(
-  "tech_params",
+  'tech_params',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     hash_entity: t.varchar(),
@@ -385,7 +385,7 @@ export const AutoTechParamsTable = AutoSchema.table(
     /** Ёмкость батареи (доступная) */
     battery_capacity_useful: t.real(),
     /** Количество циклов зарядки */
-    battery_charge_cycles: t.numeric({ mode: "number" }),
+    battery_charge_cycles: t.numeric({ mode: 'number' }),
     /** Температурный режим батареи */
     battery_temp: t.jsonb().$type<number[]>().default([]),
     /** Время зарядки */
@@ -484,7 +484,7 @@ export const AutoTechParamsTable = AutoSchema.table(
     /** ГРМ */
     valvetrain: tech_param_valvetrain_enum(),
     /** Снаряженная масса */
-    weight: t.numeric({ mode: "number" }),
+    weight: t.numeric({ mode: 'number' }),
     wheel_size: t.varchar(),
     year_start: t.smallint().notNull(),
     year_stop: t.smallint().notNull(),
@@ -499,12 +499,12 @@ export const AutoTechParamsTable = AutoSchema.table(
       .references(() => AutoConfigurationsTable.id, CASCADE),
   },
   (table) => [
-    t.index("idx_tech_params_nameplate_id").on(table.nameplate_id),
-    t.index("idx_tech_params_configuration_id").on(table.configuration_id),
+    t.index('idx_tech_params_nameplate_id').on(table.nameplate_id),
+    t.index('idx_tech_params_configuration_id').on(table.configuration_id),
   ],
-);
+)
 
-export const AutoEquipmentsTable = AutoSchema.table("equipments", {
+export const AutoEquipmentsTable = AutoSchema.table('equipments', {
   id: t.uuid().primaryKey().$defaultFn(v7),
   slug: t.varchar().notNull().unique(),
   name: t.varchar().notNull(),
@@ -520,25 +520,25 @@ export const AutoEquipmentsTable = AutoSchema.table("equipments", {
   used_offers_max_price: t.integer().default(0).notNull(),
   used_offers_min_price: t.integer().default(0).notNull(),
   ...crawlee,
-});
+})
 
-export const AutoOptionGroupsTable = AutoSchema.table("option_groups", {
+export const AutoOptionGroupsTable = AutoSchema.table('option_groups', {
   id: t.varchar().primaryKey(),
   name: t.varchar().notNull().unique(),
-});
+})
 
 export const AutoOptionsTable = AutoSchema.table(
-  "options",
+  'options',
   {
     id: t.varchar().primaryKey(),
     name: t.varchar().notNull(),
     group_id: t.varchar().references(() => AutoOptionGroupsTable.id, CASCADE),
   },
-  (table) => [t.index("idx_options_group_id").on(table.group_id)],
-);
+  (table) => [t.index('idx_options_group_id').on(table.group_id)],
+)
 
 export const AutoEquipmentOptionTable = AutoSchema.table(
-  "equipment_option",
+  'equipment_option',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     price: t.integer(),
@@ -553,29 +553,29 @@ export const AutoEquipmentOptionTable = AutoSchema.table(
   },
   (table) => [
     t
-      .uniqueIndex("auto_equipment_option_unique")
+      .uniqueIndex('auto_equipment_option_unique')
       .on(table.equipment_id, table.option_id),
-    t.index("auto_equipment_option_option_id").on(table.option_id),
+    t.index('auto_equipment_option_option_id').on(table.option_id),
   ],
-);
+)
 
 export const AutoPackagesTable = AutoSchema.table(
-  "packages",
+  'packages',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     autoru_id: bigint().notNull().unique(),
     name: t.varchar().notNull(),
-    price: t.numeric({ mode: "number" }),
+    price: t.numeric({ mode: 'number' }),
     equipment_id: t
       .uuid()
       .notNull()
       .references(() => AutoEquipmentsTable.id, CASCADE),
   },
-  (table) => [t.index("idx_packages_equipment_id").on(table.equipment_id)],
-);
+  (table) => [t.index('idx_packages_equipment_id').on(table.equipment_id)],
+)
 
 export const AutoPackageOptionTable = AutoSchema.table(
-  "package_option",
+  'package_option',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     package_id: t
@@ -589,20 +589,20 @@ export const AutoPackageOptionTable = AutoSchema.table(
   },
   (table) => [
     t
-      .uniqueIndex("auto_equipment_package_option_unique")
+      .uniqueIndex('auto_equipment_package_option_unique')
       .on(table.package_id, table.option_id),
-    t.index("auto_equipment_package_option_option_id").on(table.option_id),
+    t.index('auto_equipment_package_option_option_id').on(table.option_id),
   ],
-);
+)
 
 export const AutoComplectationsTable = AutoSchema.table(
-  "complectations",
+  'complectations',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     slug: t.varchar().notNull().unique(),
     base: t.boolean().notNull().default(false),
-    offers_price_from: t.numeric({ mode: "number" }).default(0),
-    offers_price_to: t.numeric({ mode: "number" }).default(0),
+    offers_price_from: t.numeric({ mode: 'number' }).default(0),
+    offers_price_to: t.numeric({ mode: 'number' }).default(0),
     configuration_id: t
       .uuid()
       .notNull()
@@ -615,20 +615,20 @@ export const AutoComplectationsTable = AutoSchema.table(
     ...crawlee,
   },
   (table) => [
-    t.index("idx_complectations_configuration_id").on(table.configuration_id),
-    t.index("idx_complectations_tech_param_id").on(table.tech_param_id),
-    t.index("idx_complectations_equipment_id").on(table.equipment_id),
+    t.index('idx_complectations_configuration_id').on(table.configuration_id),
+    t.index('idx_complectations_tech_param_id').on(table.tech_param_id),
+    t.index('idx_complectations_equipment_id').on(table.equipment_id),
   ],
-);
+)
 
-export const AutoTechInfoGroupsTable = AutoSchema.table("tech_info_groups", {
+export const AutoTechInfoGroupsTable = AutoSchema.table('tech_info_groups', {
   id: t.uuid().primaryKey().$defaultFn(v7),
   type: t.varchar().notNull().unique(),
   name: t.varchar(),
-});
+})
 
 export const AutoTechInfosTable = AutoSchema.table(
-  "tech_infos",
+  'tech_infos',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     type: t.varchar().notNull(),
@@ -640,9 +640,9 @@ export const AutoTechInfosTable = AutoSchema.table(
       .references(() => AutoTechInfoGroupsTable.id, CASCADE),
   },
   (table) => [
-    t.uniqueIndex("auto_tech_infos_unique").on(table.group_id, table.type),
+    t.uniqueIndex('auto_tech_infos_unique').on(table.group_id, table.type),
   ],
-);
+)
 
 // ==============================
 // СХЕМА AUTO.RU
@@ -707,10 +707,10 @@ export const AutoTechInfosTable = AutoSchema.table(
 // ==============================
 // СХЕМА OFFER
 // ==============================
-export const OfferSchema = t.pgSchema("offer");
+export const OfferSchema = t.pgSchema('offer')
 
 export const OfferUrlsTable = OfferSchema.table(
-  "urls",
+  'urls',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     title: t.varchar(),
@@ -721,13 +721,13 @@ export const OfferUrlsTable = OfferSchema.table(
   },
   (table) => [
     t
-      .index("idx_offer_urls_crawlee_status_section_id")
+      .index('idx_offer_urls_crawlee_status_section_id')
       .on(table.crawlee_status, table.section, table.id),
   ],
-);
+)
 
 export const OfferOffersTable = OfferSchema.table(
-  "offers",
+  'offers',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     autoru_id: bigint().notNull().unique(),
@@ -753,12 +753,12 @@ export const OfferOffersTable = OfferSchema.table(
       .references(() => AutoComplectationsTable.id, CASCADE),
   },
   (table) => [
-    t.index("idx_offers_complectation_id").on(table.complectation_id),
+    t.index('idx_offers_complectation_id').on(table.complectation_id),
   ],
-);
+)
 
 export const OfferOfferDiscountsTable = OfferSchema.table(
-  "offer_discounts",
+  'offer_discounts',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     type: t.varchar(),
@@ -768,11 +768,11 @@ export const OfferOfferDiscountsTable = OfferSchema.table(
       .notNull()
       .references(() => OfferOffersTable.id, CASCADE),
   },
-  (table) => [t.index("idx_offer_discounts_offer_id").on(table.offer_id)],
-);
+  (table) => [t.index('idx_offer_discounts_offer_id').on(table.offer_id)],
+)
 
 export const OfferOfferImagesTable = OfferSchema.table(
-  "offer_images",
+  'offer_images',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     name: t.varchar().notNull(),
@@ -794,18 +794,18 @@ export const OfferOfferImagesTable = OfferSchema.table(
 
     ...s3,
     s3_key: t.varchar(),
-    ai_status: t.varchar().default("NEW"),
+    ai_status: t.varchar().default('NEW'),
   },
   (table) => [
     t
-      .uniqueIndex("offer_offer_images_unique")
+      .uniqueIndex('offer_offer_images_unique')
       .on(table.offer_id, table.photo_class, table.url, table.name),
     // t.index("idx_offer_images_s3_status").on(table.s3_status),
     // t.index("idx_offer_images_ai_status").on(table.ai_status),
   ],
-);
+)
 
-export const OfferOfferCountersTable = OfferSchema.table("offer_counters", {
+export const OfferOfferCountersTable = OfferSchema.table('offer_counters', {
   id: t.uuid().primaryKey(),
   all: t.integer().notNull().default(0),
   avito_all: t.integer().notNull().default(0),
@@ -831,9 +831,9 @@ export const OfferOfferCountersTable = OfferSchema.table("offer_counters", {
     .notNull()
     .references(() => OfferOffersTable.id, CASCADE)
     .unique(),
-});
+})
 
-export const OfferOfferDocumentTable = OfferSchema.table("offer_document", {
+export const OfferOfferDocumentTable = OfferSchema.table('offer_document', {
   id: t.uuid().primaryKey(),
   accidents_resolution: t.varchar(),
   custom_cleared: t.boolean(),
@@ -851,9 +851,9 @@ export const OfferOfferDocumentTable = OfferSchema.table("offer_document", {
     .notNull()
     .references(() => OfferOffersTable.id, CASCADE)
     .unique(),
-});
+})
 
-export const OfferOfferPricesTable = OfferSchema.table("offer_prices", {
+export const OfferOfferPricesTable = OfferSchema.table('offer_prices', {
   id: t.uuid().primaryKey(),
   currency: t.varchar(),
   eur: t.integer().default(0),
@@ -866,10 +866,10 @@ export const OfferOfferPricesTable = OfferSchema.table("offer_prices", {
     .notNull()
     .references(() => OfferOffersTable.id, CASCADE)
     .unique(),
-});
+})
 
 export const OfferOfferPriceHistorysTable = OfferSchema.table(
-  "offer_price_historys",
+  'offer_price_historys',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     rur: bigint(),
@@ -883,13 +883,13 @@ export const OfferOfferPriceHistorysTable = OfferSchema.table(
   },
   (table) => [
     t
-      .uniqueIndex("offer_offer_price_historys_unique")
+      .uniqueIndex('offer_offer_price_historys_unique')
       .on(table.offer_id, table.rur, table.create_timestamp),
   ],
-);
+)
 
 export const OfferOfferOptionTable = OfferSchema.table(
-  "offer_option",
+  'offer_option',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     offer_id: t
@@ -903,15 +903,15 @@ export const OfferOfferOptionTable = OfferSchema.table(
   },
   (table) => [
     t
-      .uniqueIndex("offer_offer_option_unique")
+      .uniqueIndex('offer_offer_option_unique')
       .on(table.offer_id, table.option_id),
-    t.index("offer_offer_option_option_id").on(table.option_id),
+    t.index('offer_offer_option_option_id').on(table.option_id),
   ],
-);
+)
 
 // COLORS
 export const OfferVendorColorsTable = OfferSchema.table(
-  "vendor_colors",
+  'vendor_colors',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     autoru_body_color_id: bigint(),
@@ -933,19 +933,19 @@ export const OfferVendorColorsTable = OfferSchema.table(
   },
   (table) => [
     t
-      .uniqueIndex("vendor_colors_unique")
+      .uniqueIndex('vendor_colors_unique')
       .on(
         table.autoru_body_color_id,
         table.autoru_configuration_id,
         table.autoru_mark_color_id,
       ),
     // index for lookups by configuration
-    t.index("idx_vendor_colors_configuration_id").on(table.configuration_id),
+    t.index('idx_vendor_colors_configuration_id').on(table.configuration_id),
   ],
-);
+)
 
 export const OfferVendorColorImagesTable = OfferSchema.table(
-  "vendor_color_images",
+  'vendor_color_images',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     name: t.varchar().notNull(),
@@ -958,27 +958,27 @@ export const OfferVendorColorImagesTable = OfferSchema.table(
   },
   (table) => [
     t
-      .uniqueIndex("offer_vendor_color_images_unique")
+      .uniqueIndex('offer_vendor_color_images_unique')
       .on(table.color_id, table.url, table.name),
   ],
-);
+)
 
 // ==============================
 // СХЕМА AVITO
 // ==============================
-export const AvitoSchema = t.pgSchema("avito");
+export const AvitoSchema = t.pgSchema('avito')
 
-export const AvitoMarksTable = AvitoSchema.table("marks", {
+export const AvitoMarksTable = AvitoSchema.table('marks', {
   id: t.uuid().primaryKey().$defaultFn(v7),
   slug: t.varchar().notNull().unique(),
   name: t.varchar().notNull(),
   avito_id: bigint().notNull().unique(),
   avito_url: t.varchar().notNull().unique(),
   ...crawlee,
-});
+})
 
 export const AvitoModelsTable = AvitoSchema.table(
-  "models",
+  'models',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     slug: t.varchar().notNull(),
@@ -991,11 +991,11 @@ export const AvitoModelsTable = AvitoSchema.table(
       .references(() => AvitoMarksTable.id, CASCADE),
     ...crawlee,
   },
-  (table) => [t.uniqueIndex("models_unique").on(table.mark_id, table.avito_id)],
-);
+  (table) => [t.uniqueIndex('models_unique').on(table.mark_id, table.avito_id)],
+)
 
 export const AvitoGenerationsTable = AvitoSchema.table(
-  "generations",
+  'generations',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     slug: t.varchar().notNull(),
@@ -1008,12 +1008,12 @@ export const AvitoGenerationsTable = AvitoSchema.table(
     ...crawlee,
   },
   (table) => [
-    t.uniqueIndex("generations_unique").on(table.model_id, table.slug),
+    t.uniqueIndex('generations_unique').on(table.model_id, table.slug),
   ],
-);
+)
 
 export const AvitoBodiesTable = AvitoSchema.table(
-  "bodies",
+  'bodies',
   {
     id: t.uuid().primaryKey().$defaultFn(v7),
     slug: t.varchar().notNull(),
@@ -1027,6 +1027,6 @@ export const AvitoBodiesTable = AvitoSchema.table(
     ...crawlee,
   },
   (table) => [
-    t.uniqueIndex("bodies_unique").on(table.generation_id, table.slug),
+    t.uniqueIndex('bodies_unique').on(table.generation_id, table.slug),
   ],
-);
+)

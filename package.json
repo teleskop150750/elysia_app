@@ -1,10 +1,23 @@
 {
   "name": "app",
   "version": "1.0.50",
+  "module": "src/index.js",
   "scripts": {
     "kysely": "kysely-codegen --out-file ./src/db/db.d.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "build": "nitro build",
+    "dev": "nitro dev",
+    "dev:bun": "bun run --watch src/index.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:up": "drizzle-kit up",
+    "db:studio": "drizzle-kit studio",
+    "eslint": "eslint",
+    "eslint:fix": "eslint --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "typecheck": "tsc --noEmit"
   },
   "type": "module",
   "imports": {
@@ -12,7 +25,7 @@
   },
   "dependencies": {
     "@elysiajs/openapi": "^1.4.13",
-    "drizzle-orm": "^0.45.1",
+    "drizzle-orm": "1.0.0-beta.10-42c284e",
     "elysia": "latest",
     "kysely": "^0.28.9",
     "kysely-bun-sql": "^0.2.0",
@@ -21,9 +34,16 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
+    "kysely-codegen": "^0.19.0",
     "@types/bun": "^1.3.5",
-    "bun-types": "latest",
-    "kysely-codegen": "^0.19.0"
-  },
-  "module": "src/index.js"
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "@antfu/eslint-config": "^6.7.3",
+    "drizzle-kit": "^1.0.0-beta.9-e89174b",
+    "nitro": "^3.0.1-alpha.1",
+    "prettier": "^3.7.4",
+    "srvx": "^0.9.8",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  }
 }

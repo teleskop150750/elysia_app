@@ -1,7 +1,7 @@
-import { z, ZodArray, ZodType } from "zod";
+import { z, ZodArray, ZodType } from 'zod'
 
 export const defineArrayOperatorsSchema = <T extends ZodArray<ZodType>>(
-  type: T
+  type: T,
 ) =>
   z.object({
     eq: type.optional(),
@@ -10,12 +10,12 @@ export const defineArrayOperatorsSchema = <T extends ZodArray<ZodType>>(
     arrayOverlaps: type.optional(),
     isEmpty: z.boolean().optional(),
     isNotEmpty: z.boolean().optional(),
-  });
+  })
 
 export const BooleanOperatorsSchema = z.object({
   eq: z.boolean().optional(),
   ne: z.boolean().optional(),
-});
+})
 
 export const StringOperatorsSchema = z.object({
   eq: z.string().optional(),
@@ -26,7 +26,7 @@ export const StringOperatorsSchema = z.object({
   ilike: z.string().optional(),
   notLike: z.string().optional(),
   notIlike: z.string().optional(),
-});
+})
 
 export const NumberOperatorsSchema = z.object({
   eq: z.number().optional(),
@@ -49,7 +49,7 @@ export const NumberOperatorsSchema = z.object({
       max: z.number(),
     })
     .optional(),
-});
+})
 
 export const DateOperatorsSchema = z.object({
   eq: z.date().optional(),
@@ -72,12 +72,12 @@ export const DateOperatorsSchema = z.object({
       max: z.date(),
     })
     .optional(),
-});
+})
 
 export const NullableOperatorsSchema = z.object({
   isNull: z.boolean().optional(),
   isNotNull: z.boolean().optional(),
-});
+})
 
 const defineScalarOperatorsSchema = <T extends ZodType>(type: T) =>
   z.object({
@@ -107,7 +107,7 @@ const defineScalarOperatorsSchema = <T extends ZodType>(type: T) =>
     ilike: z.string().optional(),
     notLike: z.string().optional(),
     notIlike: z.string().optional(),
-  });
+  })
 
 /**
  * Schema for Generic filter operations
@@ -120,7 +120,7 @@ export const genericOperationSchema = z
     ...defineArrayOperatorsSchema(z.array(z.any())).shape,
     ...defineScalarOperatorsSchema(z.any()).shape,
   })
-  .strict();
+  .strict()
 
 // Backward-compatible aliases (old naming)
-export const defineArrayConditionsSchema = defineArrayOperatorsSchema;
+export const defineArrayConditionsSchema = defineArrayOperatorsSchema

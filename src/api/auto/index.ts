@@ -62,14 +62,47 @@ export const auto = new Elysia()
   })
   .all("/drizzle/query/complectations", () => {
     return db.query.AutoComplectationsTable.findMany({
+      columns: {
+        id: true,
+        slug: true,
+        configuration_id: true,
+        tech_param_id: true,
+        equipment_id: true,
+      },
       with: {
         configuration: {
+          columns: {
+            id: true,
+            human_name: true,
+            auto_class: true,
+            boot_volume_max: true,
+            boot_volume_min: true,
+            doors_count: true,
+          },
           with: {
             generation: {
+              columns: {
+                id: true,
+                slug: true,
+                name: true,
+                cyrillic_name: true,
+              },
               with: {
                 model: {
+                  columns: {
+                    id: true,
+                    slug: true,
+                    name: true,
+                    cyrillic_name: true,
+                  },
                   with: {
                     mark: {
+                      columns: {
+                        id: true,
+                        slug: true,
+                        name: true,
+                        cyrillic_name: true,
+                      },
                       with: {
                         country: true,
                       },
@@ -78,11 +111,64 @@ export const auto = new Elysia()
                 },
               },
             },
-            promos: true,
+            promos: {
+              columns: {
+                id: true,
+                name: true,
+                url: true,
+              },
+              limit: 2,
+            },
           },
         },
-        tech_param: true,
-        equipment: true,
+        tech_param: {
+          columns: {
+            id: true,
+            slug: true,
+            name: true,
+            human_name: true,
+            engine_order: true,
+            engine_type: true,
+          },
+        },
+        equipment: {
+          columns: {
+            id: true,
+            slug: true,
+            name: true,
+          },
+          with: {
+            options: {
+              columns: {
+                id: true,
+                name: true,
+              },
+              with: {
+                group: true,
+              },
+              limit: 2,
+            },
+            packages: {
+              columns: {
+                id: true,
+                name: true,
+              },
+              with: {
+                options: {
+                  columns: {
+                    id: true,
+                    name: true,
+                  },
+                  with: {
+                    group: true,
+                  },
+                  limit: 2,
+                },
+              },
+              limit: 2,
+            },
+          },
+        },
       },
       where: {
         configuration: {
@@ -94,14 +180,17 @@ export const auto = new Elysia()
               mark: {
                 country: {
                   id: {
-                    in: ["0198842f-cdfc-722f-820a-7228f8c2482e"],
+                    in: ["0198842f-d1c2-77ab-97f5-7d1dc40eabe8"],
                   },
                 },
               },
             },
           },
         },
+        equipment: {
+          packages: true,
+        },
       },
-      limit: 5,
+      limit: 1,
     });
   });

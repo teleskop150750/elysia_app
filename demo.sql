@@ -58,11 +58,9 @@ FROM
                                                 LIMIT $3
                                             ) AS "t"
                                     ) AS "model" ON TRUE
-                                WHERE (
-                                        "d2"."id" = $4
-                                        AND "d1"."generation_id" = "d2"."id"
-                                    )
-                                LIMIT $5
+                                WHERE
+                                    "d1"."generation_id" = "d2"."id"
+                                LIMIT $4
                             ) AS "t"
                     ) AS "generation" ON TRUE
                     LEFT JOIN LATERAL (
@@ -79,7 +77,7 @@ FROM
                     ) AS "promos" ON TRUE
                 WHERE
                     "d0"."configuration_id" = "d1"."id"
-                LIMIT $6
+                LIMIT $5
             ) AS "t"
     ) AS "configuration" ON TRUE
     LEFT JOIN LATERAL (
@@ -90,7 +88,7 @@ FROM
                 FROM "auto"."tech_params" AS "d1"
                 WHERE
                     "d0"."tech_param_id" = "d1"."id"
-                LIMIT $7
+                LIMIT $6
             ) AS "t"
     ) AS "tech_param" ON TRUE
     LEFT JOIN LATERAL (
@@ -101,7 +99,17 @@ FROM
                 FROM "auto"."equipments" AS "d1"
                 WHERE
                     "d0"."equipment_id" = "d1"."id"
-                LIMIT $8
+                LIMIT $7
             ) AS "t"
     ) AS "equipment" ON TRUE
+WHERE
+    EXISTS (
+        SELECT *
+        FROM "auto"."configurations" AS "f0"
+        WHERE (
+                "d0"."configuration_id" = "f0"."id"
+                AND "f0"."auto_class" = $8
+            )
+        LIMIT 1
+    )
 LIMIT $9

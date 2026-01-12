@@ -12,8 +12,7 @@ const app = new Elysia()
     }),
   )
   .use(auto)
-  .get("/", () => "Hello Elysia")
-  .listen(3000);
+  .get("/", () => "Hello Elysia");
 
 // eslint-disable-next-line no-console
 console.log(

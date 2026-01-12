@@ -60,39 +60,20 @@ export const auto = new Elysia()
                   },
                 },
               },
-              where: {
-                id: {
-                  eq: "0198838c-51ab-775f-b537-104bbd0b1192",
-                },
-              },
             },
             promos: true,
           },
-          // where: {
-          //   NOT: {
-          //     auto_class: {
-          //       eq: 'E'
-          //     }
-          //   }
-          // },
         },
         tech_param: true,
         equipment: true,
-
-        // mark: {
-        //   with: {
-        //     country: true,
-        //   },
-        // },
-        // generations: {
-        //   limit: 10,
-        // },
       },
-      // where: {
-      //   id: {
-      //     eq: "019883eb-da5b-727a-b34b-668a9bcdc6d9",
-      //   },
-      // },
+      where: {
+        configuration: {
+          auto_class: {
+            eq: "D",
+          },
+        },
+      },
       limit: 5,
     });
   });

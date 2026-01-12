@@ -1,4 +1,4 @@
-import { getColumns } from "drizzle-orm";
+import { getColumns, sql } from "drizzle-orm";
 import { Elysia } from "elysia";
 import { db, qb } from "~/db/drizzle.ts";
 import { AutoCountriesTable, AutoMarksTable } from "~/db/schema.ts";
@@ -27,6 +27,26 @@ export const auto = new Elysia()
         qb.eq(AutoCountriesTable.id, AutoMarksTable.country_id),
       )
       .limit(10);
+  })
+  .all("/drizzle/query/filter/options/marks", () => {
+    return db.query.AutoMarksTable.findMany({
+      extras: {
+        value: (table, { sql }) => sql`${table.id}`,
+        label: (table, { sql }) => sql`${table.name}`,
+      },
+      columns: {},
+      limit: 20,
+    });
+  })
+  .all("/drizzle/query/filter/options/models", () => {
+    return db.query.AutoModelsTable.findMany({
+      extras: {
+        value: (table, { sql }) => sql`${table.id}`,
+        label: (table, { sql }) => sql`${table.name}`,
+      },
+      columns: {},
+      limit: 20,
+    });
   })
   .all("/drizzle/query/marks", () => {
     const filter = {

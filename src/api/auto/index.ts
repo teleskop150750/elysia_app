@@ -77,7 +77,7 @@ export const auto = new Elysia()
               mark: {
                 country: {
                   id: {
-                    eq: '0198842f-cdfc-722f-820a-7228f8c2482e'
+                    in: ['0198842f-cdfc-722f-820a-7228f8c2482e']
                   }
                 }
               }

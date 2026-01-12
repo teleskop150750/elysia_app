@@ -45,33 +45,45 @@ export const auto = new Elysia()
   )
   .all("/drizzle/query", () => {
     return db.query.AutoComplectationsTable.findMany({
-      with: {
-        configuration: {
-          with: {
-            generation: {
-              with: {
-                model: {
-                  with: {
-                    mark: {
-                      with: {
-                        country: true,
-                      },
-                    },
-                  },
-                },
-              },
-            },
-            promos: true,
-          },
-        },
-        tech_param: true,
-        equipment: true,
-      },
+      // with: {
+      //   configuration: {
+      //     with: {
+      //       generation: {
+      //         with: {
+      //           model: {
+      //             with: {
+      //               mark: {
+      //                 with: {
+      //                   country: true,
+      //                 },
+      //               },
+      //             },
+      //           },
+      //         },
+      //       },
+      //       promos: true,
+      //     },
+      //   },
+      //   tech_param: true,
+      //   equipment: true,
+      // },
       where: {
         configuration: {
           auto_class: {
             eq: "D",
           },
+          generation: {
+            model: {
+              mark: {
+                country: {
+                  id: {
+                    eq: '0198842f-cdfc-722f-820a-7228f8c2482e'
+                  }
+                }
+              }
+            }
+          }
+
         },
       },
       limit: 5,

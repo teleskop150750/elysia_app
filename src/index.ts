@@ -2,6 +2,7 @@ import { openapi } from "@elysiajs/openapi";
 import { Elysia } from "elysia";
 import z from "zod";
 import { auto } from "./api/auto/index.ts";
+import { filter } from "./api/filters/index.ts";
 
 const app = new Elysia()
   .use(
@@ -12,6 +13,7 @@ const app = new Elysia()
     }),
   )
   .use(auto)
+  .use(filter)
   .get("/", () => "Hello Elysia");
 
 // eslint-disable-next-line no-console

@@ -1,0 +1,349 @@
+import Elysia from "elysia";
+import { z } from "zod";
+import {
+  BasePaginationSchema,
+  BasePipelineSchema,
+  ClientSchema,
+  objOmit,
+} from "./schemas";
+
+export const pipelines = new Elysia()
+  .post(
+    "/api/v2/pipelines/get",
+    () => {
+      return {
+        success: true,
+        data: [
+          {
+            id: "123",
+            active_pipeline_id: null,
+
+            status_id: "456",
+            operator_id: "789",
+
+            is_captcha: false,
+            is_spam: false,
+
+            lead_type: "organic",
+            source_id: "654",
+
+            call_at: "2023-01-01T00:00:00Z",
+            visit_at: "2023-01-02T00:00:00Z",
+            closed_at: null,
+            created_at: "2023-01-01T00:00:00Z",
+            updated_at: "2023-01-01T00:00:00Z",
+
+            client: {
+              id: "321",
+              name: "Jane Doe",
+              rating: 8,
+              region_id: "987",
+              phones: [
+                {
+                  id: "555-1234",
+                  label: "+7(555)123-4567",
+                },
+              ],
+            },
+
+            comment: "",
+          },
+        ],
+        pagination: {
+          total: 50,
+          per_page: 15,
+          current_page: 1,
+          last_page: 4,
+          from: 1,
+          to: 15,
+        },
+      };
+    },
+    {
+      tags: ["Pipelines"],
+      body: z.object({
+        search: z.string().nullish().default(null),
+        category: z
+          .enum([
+            "hot",
+            "new_no_answer",
+            "burned_my",
+            "burned",
+            "urgent",
+            "visit_today",
+            "visit_tomorrow",
+          ])
+          .nullish()
+          .default(null),
+        metric: z.string().nullish().default(null),
+        groupings: z
+          .array(
+            z.strictObject({
+              key: z.string(),
+              value: z.string(),
+            }),
+          )
+          .nullish()
+          .default(null),
+        filters: z.record(z.string(), z.any()).nullish().default(null),
+        pagination: z
+          .strictObject({
+            current_page: z.number().int().min(1).default(1),
+            per_page: z.number().int().min(1).max(100).default(15),
+          })
+          .optional(),
+      }),
+      response: {
+        200: z.strictObject({
+          success: z.boolean(),
+          data: z.array(
+            z.strictObject({
+              ...objOmit(BasePipelineSchema.shape, [
+                "tag_list",
+                "sale_type",
+                "trade_in",
+                "disposal",
+              ]),
+              comment: z.nullable(z.string()),
+              client: ClientSchema,
+            }),
+          ),
+          pagination: BasePaginationSchema,
+        }),
+      },
+    },
+  )
+  .post(
+    "/api/v2/pipelines/filter-options/get",
+    () => {
+      return {
+        success: true,
+        data: null,
+      };
+    },
+    {
+      tags: ["Pipelines"],
+      body: z
+        .object({
+          search: z.string().nullish().default(null),
+          category: z
+            .enum([
+              "hot",
+              "new_no_answer",
+              "burned_my",
+              "burned",
+              "urgent",
+              "visit_today",
+              "visit_tomorrow",
+            ])
+            .nullish()
+            .default(null),
+          metric: z.string().nullish().default(null),
+          groupings: z
+            .array(
+              z.strictObject({
+                key: z.string(),
+                value: z.string(),
+              }),
+            )
+            .nullish()
+            .default(null),
+          filters: z.record(z.string(), z.any()).nullish().default(null),
+          pagination: z
+            .strictObject({
+              current_page: z.number().int().min(1).default(1),
+              per_page: z.number().int().min(1).max(100).default(15),
+            })
+            .optional(),
+        })
+        .optional(),
+      response: {
+        200: z.strictObject({
+          success: z.boolean(),
+          data: z.null(),
+        }),
+      },
+    },
+  )
+  .post(
+    "/api/v2/pipelines/:pipelineId/get",
+    () => {
+      return {
+        success: true,
+        data: {
+          id: "123",
+          active_pipeline_id: null,
+
+          status_id: "456",
+          operator_id: "789",
+
+          tag_list: ["tag1", "tag2"],
+
+          sale_type: "retail",
+          trade_in: true,
+          disposal: false,
+
+          is_captcha: false,
+          is_spam: false,
+
+          lead_type: "organic",
+          source_id: "654",
+
+          call_at: "2023-01-01T00:00:00Z",
+          visit_at: "2023-01-02T00:00:00Z",
+          closed_at: null,
+          created_at: "2023-01-01T00:00:00Z",
+          updated_at: "2023-01-01T00:00:00Z",
+
+          client: {
+            id: "321",
+            name: "Jane Doe",
+            rating: 8,
+            region_id: "987",
+            phones: [
+              {
+                id: "555-1234",
+                label: "+7(555)123-4567",
+              },
+            ],
+          },
+
+          purchased_car: null,
+          offer: null,
+          desired_car: null,
+
+          other_pipeline_list: [],
+        },
+      };
+    },
+    {
+      tags: ["Pipelines"],
+      response: {
+        200: z.strictObject({
+          success: z.boolean(),
+          data: z.strictObject({
+            ...BasePipelineSchema.shape,
+
+            client: ClientSchema,
+
+            purchased_car: z.nullable(
+              z.strictObject({
+                id: z.string(),
+                name: z.string(),
+              }),
+            ),
+            offer: z.nullable(
+              z.strictObject({
+                id: z.string(),
+                name: z.string(),
+              }),
+            ),
+            desired_car: z.nullable(
+              z.strictObject({
+                id: z.string(),
+                name: z.string(),
+              }),
+            ),
+
+            other_pipeline_list: z.array(
+              z.strictObject({
+                id: z.string(),
+                status_id: z.string(),
+              }),
+            ),
+          }),
+        }),
+      },
+    },
+  )
+  .post(
+    "/api/v2/pipelines/:pipelineId/client/feed/get",
+    () => {
+      return {
+        success: true,
+        data: {
+          id: "123",
+          active_pipeline_id: null,
+
+          status_id: "456",
+          operator_id: "789",
+
+          tag_list: ["tag1", "tag2"],
+
+          sale_type: "retail",
+          trade_in: true,
+          disposal: false,
+
+          is_captcha: false,
+          is_spam: false,
+
+          lead_type: "organic",
+          source_id: "654",
+
+          call_at: "2023-01-01T00:00:00Z",
+          visit_at: "2023-01-02T00:00:00Z",
+          closed_at: null,
+          created_at: "2023-01-01T00:00:00Z",
+          updated_at: "2023-01-01T00:00:00Z",
+
+          client: {
+            id: "321",
+            name: "Jane Doe",
+            rating: 8,
+            region_id: "987",
+            phones: [
+              {
+                id: "555-1234",
+                label: "+7(555)123-4567",
+              },
+            ],
+          },
+
+          purchased_car: null,
+          offer: null,
+          desired_car: null,
+
+          other_pipeline_list: [],
+        },
+      };
+    },
+    {
+      tags: ["Pipelines"],
+      response: {
+        200: z.strictObject({
+          success: z.boolean(),
+          data: z.strictObject({
+            ...BasePipelineSchema.shape,
+
+            client: ClientSchema,
+
+            purchased_car: z.nullable(
+              z.strictObject({
+                id: z.string(),
+                name: z.string(),
+              }),
+            ),
+            offer: z.nullable(
+              z.strictObject({
+                id: z.string(),
+                name: z.string(),
+              }),
+            ),
+            desired_car: z.nullable(
+              z.strictObject({
+                id: z.string(),
+                name: z.string(),
+              }),
+            ),
+
+            other_pipeline_list: z.array(
+              z.strictObject({
+                id: z.string(),
+                status_id: z.string(),
+              }),
+            ),
+          }),
+        }),
+      },
+    },
+  );

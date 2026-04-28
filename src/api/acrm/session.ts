@@ -41,7 +41,7 @@ export const session = new Elysia()
         password: z.string().min(6),
       }),
       response: {
-        200: z.object({
+        200: z.strictObject({
           success: z.boolean(),
         }),
       },

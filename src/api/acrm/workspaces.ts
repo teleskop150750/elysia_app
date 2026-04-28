@@ -1,34 +1,10 @@
 import Elysia from "elysia";
-import { BaseListSchemaVali, v } from "../utils";
-
-interface IWorkspace {
-  id: string;
-  name: string;
-  disabled: boolean;
-  children: IWorkspace[] | null;
-}
-
-const WorkspaceSchema: v.GenericSchema<IWorkspace> = v.object({
-  id: v.string(),
-  name: v.string(),
-  disabled: v.boolean(),
-  children: v.nullable(v.array(v.lazy(() => WorkspaceSchema))),
-});
-
-interface IStatus {
-  id: string;
-  name: string;
-  disabled: boolean;
-  children: IStatus[] | null;
-}
-
-const StatusSchema: v.GenericSchema<IStatus> = v.object({
-  id: v.string(),
-  name: v.string(),
-  color: v.string(),
-  disabled: v.boolean(),
-  children: v.nullable(v.array(v.lazy(() => StatusSchema))),
-});
+import { z } from "zod";
+import {
+  BaseListSchema,
+  PipelineStatusSchema,
+  WorkspaceSchema,
+} from "./schemas";
 
 export const workspaces = new Elysia()
   .post(
@@ -41,20 +17,7 @@ export const workspaces = new Elysia()
             id: "1",
             name: "Workspace 1",
             disabled: false,
-            children: [
-              {
-                id: "1-1",
-                name: "Workspace 1-1",
-                disabled: false,
-                children: [],
-              },
-              {
-                id: "1-2",
-                name: "Workspace 1-2",
-                disabled: true,
-                children: [],
-              },
-            ],
+            parent_id: null,
           },
         ],
       };
@@ -62,9 +25,9 @@ export const workspaces = new Elysia()
     {
       tags: ["Workspaces"],
       response: {
-        200: v.object({
-          success: v.boolean(),
-          data: v.array(WorkspaceSchema),
+        200: z.strictObject({
+          success: z.boolean(),
+          data: z.array(WorkspaceSchema),
         }),
       },
     },
@@ -78,51 +41,116 @@ export const workspaces = new Elysia()
           region_list: [
             {
               id: "1",
-              name: "Region 1",
+              label: "Region 1",
             },
           ],
           pipeline_tag_list: [
             {
               id: "1",
-              name: "Tag 1",
+              label: "Tag 1",
             },
           ],
           pipeline_status_list: [
             {
               id: "1",
-              name: "Status 1",
+              label: "Status 1",
               color: "#ff0000",
               disabled: false,
-              children: [
-                {
-                  id: "1-1",
-                  name: "Status 1-1",
-                  color: "#00ff00",
-                  disabled: false,
-                  children: [],
-                },
-                {
-                  id: "1-2",
-                  name: "Status 1-2",
-                  color: "#0000ff",
-                  disabled: true,
-                  children: [],
-                },
-              ],
+              parent_id: null,
             },
           ],
+          pipeline_visited_status_list: [
+            {
+              id: "1",
+              label: "Status 1",
+              color: "#ff0000",
+              disabled: false,
+              parent_id: null,
+            },
+          ],
+          report_settings: {
+            date_field_list: [
+              {
+                id: "created_at",
+                label: "Created At",
+              },
+              {
+                id: "updated_at",
+                label: "Updated At",
+              },
+            ],
+            grouping_list: [
+              {
+                id: "region_id",
+                treeType: "leaf" as const,
+                parent_id: null,
+                label: "Region",
+                key: "region_id",
+                value: "region_name",
+              },
+            ],
+            metric_list: [
+              {
+                id: "pipeline_count",
+                treeType: "leaf" as const,
+                parent_id: null,
+                label: "Pipeline Count",
+                key: "pipeline_count",
+                value: "pipeline_count",
+              },
+            ],
+          },
         },
       };
     },
     {
       tags: ["Workspaces"],
       response: {
-        200: v.object({
-          success: v.boolean(),
-          data: v.object({
-            region_list: BaseListSchemaVali,
-            pipeline_tag_list: BaseListSchemaVali,
-            pipeline_status_list: v.array(StatusSchema),
+        200: z.strictObject({
+          success: z.boolean(),
+          data: z.strictObject({
+            region_list: BaseListSchema,
+            pipeline_tag_list: BaseListSchema,
+            pipeline_status_list: z.array(PipelineStatusSchema),
+            report_settings: z.strictObject({
+              date_field_list: BaseListSchema,
+              grouping_list: z.array(
+                z.discriminatedUnion("treeType", [
+                  z.strictObject({
+                    id: z.string(),
+                    treeType: z.literal("branch"),
+                    parent_id: z.nullable(z.string()),
+                    label: z.string(),
+                  }),
+                  z.strictObject({
+                    id: z.string(),
+                    treeType: z.literal("leaf"),
+                    parent_id: z.nullable(z.string()),
+                    label: z.string(),
+                    key: z.string(),
+                    value: z.string(),
+                  }),
+                ]),
+              ),
+              metric_list: z.array(
+                z.discriminatedUnion("treeType", [
+                  z.strictObject({
+                    id: z.string(),
+                    treeType: z.literal("branch"),
+                    parent_id: z.nullable(z.string()),
+                    label: z.string(),
+                  }),
+                  z.strictObject({
+                    id: z.string(),
+                    treeType: z.literal("leaf"),
+                    parent_id: z.nullable(z.string()),
+                    label: z.string(),
+                    key: z.string(),
+                    value: z.string(),
+                  }),
+                ]),
+              ),
+            }),
           }),
         }),
       },

@@ -127,6 +127,14 @@ export const VehicleMock: z.infer<typeof VehicleSchema> = {
   model: "Camry",
   year: 2020,
 };
+export const PipelineTagSchema = z.strictObject({
+  id: z.string(),
+  label: z.string(),
+});
+export const PipelineTagMock: z.infer<typeof PipelineTagSchema> = {
+  id: "tag1",
+  label: "Tag 1",
+};
 
 export const PipelineSchema = z.strictObject({
   id: z.string(),
@@ -144,7 +152,7 @@ export const PipelineSchema = z.strictObject({
   customer_id: z.string(),
   customer: CustomerSchema,
 
-  tag_list: z.array(z.string()),
+  tag_list: z.array(PipelineTagSchema),
 
   sale_type: z.nullable(z.string()),
   trade_in: z.nullable(z.boolean()),
@@ -195,7 +203,7 @@ export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
   customer_id: CustomerMock.id,
   customer: CustomerMock,
 
-  tag_list: ["tag1", "tag2"],
+  tag_list: [PipelineTagMock],
 
   sale_type: "new",
   trade_in: false,

@@ -4,7 +4,7 @@ import { BasePaginationSchema } from "./schemas";
 
 export const cars = new Elysia()
   .post(
-    "/api/v2/cars/get",
+    "/api/v2/car-list/get",
     () => {
       return {
         success: true,
@@ -41,7 +41,7 @@ export const cars = new Elysia()
     },
   )
   .post(
-    "/api/v2/cars/filter-options/get",
+    "/api/v2/car-list/filter-options/get",
     () => {
       return {
         success: true,

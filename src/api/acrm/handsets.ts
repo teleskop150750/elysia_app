@@ -1,5 +1,6 @@
 import Elysia from "elysia";
 import { z } from "zod";
+import { HandlesetMock, HandlesetSchema } from "./schemas";
 
 export const handsets = new Elysia()
   .post(
@@ -7,15 +8,7 @@ export const handsets = new Elysia()
     () => {
       return {
         success: true,
-        data: [
-          {
-            id: "1",
-            owner: {
-              id: 1,
-              name: "Operator 1",
-            },
-          },
-        ],
+        data: [HandlesetMock],
       };
     },
     {
@@ -23,19 +16,7 @@ export const handsets = new Elysia()
       response: {
         200: z.strictObject({
           success: z.boolean(),
-          data: z.array(
-            z.strictObject({
-              id: z.string(),
-              owner: z
-                .nullable(
-                  z.strictObject({
-                    id: z.number(),
-                    name: z.string(),
-                  }),
-                )
-                .default(null),
-            }),
-          ),
+          data: z.array(HandlesetSchema),
         }),
       },
     },
@@ -61,9 +42,7 @@ export const handsets = new Elysia()
     () => {
       return {
         success: true,
-        data: {
-          id: "1",
-        },
+        data: HandlesetMock,
       };
     },
     {
@@ -71,9 +50,7 @@ export const handsets = new Elysia()
       response: {
         200: z.strictObject({
           success: z.boolean(),
-          data: z.strictObject({
-            id: z.nullish(z.string()),
-          }),
+          data: HandlesetSchema,
         }),
       },
     },

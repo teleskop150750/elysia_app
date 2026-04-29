@@ -12,51 +12,51 @@ import { workspaces } from "./api/acrm/workspaces";
 // import { filter } from "./api/filters/index.ts";
 
 const app = new Elysia()
-  .use(
-    openapi({
-      scalar: {
-        theme: "elysiajs",
-        hiddenClients: {
-          c: true,
-          csharp: true,
-          clojure: true,
-          dart: true,
-          go: true,
-          http: true,
-          java: true,
-          js: true,
-          // js: ["fetch", "ofetch"],
-          kotlin: true,
-          // node: true,
-          objc: true,
-          ocaml: true,
-          // php: true,
-          powershell: true,
-          python: true,
-          r: true,
-          ruby: true,
-          rust: true,
-          fsharp: true,
-          // shell: true,
-          swift: true,
-        },
-        defaultHttpClient: {
-          targetKey: "node",
-          clientKey: "ofetch",
-        },
-        darkMode: true,
-      },
-      exclude: {
-        paths: ["/"],
-      },
-      mapJsonSchema: {
-        zod: z.toJSONSchema,
-      },
-    }),
-    // openapi({
-    //   references: fromTypes(),
-    // }),
-  )
+  // .use(
+  //   openapi({
+  //     scalar: {
+  //       theme: "elysiajs",
+  //       hiddenClients: {
+  //         c: true,
+  //         csharp: true,
+  //         clojure: true,
+  //         dart: true,
+  //         go: true,
+  //         http: true,
+  //         java: true,
+  //         js: true,
+  //         // js: ["fetch", "ofetch"],
+  //         kotlin: true,
+  //         // node: true,
+  //         objc: true,
+  //         ocaml: true,
+  //         // php: true,
+  //         powershell: true,
+  //         python: true,
+  //         r: true,
+  //         ruby: true,
+  //         rust: true,
+  //         fsharp: true,
+  //         // shell: true,
+  //         swift: true,
+  //       },
+  //       defaultHttpClient: {
+  //         targetKey: "node",
+  //         clientKey: "ofetch",
+  //       },
+  //       darkMode: true,
+  //     },
+  //     exclude: {
+  //       paths: ["/"],
+  //     },
+  //     mapJsonSchema: {
+  //       zod: z.toJSONSchema,
+  //     },
+  //   }),
+  //   // openapi({
+  //   //   references: fromTypes(),
+  //   // }),
+  // )
   .use(session)
   .use(workspaces)
   .use(pipelines)
@@ -64,8 +64,9 @@ const app = new Elysia()
   .use(handsets)
   .use(offers)
   .use(vehicles)
-  // .use(filter)
-  .get("/", () => "<a href='/openapi'>OpenAPI Spec</a>");
+  // .get("/openapi/json", () => Bun.file("./api/openapi/openapi.json"))
+  // // .use(filter)
+  // .get("/", () => Bun.file("./api/openapi/openapi.html"));
 
 // eslint-disable-next-line no-console
 console.log(

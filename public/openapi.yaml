@@ -1,0 +1,1581 @@
+openapi: 3.1.0
+info:
+  title: ACRM API
+  version: 0.0.0
+tags:
+  - name: Sessions
+  - name: Workspaces
+  - name: Customers
+  - name: Handsets
+  - name: Vehicles
+  - name: Offers
+  - name: Pipelines
+paths:
+  /api/v2/current-session/create:
+    post:
+      operationId: Api_createCurrentSession
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionCreateRequest'
+  /api/v2/current-session/delete:
+    delete:
+      operationId: Api_deleteCurrentSession
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+      tags:
+        - Sessions
+  /api/v2/me/get:
+    post:
+      operationId: Api_getMe
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeResponse'
+      tags:
+        - Sessions
+  /api/v2/workspace-list/get:
+    post:
+      operationId: Api_getWorkspaceList
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceListResponse'
+      tags:
+        - Workspaces
+  /api/v2/workspace/{workspaceId}/car-list/filter-options/get:
+    post:
+      operationId: Api_getVehicleFilterOptions
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehiclesFilterOptionsResponse'
+      tags:
+        - Vehicles
+  /api/v2/workspace/{workspaceId}/current-handset/delete:
+    delete:
+      operationId: Api_deleteCurrentHandset
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+      tags:
+        - Handsets
+  /api/v2/workspace/{workspaceId}/current-handset/get:
+    post:
+      operationId: Api_getCurrentHandset
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentHandsetResponse'
+      tags:
+        - Handsets
+  /api/v2/workspace/{workspaceId}/customer-list/get:
+    post:
+      operationId: Api_getCustomerList
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomersListResponse'
+      tags:
+        - Customers
+  /api/v2/workspace/{workspaceId}/handset-list/get:
+    post:
+      operationId: Api_getHandsetList
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HandsetListResponse'
+      tags:
+        - Handsets
+  /api/v2/workspace/{workspaceId}/handset/{handsetId}/owner/update:
+    put:
+      operationId: Api_updateHandsetOwner
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: handsetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+      tags:
+        - Handsets
+  /api/v2/workspace/{workspaceId}/offer-list/filter-options/get:
+    post:
+      operationId: Api_getOfferFilterOptions
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OffersFilterOptionsResponse'
+      tags:
+        - Offers
+  /api/v2/workspace/{workspaceId}/offer-list/get:
+    post:
+      operationId: Api_getOfferList
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OffersListResponse'
+      tags:
+        - Offers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListRequest'
+  /api/v2/workspace/{workspaceId}/pipeline-list/filter-options/get:
+    post:
+      operationId: Api_getPipelineFilterOptions
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineFilterOptionsResponse'
+      tags:
+        - Pipelines
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PipelineFilterOptionsRequest'
+  /api/v2/workspace/{workspaceId}/pipeline-list/get:
+    post:
+      operationId: Api_getPipelineList
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineListResponse'
+      tags:
+        - Pipelines
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PipelineCategoryRequest'
+  /api/v2/workspace/{workspaceId}/pipeline-list/metric-trend/get:
+    post:
+      operationId: Api_getPipelineMetricTrend
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineMetricTrendResponse'
+      tags:
+        - Pipelines
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PipelineMetricTrendRequest'
+  /api/v2/workspace/{workspaceId}/pipeline-list/report/get:
+    post:
+      operationId: Api_getPipelineReport
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineReportResponse'
+      tags:
+        - Pipelines
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PipelineReportRequest'
+  /api/v2/workspace/{workspaceId}/pipeline/{pipelineId}/customer/feed/get:
+    post:
+      operationId: Api_getPipelineCustomerFeed
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pipelineId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineCustomerFeedResponse'
+      tags:
+        - Pipelines
+  /api/v2/workspace/{workspaceId}/pipeline/{pipelineId}/customer/update:
+    put:
+      operationId: Api_updatePipelineCustomer
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pipelineId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+      tags:
+        - Pipelines
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PipelineCustomerUpdateRequest'
+  /api/v2/workspace/{workspaceId}/pipeline/{pipelineId}/feed/create:
+    post:
+      operationId: Api_createPipelineFeed
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pipelineId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+      tags:
+        - Pipelines
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PipelineFeedCreateRequestComment'
+  /api/v2/workspace/{workspaceId}/pipeline/{pipelineId}/get:
+    post:
+      operationId: Api_getPipeline
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pipelineId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineGetResponse'
+      tags:
+        - Pipelines
+  /api/v2/workspace/{workspaceId}/settings/get:
+    post:
+      operationId: Api_getWorkspaceSettings
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspacesSettingsResponse'
+      tags:
+        - Workspaces
+  /api/v2/workspace/{workspaceId}/vehicle-list/get:
+    post:
+      operationId: Api_getVehicleList
+      parameters:
+        - name: workspaceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehiclesListResponse'
+      tags:
+        - Vehicles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListRequest'
+components:
+  schemas:
+    BasePagination:
+      type: object
+      required:
+        - total
+        - per_page
+        - current_page
+        - last_page
+        - from
+        - to
+      properties:
+        total:
+          type: integer
+          format: int32
+        per_page:
+          type: integer
+          format: int32
+        current_page:
+          type: integer
+          format: int32
+        last_page:
+          type: integer
+          format: int32
+        from:
+          type: integer
+          format: int32
+        to:
+          type: integer
+          format: int32
+    CurrentHandsetData:
+      type: object
+      properties:
+        id:
+          anyOf:
+            - type: string
+            - type: 'null'
+    CurrentHandsetResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/CurrentHandsetData'
+    Customer:
+      type: object
+      required:
+        - id
+        - name
+        - rating
+        - region_id
+        - region
+        - phones
+      properties:
+        id:
+          type: string
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+        rating:
+          anyOf:
+            - type: number
+              format: double
+            - type: 'null'
+        region_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+        region:
+          anyOf:
+            - $ref: '#/components/schemas/Region'
+            - type: 'null'
+        phones:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerPhone'
+    CustomerPhone:
+      type: object
+      required:
+        - id
+        - label
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+    CustomersListResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+    Handset:
+      type: object
+      required:
+        - id
+        - owner
+      properties:
+        id:
+          type: string
+        owner:
+          anyOf:
+            - $ref: '#/components/schemas/HandsetOwner'
+            - type: 'null'
+    HandsetListResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Handset'
+    HandsetOwner:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+    ListRequest:
+      type: object
+      properties:
+        search:
+          anyOf:
+            - type: string
+            - type: 'null'
+        filters:
+          anyOf:
+            - type: object
+              unevaluatedProperties: {}
+            - type: 'null'
+        pagination:
+          type: object
+          properties:
+            current_page:
+              type: integer
+              format: int32
+            per_page:
+              type: integer
+              format: int32
+          required:
+            - current_page
+            - per_page
+    Me:
+      type: object
+      required:
+        - id
+        - email
+        - name
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+    MeResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/Me'
+    Offer:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    OffersFilterOptionsResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          type: 'null'
+    OffersListResponse:
+      type: object
+      required:
+        - success
+        - data
+        - pagination
+      properties:
+        success:
+          type: boolean
+        data:
+          type: 'null'
+        pagination:
+          $ref: '#/components/schemas/BasePagination'
+    Operator:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Pipeline:
+      type: object
+      required:
+        - id
+        - active_pipeline_id
+        - is_spam
+        - is_captcha
+        - status_id
+        - status
+        - operator_id
+        - operator
+        - customer_id
+        - customer
+        - tag_list
+        - sale_type
+        - trade_in
+        - disposal
+        - lead_type
+        - source_id
+        - source
+        - ad_url
+        - ad_external_id
+        - target_vehicle_id
+        - target_vehicle
+        - desired_vehicle_id
+        - desired_vehicle
+        - sold_vehicle_id
+        - sold_vehicle
+        - advertised_price
+        - desired_price
+        - catalog_price_at_sale
+        - selling_price
+        - call_at
+        - visit_at
+        - closed_at
+        - deleted_at
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: string
+        active_pipeline_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+        is_spam:
+          type: boolean
+        is_captcha:
+          type: boolean
+        status_id:
+          type: string
+        status:
+          $ref: '#/components/schemas/PipelineStatus'
+        operator_id:
+          type: string
+        operator:
+          $ref: '#/components/schemas/Operator'
+        customer_id:
+          type: string
+        customer:
+          $ref: '#/components/schemas/Customer'
+        tag_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineTag'
+        sale_type:
+          anyOf:
+            - type: string
+            - type: 'null'
+        trade_in:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+        disposal:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+        lead_type:
+          anyOf:
+            - type: string
+            - type: 'null'
+        source_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+        source:
+          anyOf:
+            - $ref: '#/components/schemas/Source'
+            - type: 'null'
+        ad_url:
+          anyOf:
+            - type: string
+            - type: 'null'
+        ad_external_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+        target_vehicle_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+        target_vehicle:
+          anyOf:
+            - $ref: '#/components/schemas/Offer'
+            - type: 'null'
+        desired_vehicle_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+        desired_vehicle:
+          anyOf:
+            - $ref: '#/components/schemas/Vehicle'
+            - type: 'null'
+        sold_vehicle_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+        sold_vehicle:
+          anyOf:
+            - $ref: '#/components/schemas/Vehicle'
+            - type: 'null'
+        advertised_price:
+          anyOf:
+            - type: number
+              format: double
+            - type: 'null'
+        desired_price:
+          anyOf:
+            - type: number
+              format: double
+            - type: 'null'
+        catalog_price_at_sale:
+          anyOf:
+            - type: number
+              format: double
+            - type: 'null'
+        selling_price:
+          anyOf:
+            - type: number
+              format: double
+            - type: 'null'
+        call_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+        visit_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+        closed_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+        deleted_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+        created_at:
+          type: string
+        updated_at:
+          type: string
+    PipelineCategoryRequest:
+      type: object
+      properties:
+        search:
+          anyOf:
+            - type: string
+            - type: 'null'
+        category:
+          anyOf:
+            - type: string
+              enum:
+                - hot
+                - new_no_answer
+                - burned_my
+                - burned
+                - urgent
+                - visit_today
+                - visit_tomorrow
+            - type: 'null'
+        metric:
+          anyOf:
+            - type: string
+            - type: 'null'
+        dimensions:
+          anyOf:
+            - type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  value:
+                    type: string
+                required:
+                  - key
+                  - value
+            - type: 'null'
+        filters:
+          anyOf:
+            - type: object
+              unevaluatedProperties: {}
+            - type: 'null'
+        pagination:
+          type: object
+          properties:
+            current_page:
+              type: integer
+              format: int32
+            per_page:
+              type: integer
+              format: int32
+          required:
+            - current_page
+            - per_page
+    PipelineCustomerFeedResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineFeedComment'
+    PipelineCustomerUpdateRequest:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+    PipelineFeedComment:
+      type: object
+      required:
+        - id
+        - type
+        - pyaload
+        - order_id
+        - created_at
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+            - comment
+        operator:
+          anyOf:
+            - $ref: '#/components/schemas/Operator'
+            - type: 'null'
+        pyaload:
+          $ref: '#/components/schemas/PipelineFeedCommentPayload'
+        order_id:
+          type: number
+          format: double
+        created_at:
+          type: string
+    PipelineFeedCommentPayload:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+    PipelineFeedCreateRequestComment:
+      type: object
+      required:
+        - type
+        - pyaload
+      properties:
+        type:
+          type: string
+          enum:
+            - comment
+        pyaload:
+          $ref: '#/components/schemas/PipelineFeedCommentPayload'
+    PipelineFilterDimension:
+      type: object
+      required:
+        - id
+        - value
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+    PipelineFilterOptionsRequest:
+      type: object
+      properties:
+        search:
+          anyOf:
+            - type: string
+            - type: 'null'
+        category:
+          anyOf:
+            - type: string
+              enum:
+                - hot
+                - new_no_answer
+                - burned_my
+                - burned
+                - urgent
+                - visit_today
+                - visit_tomorrow
+            - type: 'null'
+        metric:
+          anyOf:
+            - type: string
+            - type: 'null'
+        dimensions:
+          anyOf:
+            - type: array
+              items:
+                $ref: '#/components/schemas/PipelineFilterDimension'
+            - type: 'null'
+        filters:
+          anyOf:
+            - type: object
+              unevaluatedProperties: {}
+            - type: 'null'
+        pagination:
+          type: object
+          properties:
+            current_page:
+              type: integer
+              format: int32
+            per_page:
+              type: integer
+              format: int32
+          required:
+            - current_page
+            - per_page
+    PipelineFilterOptionsResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          type: 'null'
+    PipelineGetData:
+      type: object
+      required:
+        - other_pipeline_list
+      properties:
+        other_pipeline_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineOther'
+      allOf:
+        - $ref: '#/components/schemas/Pipeline'
+    PipelineGetResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/PipelineGetData'
+    PipelineListItem:
+      type: object
+      required:
+        - comment
+      properties:
+        comment:
+          anyOf:
+            - type: string
+            - type: 'null'
+      allOf:
+        - type: object
+          required:
+            - id
+            - active_pipeline_id
+            - is_spam
+            - is_captcha
+            - status_id
+            - status
+            - operator_id
+            - operator
+            - customer_id
+            - customer
+            - lead_type
+            - source_id
+            - source
+            - ad_url
+            - ad_external_id
+            - target_vehicle_id
+            - target_vehicle
+            - desired_vehicle_id
+            - desired_vehicle
+            - sold_vehicle_id
+            - sold_vehicle
+            - advertised_price
+            - desired_price
+            - catalog_price_at_sale
+            - selling_price
+            - call_at
+            - visit_at
+            - closed_at
+            - deleted_at
+            - created_at
+            - updated_at
+          properties:
+            id:
+              type: string
+            active_pipeline_id:
+              anyOf:
+                - type: string
+                - type: 'null'
+            is_spam:
+              type: boolean
+            is_captcha:
+              type: boolean
+            status_id:
+              type: string
+            status:
+              $ref: '#/components/schemas/PipelineStatus'
+            operator_id:
+              type: string
+            operator:
+              $ref: '#/components/schemas/Operator'
+            customer_id:
+              type: string
+            customer:
+              $ref: '#/components/schemas/Customer'
+            lead_type:
+              anyOf:
+                - type: string
+                - type: 'null'
+            source_id:
+              anyOf:
+                - type: string
+                - type: 'null'
+            source:
+              anyOf:
+                - $ref: '#/components/schemas/Source'
+                - type: 'null'
+            ad_url:
+              anyOf:
+                - type: string
+                - type: 'null'
+            ad_external_id:
+              anyOf:
+                - type: string
+                - type: 'null'
+            target_vehicle_id:
+              anyOf:
+                - type: string
+                - type: 'null'
+            target_vehicle:
+              anyOf:
+                - $ref: '#/components/schemas/Offer'
+                - type: 'null'
+            desired_vehicle_id:
+              anyOf:
+                - type: string
+                - type: 'null'
+            desired_vehicle:
+              anyOf:
+                - $ref: '#/components/schemas/Vehicle'
+                - type: 'null'
+            sold_vehicle_id:
+              anyOf:
+                - type: string
+                - type: 'null'
+            sold_vehicle:
+              anyOf:
+                - $ref: '#/components/schemas/Vehicle'
+                - type: 'null'
+            advertised_price:
+              anyOf:
+                - type: number
+                  format: double
+                - type: 'null'
+            desired_price:
+              anyOf:
+                - type: number
+                  format: double
+                - type: 'null'
+            catalog_price_at_sale:
+              anyOf:
+                - type: number
+                  format: double
+                - type: 'null'
+            selling_price:
+              anyOf:
+                - type: number
+                  format: double
+                - type: 'null'
+            call_at:
+              anyOf:
+                - type: string
+                - type: 'null'
+            visit_at:
+              anyOf:
+                - type: string
+                - type: 'null'
+            closed_at:
+              anyOf:
+                - type: string
+                - type: 'null'
+            deleted_at:
+              anyOf:
+                - type: string
+                - type: 'null'
+            created_at:
+              type: string
+            updated_at:
+              type: string
+          description: The template for omitting properties.
+    PipelineListResponse:
+      type: object
+      required:
+        - success
+        - data
+        - pagination
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineListItem'
+        pagination:
+          $ref: '#/components/schemas/BasePagination'
+    PipelineMetricTrendItem:
+      type: object
+      required:
+        - datetime
+        - groupings
+        - metrics
+      properties:
+        datetime:
+          type: string
+        groupings:
+          type: object
+          unevaluatedProperties:
+            $ref: '#/components/schemas/PipelineReportGroupingItem'
+        metrics:
+          type: object
+          unevaluatedProperties:
+            $ref: '#/components/schemas/PipelineReportMetricItem'
+    PipelineMetricTrendRequest:
+      type: object
+      required:
+        - periodGroup
+        - metric
+        - dimensions
+      properties:
+        periodGroup:
+          type: string
+        metric:
+          type: array
+          items:
+            type: string
+        dimensions:
+          type: array
+          items:
+            type: string
+    PipelineMetricTrendResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineMetricTrendItem'
+    PipelineOther:
+      type: object
+      required:
+        - id
+        - status_id
+      properties:
+        id:
+          type: string
+        status_id:
+          type: string
+    PipelineReportGroupingItem:
+      type: object
+      required:
+        - id
+        - label
+        - value
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        value: {}
+    PipelineReportItem:
+      type: object
+      required:
+        - groupings
+        - metrics
+      properties:
+        groupings:
+          type: object
+          unevaluatedProperties:
+            $ref: '#/components/schemas/PipelineReportGroupingItem'
+        metrics:
+          type: object
+          unevaluatedProperties:
+            $ref: '#/components/schemas/PipelineReportMetricItem'
+    PipelineReportMetricItem:
+      type: object
+      required:
+        - id
+        - value
+      properties:
+        id:
+          type: string
+        value:
+          type: number
+          format: double
+    PipelineReportRequest:
+      type: object
+      required:
+        - metrics
+        - dimensions
+      properties:
+        metrics:
+          type: array
+          items:
+            type: string
+        dimensions:
+          type: array
+          items:
+            type: string
+    PipelineReportResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineReportItem'
+    PipelineStatus:
+      type: object
+      required:
+        - id
+        - label
+        - color
+        - disabled
+        - parent_id
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        color:
+          type: string
+        disabled:
+          type: boolean
+        parent_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+    PipelineTag:
+      type: object
+      required:
+        - id
+        - label
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+    Region:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    SessionCreateRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    Source:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    SuccessResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+    Vehicle:
+      type: object
+      required:
+        - id
+        - make
+        - model
+        - year
+      properties:
+        id:
+          type: string
+        make:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer
+          format: int32
+    VehiclesFilterOptionsResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          type: 'null'
+    VehiclesListResponse:
+      type: object
+      required:
+        - success
+        - data
+        - pagination
+      properties:
+        success:
+          type: boolean
+        data:
+          type: 'null'
+        pagination:
+          $ref: '#/components/schemas/BasePagination'
+    Workspace:
+      type: object
+      required:
+        - id
+        - name
+        - disabled
+        - parent_id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        disabled:
+          type: boolean
+        parent_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+    WorkspaceListResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workspace'
+    WorkspacesSettingsData:
+      type: object
+      required:
+        - source_list
+        - region_list
+        - pipeline_tag_list
+        - pipeline_status_list
+        - report_settings
+      properties:
+        source_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+        region_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+        pipeline_tag_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineTag'
+        pipeline_status_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineStatus'
+        report_settings:
+          $ref: '#/components/schemas/WorkspacesSettingsReportSettings'
+    WorkspacesSettingsReportSettings:
+      type: object
+      required:
+        - dimension_list
+        - metric_list
+      properties:
+        dimension_list:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/WorkspacesSettingsTreeBranch'
+              - $ref: '#/components/schemas/WorkspacesSettingsTreeLeaf'
+        metric_list:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/WorkspacesSettingsTreeBranch'
+              - $ref: '#/components/schemas/WorkspacesSettingsTreeLeaf'
+    WorkspacesSettingsResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/WorkspacesSettingsData'
+    WorkspacesSettingsTreeBranch:
+      type: object
+      required:
+        - id
+        - treeType
+        - parent_id
+        - label
+      properties:
+        id:
+          type: string
+        treeType:
+          type: string
+          enum:
+            - branch
+        parent_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+        label:
+          type: string
+    WorkspacesSettingsTreeLeaf:
+      type: object
+      required:
+        - id
+        - treeType
+        - parent_id
+        - label
+        - value
+      properties:
+        id:
+          type: string
+        treeType:
+          type: string
+          enum:
+            - leaf
+        parent_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+        label:
+          type: string
+        value:
+          type: string

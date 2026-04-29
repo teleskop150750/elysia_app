@@ -176,7 +176,7 @@ export const PipelineSchema = z.strictObject({
   sold_vehicle_id: z.nullable(z.string()),
   sold_vehicle: z.nullable(SoldVehicle),
 
-  offer_price: z.nullable(z.number().min(0)),
+  advertised_price: z.nullable(z.number().min(0)),
   desired_price: z.nullable(z.number().min(0)),
   catalog_price_at_sale: z.nullable(z.number().min(0)),
   selling_price: z.nullable(z.number().min(0)),
@@ -224,7 +224,7 @@ export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
   sold_vehicle_id: SoldVehicleMock.id,
   sold_vehicle: SoldVehicleMock,
 
-  offer_price: 30000,
+  advertised_price: 30000,
   desired_price: 25000,
   catalog_price_at_sale: 26000,
   selling_price: 24000,

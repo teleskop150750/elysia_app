@@ -142,7 +142,6 @@ export const SoldVehicleMock: z.infer<typeof SoldVehicle> = {
 
 export const PipelineSchema = z.strictObject({
   id: z.string(),
-  last_pipeline_id: z.nullable(z.string()),
   active_pipeline_id: z.nullable(z.string()),
 
   is_spam: z.boolean(),
@@ -190,7 +189,6 @@ export const PipelineSchema = z.strictObject({
 });
 export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
   id: "555",
-  last_pipeline_id: null,
   active_pipeline_id: null,
 
   is_spam: false,

@@ -79,8 +79,8 @@ export const SourceSchema = z.strictObject({
   name: z.string(),
 });
 export const SourceMock: z.infer<typeof SourceSchema> = {
-  id: "654",
-  name: "Website",
+  id: "456",
+  name: "Facebook Ads",
 };
 export const CustomerPhoneSchema = z.strictObject({
   id: z.string(),

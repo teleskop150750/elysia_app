@@ -7,6 +7,8 @@ import {
   PipelineStatusSchema,
   RegionMock,
   RegionSchema,
+  SourceMock,
+  SourceSchema,
   WorkspaceSchema,
 } from "./schemas";
 
@@ -42,6 +44,7 @@ export const workspaces = new Elysia()
       return {
         success: true,
         data: {
+          source_list: [SourceMock],
           region_list: [RegionMock],
           pipeline_tag_list: BaseListMock,
           pipeline_status_list: [PipelineStatusMock],
@@ -87,6 +90,7 @@ export const workspaces = new Elysia()
         200: z.strictObject({
           success: z.boolean(),
           data: z.strictObject({
+            source_list: SourceSchema.array(),
             region_list: RegionSchema.array(),
             pipeline_tag_list: BaseListSchema,
             pipeline_status_list: z.array(PipelineStatusSchema),

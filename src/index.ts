@@ -2,6 +2,7 @@ import { openapi } from "@elysiajs/openapi";
 import { Elysia } from "elysia";
 import { z } from "zod";
 import { cars } from "./api/acrm/cars";
+import { handsets } from "./api/acrm/handsets";
 import { offers } from "./api/acrm/offers";
 import { pipelines } from "./api/acrm/pipelines";
 import { session } from "./api/acrm/session";
@@ -60,6 +61,7 @@ const app = new Elysia()
   .use(pipelines)
   .use(offers)
   .use(cars)
+  .use(handsets)
   // .use(filter)
   .get("/", () => "<a href='/openapi'>OpenAPI Spec</a>");
 

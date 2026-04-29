@@ -168,6 +168,7 @@ export const PipelineSchema = z.strictObject({
   source: z.nullable(SourceSchema),
 
   ad_url: z.url().nullable(),
+  ad_external_id: z.nullable(z.string()),
 
   target_vehicle_id: z.nullable(z.string()),
   target_vehicle: z.nullable(OfferSchema),
@@ -215,6 +216,7 @@ export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
   lead_type: "organic",
 
   ad_url: "https://example.com/offer/555",
+  ad_external_id: "555",
 
   source_id: SourceMock.id,
   source: SourceMock,

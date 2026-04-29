@@ -6,6 +6,11 @@ export const BaseListSchema = z.array(
     label: z.string(),
   }),
 );
+export const BaseListMock: z.infer<typeof BaseListSchema> = [
+  { id: "1", label: "Option 1" },
+  { id: "2", label: "Option 2" },
+  { id: "3", label: "Option 3" },
+];
 
 export const BasePaginationSchema = z.strictObject({
   total: z.number().int().min(0),
@@ -15,6 +20,14 @@ export const BasePaginationSchema = z.strictObject({
   from: z.number().int().min(0),
   to: z.number().int().min(0),
 });
+export const BasePaginationMock: z.infer<typeof BasePaginationSchema> = {
+  total: 50,
+  per_page: 15,
+  current_page: 1,
+  last_page: 4,
+  from: 1,
+  to: 15,
+};
 
 export const WorkspaceSchema = z.strictObject({
   id: z.string(),
@@ -22,11 +35,21 @@ export const WorkspaceSchema = z.strictObject({
   disabled: z.boolean(),
   parent_id: z.nullable(z.string()),
 });
+export const WorkspaceMock: z.infer<typeof WorkspaceSchema> = {
+  id: "1",
+  name: "Workspace 1",
+  disabled: false,
+  parent_id: null,
+};
 
 export const OperatorSchema = z.strictObject({
   id: z.string(),
   name: z.string(),
 });
+export const OperatorMock: z.infer<typeof OperatorSchema> = {
+  id: "789",
+  name: "Alice Smith",
+};
 
 export const PipelineStatusSchema = z.strictObject({
   id: z.string(),
@@ -35,27 +58,89 @@ export const PipelineStatusSchema = z.strictObject({
   disabled: z.boolean(),
   parent_id: z.nullable(z.string()),
 });
+export const PipelineStatusMock: z.infer<typeof PipelineStatusSchema> = {
+  id: "123",
+  label: "New",
+  color: "#00ff00",
+  disabled: false,
+  parent_id: null,
+};
 
 export const RegionSchema = z.strictObject({
   id: z.string(),
+  name: z.string(),
+});
+export const RegionMock: z.infer<typeof RegionSchema> = {
+  id: "987",
+  name: "Moscow",
+};
+export const SourceSchema = z.strictObject({
+  id: z.string(),
+  name: z.string(),
+});
+export const SourceMock: z.infer<typeof SourceSchema> = {
+  id: "654",
+  name: "Website",
+};
+export const CustomerPhoneSchema = z.strictObject({
+  id: z.string(),
   label: z.string(),
 });
-
-export const ClientSchema = z.strictObject({
+export const CustomerPhoneMock: z.infer<typeof CustomerPhoneSchema> = {
+  id: "555-1234",
+  label: "+1 (555) 123-4567",
+};
+export const CustomerSchema = z.strictObject({
   id: z.string(),
   name: z.nullable(z.string()),
   rating: z.nullable(z.number().min(1).max(10)),
   region_id: z.nullable(z.string()),
   region: z.nullable(RegionSchema),
-  phones: z.array(
-    z.strictObject({
-      id: z.string(),
-      label: z.string(),
-    }),
-  ),
+  phones: z.array(CustomerPhoneSchema),
 });
+export const CustomerMock: z.infer<typeof CustomerSchema> = {
+  id: "321",
+  name: "Jane Doe",
+  rating: 8,
+  region_id: RegionMock.id,
+  region: RegionMock,
+  phones: [CustomerPhoneMock],
+};
 
-export const BasePipelineSchema = z.strictObject({
+export const OfferSchema = z.strictObject({
+  id: z.string(),
+  name: z.string(),
+});
+export const OfferMock: z.infer<typeof OfferSchema> = {
+  id: "777",
+  name: "Special Offer",
+};
+export const DesiredVehicle = z.strictObject({
+  id: z.string(),
+  make: z.string(),
+  model: z.string(),
+  year: z.number().int().min(1900).max(new Date().getFullYear()),
+});
+export const DesiredVehicleMock: z.infer<typeof DesiredVehicle> = {
+  id: "888",
+  make: "Toyota",
+  model: "Camry",
+  year: 2020,
+};
+export const SoldVehicle = z.strictObject({
+  id: z.string(),
+  make: z.string(),
+  model: z.string(),
+  year: z.number().int().min(1900).max(new Date().getFullYear()),
+});
+export const SoldVehicleMock: z.infer<typeof SoldVehicle> = {
+  id: "999",
+  make: "Honda",
+  model: "Civic",
+  year: 2018,
+};
+
+export const PipelineSchema = z.strictObject({
   id: z.string(),
   active_pipeline_id: z.nullable(z.string()),
 
@@ -63,9 +148,13 @@ export const BasePipelineSchema = z.strictObject({
   is_captcha: z.boolean(),
 
   status_id: z.string(),
+  status: PipelineStatusSchema,
+
   operator_id: z.string(),
   operator: OperatorSchema,
-  client: ClientSchema,
+
+  customer_id: z.string(),
+  customer: CustomerSchema,
 
   tag_list: z.array(z.string()),
 
@@ -74,7 +163,20 @@ export const BasePipelineSchema = z.strictObject({
   disposal: z.nullable(z.boolean()),
 
   lead_type: z.nullable(z.string()),
+
   source_id: z.nullable(z.string()),
+  source: z.nullable(SourceSchema),
+
+  desired_price: z.nullable(z.number().min(0)),
+
+  offer_id: z.nullable(z.string()),
+  offer: z.nullable(OfferSchema),
+
+  desired_vehicle_id: z.nullable(z.string()),
+  desired_vehicle: z.nullable(DesiredVehicle),
+
+  sold_vehicle_id: z.nullable(z.string()),
+  sold_vehicle: z.nullable(SoldVehicle),
 
   call_at: z.nullable(z.string()),
   visit_at: z.nullable(z.string()),
@@ -82,6 +184,50 @@ export const BasePipelineSchema = z.strictObject({
   created_at: z.string(),
   updated_at: z.string(),
 });
+export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
+  id: "555",
+  active_pipeline_id: null,
+
+  is_spam: false,
+  is_captcha: false,
+
+  status_id: PipelineStatusMock.id,
+  status: PipelineStatusMock,
+
+  operator_id: OperatorMock.id,
+  operator: OperatorMock,
+
+  customer_id: CustomerMock.id,
+  customer: CustomerMock,
+
+  tag_list: ["tag1", "tag2"],
+
+  sale_type: "new",
+  trade_in: false,
+  disposal: false,
+
+  lead_type: "organic",
+
+  source_id: SourceMock.id,
+  source: SourceMock,
+
+  desired_price: 25000,
+
+  offer_id: OfferMock.id,
+  offer: OfferMock,
+
+  desired_vehicle_id: DesiredVehicleMock.id,
+  desired_vehicle: DesiredVehicleMock,
+
+  sold_vehicle_id: SoldVehicleMock.id,
+  sold_vehicle: SoldVehicleMock,
+
+  call_at: null,
+  visit_at: null,
+  closed_at: null,
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString(),
+};
 
 export function objKeys<T extends Record<string, any>>(obj: T): (keyof T)[] {
   return Object.keys(obj) as (keyof T)[];

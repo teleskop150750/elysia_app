@@ -1,8 +1,12 @@
 import Elysia from "elysia";
 import { z } from "zod";
 import {
+  BaseListMock,
   BaseListSchema,
+  PipelineStatusMock,
   PipelineStatusSchema,
+  RegionMock,
+  RegionSchema,
   WorkspaceSchema,
 } from "./schemas";
 
@@ -38,36 +42,10 @@ export const workspaces = new Elysia()
       return {
         success: true,
         data: {
-          region_list: [
-            {
-              id: "1",
-              label: "Region 1",
-            },
-          ],
-          pipeline_tag_list: [
-            {
-              id: "1",
-              label: "Tag 1",
-            },
-          ],
-          pipeline_status_list: [
-            {
-              id: "1",
-              label: "Status 1",
-              color: "#ff0000",
-              disabled: false,
-              parent_id: null,
-            },
-          ],
-          pipeline_visited_status_list: [
-            {
-              id: "1",
-              label: "Status 1",
-              color: "#ff0000",
-              disabled: false,
-              parent_id: null,
-            },
-          ],
+          region_list: [RegionMock],
+          pipeline_tag_list: BaseListMock,
+          pipeline_status_list: [PipelineStatusMock],
+          pipeline_visited_status_list: [PipelineStatusMock],
           report_settings: {
             date_field_list: [
               {
@@ -109,7 +87,7 @@ export const workspaces = new Elysia()
         200: z.strictObject({
           success: z.boolean(),
           data: z.strictObject({
-            region_list: BaseListSchema,
+            region_list: RegionSchema.array(),
             pipeline_tag_list: BaseListSchema,
             pipeline_status_list: z.array(PipelineStatusSchema),
             report_settings: z.strictObject({

@@ -1,11 +1,6 @@
 import Elysia from "elysia";
 import { z } from "zod";
-import {
-  BasePaginationSchema,
-  BasePipelineSchema,
-  ClientSchema,
-  objOmit,
-} from "./schemas";
+import { BasePaginationSchema, BasePipelineSchema, objOmit } from "./schemas";
 
 export const pipelines = new Elysia()
   .post(
@@ -20,6 +15,10 @@ export const pipelines = new Elysia()
 
             status_id: "456",
             operator_id: "789",
+            operator: {
+              id: "789",
+              name: "John Smith",
+            },
 
             is_captcha: false,
             is_spam: false,
@@ -38,6 +37,10 @@ export const pipelines = new Elysia()
               name: "Jane Doe",
               rating: 8,
               region_id: "987",
+              region: {
+                id: "987",
+                label: "Moscow",
+              },
               phones: [
                 {
                   id: "555-1234",
@@ -105,7 +108,6 @@ export const pipelines = new Elysia()
                 "disposal",
               ]),
               comment: z.nullable(z.string()),
-              client: ClientSchema,
             }),
           ),
           pagination: BasePaginationSchema,
@@ -291,6 +293,10 @@ export const pipelines = new Elysia()
 
           status_id: "456",
           operator_id: "789",
+          operator: {
+            id: "789",
+            name: "John Smith",
+          },
 
           tag_list: ["tag1", "tag2"],
 
@@ -315,6 +321,10 @@ export const pipelines = new Elysia()
             name: "Jane Doe",
             rating: 8,
             region_id: "987",
+            region: {
+              id: "987",
+              label: "Moscow",
+            },
             phones: [
               {
                 id: "555-1234",
@@ -338,8 +348,6 @@ export const pipelines = new Elysia()
           success: z.boolean(),
           data: z.strictObject({
             ...BasePipelineSchema.shape,
-
-            client: ClientSchema,
 
             purchased_car: z.nullable(
               z.strictObject({

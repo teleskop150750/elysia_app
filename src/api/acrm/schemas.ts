@@ -23,6 +23,11 @@ export const WorkspaceSchema = z.strictObject({
   parent_id: z.nullable(z.string()),
 });
 
+export const OperatorSchema = z.strictObject({
+  id: z.string(),
+  name: z.string(),
+});
+
 export const PipelineStatusSchema = z.strictObject({
   id: z.string(),
   label: z.string(),
@@ -31,11 +36,17 @@ export const PipelineStatusSchema = z.strictObject({
   parent_id: z.nullable(z.string()),
 });
 
+export const RegionSchema = z.strictObject({
+  id: z.string(),
+  label: z.string(),
+});
+
 export const ClientSchema = z.strictObject({
   id: z.string(),
   name: z.nullable(z.string()),
   rating: z.nullable(z.number().min(1).max(10)),
   region_id: z.nullable(z.string()),
+  region: z.nullable(RegionSchema),
   phones: z.array(
     z.strictObject({
       id: z.string(),
@@ -53,6 +64,8 @@ export const BasePipelineSchema = z.strictObject({
 
   status_id: z.string(),
   operator_id: z.string(),
+  operator: OperatorSchema,
+  client: ClientSchema,
 
   tag_list: z.array(z.string()),
 

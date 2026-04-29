@@ -71,7 +71,7 @@ model Offer {
 model Vehicle {
   id: string;
   make: string;
-  "model": string;
+  `model`: string;
   year: int32;
 }
 
@@ -172,14 +172,9 @@ model CustomersListResponse {
   data: Customer[];
 }
 
-model HandsetOwner {
-  id: numeric;
-  name: string;
-}
-
 model Handset {
   id: string;
-  owner: HandsetOwner | null;
+  owner: Operator | null;
 }
 
 model HandsetListResponse {
@@ -250,7 +245,11 @@ model PipelineCategoryRequest {
   };
 }
 
-model PipelineListItem extends OmitProperties<Pipeline, "tag_list" | "sale_type" | "trade_in" | "disposal"> {
+model PipelineListItem
+  extends OmitProperties<
+    Pipeline,
+    "tag_list" | "sale_type" | "trade_in" | "disposal"
+  > {
   comment: string | null;
 }
 
@@ -419,7 +418,10 @@ interface Api {
   @tag("Handsets")
   @put
   @route("/workspace/{workspaceId}/handset/{handsetId}/owner/update")
-  updateHandsetOwner(@path workspaceId: string, @path handsetId: string): SuccessResponse;
+  updateHandsetOwner(
+    @path workspaceId: string,
+    @path handsetId: string,
+  ): SuccessResponse;
 
   @tag("Handsets")
   @post
@@ -434,17 +436,25 @@ interface Api {
   @tag("Vehicles")
   @post
   @route("/workspace/{workspaceId}/vehicle-list/get")
-  getVehicleList(@path workspaceId: string, @body body: ListRequest): VehiclesListResponse;
+  getVehicleList(
+    @path workspaceId: string,
+    @body body: ListRequest,
+  ): VehiclesListResponse;
 
   @tag("Vehicles")
   @post
   @route("/workspace/{workspaceId}/car-list/filter-options/get")
-  getVehicleFilterOptions(@path workspaceId: string): VehiclesFilterOptionsResponse;
+  getVehicleFilterOptions(
+    @path workspaceId: string,
+  ): VehiclesFilterOptionsResponse;
 
   @tag("Offers")
   @post
   @route("/workspace/{workspaceId}/offer-list/get")
-  getOfferList(@path workspaceId: string, @body body: ListRequest): OffersListResponse;
+  getOfferList(
+    @path workspaceId: string,
+    @body body: ListRequest,
+  ): OffersListResponse;
 
   @tag("Offers")
   @post
@@ -454,12 +464,18 @@ interface Api {
   @tag("Pipelines")
   @post
   @route("/workspace/{workspaceId}/pipeline-list/get")
-  getPipelineList(@path workspaceId: string, @body body: PipelineCategoryRequest): PipelineListResponse;
+  getPipelineList(
+    @path workspaceId: string,
+    @body body: PipelineCategoryRequest,
+  ): PipelineListResponse;
 
   @tag("Pipelines")
   @post
   @route("/workspace/{workspaceId}/pipeline-list/report/get")
-  getPipelineReport(@path workspaceId: string, @body body: PipelineReportRequest): PipelineReportResponse;
+  getPipelineReport(
+    @path workspaceId: string,
+    @body body: PipelineReportRequest,
+  ): PipelineReportResponse;
 
   @tag("Pipelines")
   @post
@@ -480,7 +496,10 @@ interface Api {
   @tag("Pipelines")
   @post
   @route("/workspace/{workspaceId}/pipeline/{pipelineId}/get")
-  getPipeline(@path workspaceId: string, @path pipelineId: string): PipelineGetResponse;
+  getPipeline(
+    @path workspaceId: string,
+    @path pipelineId: string,
+  ): PipelineGetResponse;
 
   @tag("Pipelines")
   @put

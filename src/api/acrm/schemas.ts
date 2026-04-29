@@ -38,12 +38,12 @@ export const OperatorMock: z.infer<typeof OperatorSchema> = {
   id: "789",
   name: "Alice Smith",
 };
-export const HandlesetSchema = z.strictObject({
+export const HandsetSchema = z.strictObject({
   id: z.string(),
   owner: z.nullish(OperatorSchema),
 });
-export const HandlesetMock: z.infer<typeof HandlesetSchema> = {
-  id: "handle1",
+export const HandsetMock: z.infer<typeof HandsetSchema> = {
+  id: "handset1",
   owner: OperatorMock,
 };
 

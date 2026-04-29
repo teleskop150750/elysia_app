@@ -29,7 +29,7 @@ export const session = new Elysia()
     },
   )
   .post(
-    "/api/v2/sessions/make",
+    "/api/v2/sessions/create",
     () => {
       return {
         success: true,

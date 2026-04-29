@@ -2,6 +2,7 @@ import { openapi } from "@elysiajs/openapi";
 import { Elysia } from "elysia";
 import { z } from "zod";
 import { cars } from "./api/acrm/cars";
+import { clients } from "./api/acrm/clients";
 import { handsets } from "./api/acrm/handsets";
 import { offers } from "./api/acrm/offers";
 import { pipelines } from "./api/acrm/pipelines";
@@ -59,9 +60,10 @@ const app = new Elysia()
   .use(session)
   .use(workspaces)
   .use(pipelines)
+  .use(clients)
+  .use(handsets)
   .use(offers)
   .use(cars)
-  .use(handsets)
   // .use(filter)
   .get("/", () => "<a href='/openapi'>OpenAPI Spec</a>");
 

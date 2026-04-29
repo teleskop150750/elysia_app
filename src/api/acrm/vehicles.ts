@@ -2,9 +2,9 @@ import Elysia from "elysia";
 import { z } from "zod";
 import { BasePaginationSchema } from "./schemas";
 
-export const cars = new Elysia()
+export const vehicles = new Elysia()
   .post(
-    "/api/v2/workspace/:workspaceId/car-list/get",
+    "/api/v2/workspace/:workspaceId/vehicle-list/get",
     () => {
       return {
         success: true,
@@ -20,7 +20,7 @@ export const cars = new Elysia()
       };
     },
     {
-      tags: ["Cars"],
+      tags: ["Vehicles"],
       body: z.object({
         search: z.string().nullish().default(null),
         filters: z.record(z.string(), z.any()).nullish().default(null),
@@ -49,7 +49,7 @@ export const cars = new Elysia()
       };
     },
     {
-      tags: ["Cars"],
+      tags: ["Vehicles"],
       response: {
         200: z.strictObject({
           success: z.boolean(),

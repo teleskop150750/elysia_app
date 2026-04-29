@@ -1,12 +1,12 @@
 import { openapi } from "@elysiajs/openapi";
 import { Elysia } from "elysia";
 import { z } from "zod";
-import { cars } from "./api/acrm/cars";
 import { customers } from "./api/acrm/customers";
 import { handsets } from "./api/acrm/handsets";
 import { offers } from "./api/acrm/offers";
 import { pipelines } from "./api/acrm/pipelines";
 import { session } from "./api/acrm/session";
+import { vehicles } from "./api/acrm/vehicles";
 import { workspaces } from "./api/acrm/workspaces";
 // import { auto } from "./api/auto/index.ts";
 // import { filter } from "./api/filters/index.ts";
@@ -63,7 +63,7 @@ const app = new Elysia()
   .use(customers)
   .use(handsets)
   .use(offers)
-  .use(cars)
+  .use(vehicles)
   // .use(filter)
   .get("/", () => "<a href='/openapi'>OpenAPI Spec</a>");
 

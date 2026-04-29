@@ -1,17 +1,5 @@
 import z from "zod";
 
-export const BaseListSchema = z.array(
-  z.strictObject({
-    id: z.string(),
-    label: z.string(),
-  }),
-);
-export const BaseListMock: z.infer<typeof BaseListSchema> = [
-  { id: "1", label: "Option 1" },
-  { id: "2", label: "Option 2" },
-  { id: "3", label: "Option 3" },
-];
-
 export const BasePaginationSchema = z.strictObject({
   total: z.number().int().min(0),
   per_page: z.number().int().min(1).max(100),

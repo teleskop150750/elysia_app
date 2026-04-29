@@ -1,10 +1,10 @@
 import Elysia from "elysia";
 import { z } from "zod";
 import {
-  BaseListMock,
-  BaseListSchema,
   PipelineStatusMock,
   PipelineStatusSchema,
+  PipelineTagMock,
+  PipelineTagSchema,
   RegionMock,
   RegionSchema,
   SourceMock,
@@ -46,7 +46,7 @@ export const workspaces = new Elysia()
         data: {
           source_list: [SourceMock],
           region_list: [RegionMock],
-          pipeline_tag_list: BaseListMock,
+          pipeline_tag_list: [PipelineTagMock],
           pipeline_status_list: [PipelineStatusMock],
           pipeline_visited_status_list: [PipelineStatusMock],
           report_settings: {
@@ -92,10 +92,9 @@ export const workspaces = new Elysia()
           data: z.strictObject({
             source_list: SourceSchema.array(),
             region_list: RegionSchema.array(),
-            pipeline_tag_list: BaseListSchema,
+            pipeline_tag_list: PipelineTagSchema.array(),
             pipeline_status_list: z.array(PipelineStatusSchema),
             report_settings: z.strictObject({
-              date_field_list: BaseListSchema,
               dimension_list: z.array(
                 z.discriminatedUnion("treeType", [
                   z.strictObject({

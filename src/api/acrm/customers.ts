@@ -1,17 +1,13 @@
 import Elysia from "elysia";
 import { z } from "zod";
+import { CustomerMock, CustomerSchema } from "./schemas";
 
 export const customers = new Elysia().post(
   "/api/v2/workspace/:workspaceId/customer-list/get",
   () => {
     return {
       success: true,
-      data: [
-        {
-          id: "1",
-          name: "Customer 1",
-        },
-      ],
+      data: [CustomerMock],
     };
   },
   {
@@ -19,12 +15,7 @@ export const customers = new Elysia().post(
     response: {
       200: z.strictObject({
         success: z.boolean(),
-        data: z.array(
-          z.strictObject({
-            id: z.string(),
-            name: z.string(),
-          }),
-        ),
+        data: z.array(CustomerSchema),
       }),
     },
   },

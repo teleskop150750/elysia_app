@@ -167,8 +167,6 @@ export const PipelineSchema = z.strictObject({
   source_id: z.nullable(z.string()),
   source: z.nullable(SourceSchema),
 
-  desired_price: z.nullable(z.number().min(0)),
-
   offer_id: z.nullable(z.string()),
   offer: z.nullable(OfferSchema),
 
@@ -177,6 +175,10 @@ export const PipelineSchema = z.strictObject({
 
   sold_vehicle_id: z.nullable(z.string()),
   sold_vehicle: z.nullable(SoldVehicle),
+
+  offer_price: z.nullable(z.number().min(0)),
+  desired_price: z.nullable(z.number().min(0)),
+  selling_price: z.nullable(z.number().min(0)),
 
   call_at: z.nullable(z.string()),
   visit_at: z.nullable(z.string()),
@@ -211,8 +213,6 @@ export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
   source_id: SourceMock.id,
   source: SourceMock,
 
-  desired_price: 25000,
-
   offer_id: OfferMock.id,
   offer: OfferMock,
 
@@ -221,6 +221,10 @@ export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
 
   sold_vehicle_id: SoldVehicleMock.id,
   sold_vehicle: SoldVehicleMock,
+
+  offer_price: 30000,
+  desired_price: 25000,
+  selling_price: 24000,
 
   call_at: null,
   visit_at: null,

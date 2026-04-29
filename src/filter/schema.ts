@@ -1,16 +1,16 @@
-import { z, ZodArray, ZodType } from "zod";
+import type { ZodArray, ZodType } from "zod";
+import { z } from "zod";
 
-export const defineArrayOperatorsSchema = <T extends ZodArray<ZodType>>(
-  type: T,
-) =>
-  z.object({
+export function defineArrayOperatorsSchema <T extends ZodArray<ZodType>>(type: T) {
+  return z.object({
     eq: type.optional(),
     arrayContains: type.optional(),
     arrayContained: type.optional(),
     arrayOverlaps: type.optional(),
     isEmpty: z.boolean().optional(),
     isNotEmpty: z.boolean().optional(),
-  });
+  })
+}
 
 export const BooleanOperatorsSchema = z.object({
   eq: z.boolean().optional(),
@@ -79,8 +79,8 @@ export const NullableOperatorsSchema = z.object({
   isNotNull: z.boolean().optional(),
 });
 
-const defineScalarOperatorsSchema = <T extends ZodType>(type: T) =>
-  z.object({
+function defineScalarOperatorsSchema <T extends ZodType>(type: T) {
+  return z.object({
     eq: type.optional(),
     ne: type.optional(),
     lt: type.optional(),
@@ -107,7 +107,8 @@ const defineScalarOperatorsSchema = <T extends ZodType>(type: T) =>
     ilike: z.string().optional(),
     notLike: z.string().optional(),
     notIlike: z.string().optional(),
-  });
+  })
+}
 
 /**
  * Schema for Generic filter operations

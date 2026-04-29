@@ -1,23 +1,23 @@
-export type IArrayOperators<T extends any[]> = {
+export interface IArrayOperators<T extends any[]> {
   eq?: T;
   arrayContains?: T;
   arrayContained?: T;
   arrayOverlaps?: T;
   isEmpty?: true;
   isNotEmpty?: true;
-};
+}
 
-export type INullableOperators = {
+export interface INullableOperators {
   isNull?: true;
   isNotNull?: true;
-};
+}
 
-export type IBooleanOperators = {
+export interface IBooleanOperators {
   eq?: boolean;
   ne?: boolean;
-};
+}
 
-export type IStringOperators = {
+export interface IStringOperators {
   eq?: string;
   ne?: string;
   inArray?: string[];
@@ -26,9 +26,9 @@ export type IStringOperators = {
   ilike?: string;
   notLike?: string;
   notIlike?: string;
-};
+}
 
-export type INumberOperators = {
+export interface INumberOperators {
   eq?: number;
   ne?: number;
   lt?: number;
@@ -45,9 +45,9 @@ export type INumberOperators = {
     min: number;
     max: number;
   };
-};
+}
 
-export type IDateOperators = {
+export interface IDateOperators {
   eq?: string;
   ne?: string;
   lt?: string;
@@ -64,7 +64,7 @@ export type IDateOperators = {
     min: string;
     max: string;
   };
-};
+}
 
 export type IOperatorKey =
   | keyof INullableOperators
@@ -78,13 +78,12 @@ export type IFieldOperators = Partial<Record<IOperatorKey, any>>;
 
 export type IFilterFieldsBase = Partial<Record<string, IFieldOperators>>;
 
-export type IFilterExpression<T extends IFilterFieldsBase = IFilterFieldsBase> =
-  {
+export interface IFilterExpression<T extends IFilterFieldsBase = IFilterFieldsBase> {
     FIELDS?: T | undefined | null;
     AND?: IFilterExpression<T>[] | undefined | null;
     OR?: IFilterExpression<T>[] | undefined | null;
     NOT?: IFilterExpression<T> | undefined | null;
-  };
+  }
 
 // export type IScalarFieldOperations<T> = {
 //   eq?: T;

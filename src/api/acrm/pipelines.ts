@@ -395,50 +395,21 @@ export const pipelines = new Elysia()
     () => {
       return {
         success: true,
-        data: {
-          id: "123",
-          active_pipeline_id: null,
-
-          status_id: "456",
-          operator_id: "789",
-
-          tag_list: ["tag1", "tag2"],
-
-          sale_type: "retail",
-          trade_in: true,
-          disposal: false,
-
-          is_captcha: false,
-          is_spam: false,
-
-          lead_type: "organic",
-          source_id: "654",
-
-          call_at: "2023-01-01T00:00:00Z",
-          visit_at: "2023-01-02T00:00:00Z",
-          closed_at: null,
-          created_at: "2023-01-01T00:00:00Z",
-          updated_at: "2023-01-01T00:00:00Z",
-
-          client: {
-            id: "321",
-            name: "Jane Doe",
-            rating: 8,
-            region_id: "987",
-            phones: [
-              {
-                id: "555-1234",
-                label: "+7(555)123-4567",
-              },
-            ],
-          },
-
-          purchased_car: null,
-          offer: null,
-          desired_car: null,
-
-          other_pipeline_list: [],
-        },
+        data: [
+          {
+            id: "123",
+            type: "comment",
+            operator: {
+              id: "789",
+              name: "John Smith",
+            },
+            pyaload: {
+              text: "This is a comment",
+            },
+            order_id: 1,
+            created_at: "2023-01-01T00:00:00Z",
+          } as const,
+        ],
       };
     },
     {
@@ -446,37 +417,66 @@ export const pipelines = new Elysia()
       response: {
         200: z.strictObject({
           success: z.boolean(),
-          data: z.strictObject({
-            ...BasePipelineSchema.shape,
-
-            client: ClientSchema,
-
-            purchased_car: z.nullable(
+          data: z.array(
+            z.discriminatedUnion("type", [
               z.strictObject({
                 id: z.string(),
-                name: z.string(),
+                type: z.literal("comment"),
+                operator: z
+                  .nullish(
+                    z.strictObject({
+                      id: z.string(),
+                      name: z.string(),
+                    }),
+                  )
+                  .default(null),
+                pyaload: z.strictObject({
+                  text: z.string(),
+                }),
+                order_id: z.number(),
+                created_at: z.iso.datetime(),
               }),
-            ),
-            offer: z.nullable(
-              z.strictObject({
-                id: z.string(),
-                name: z.string(),
-              }),
-            ),
-            desired_car: z.nullable(
-              z.strictObject({
-                id: z.string(),
-                name: z.string(),
-              }),
-            ),
-
-            other_pipeline_list: z.array(
-              z.strictObject({
-                id: z.string(),
-                status_id: z.string(),
-              }),
-            ),
+            ]),
+          ),
+        }),
+      },
+    },
+  )
+  .post(
+    "/api/v2/workspace/:workspaceId/pipeline/:pipelineId/feed/create",
+    () => {
+      return {
+        success: true,
+        data: [
+          {
+            id: "123",
+            type: "comment",
+            operator: {
+              id: "789",
+              name: "John Smith",
+            },
+            pyaload: {
+              text: "This is a comment",
+            },
+            order_id: 1,
+            created_at: "2023-01-01T00:00:00Z",
+          } as const,
+        ],
+      };
+    },
+    {
+      tags: ["Pipelines"],
+      body: z.discriminatedUnion("type", [
+        z.strictObject({
+          type: z.literal("comment"),
+          pyaload: z.strictObject({
+            text: z.string(),
           }),
+        }),
+      ]),
+      response: {
+        200: z.strictObject({
+          success: z.boolean(),
         }),
       },
     },

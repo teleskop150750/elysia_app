@@ -50,40 +50,6 @@ export const offers = new Elysia()
     },
     {
       tags: ["Offers"],
-      body: z
-        .object({
-          search: z.string().nullish().default(null),
-          category: z
-            .enum([
-              "hot",
-              "new_no_answer",
-              "burned_my",
-              "burned",
-              "urgent",
-              "visit_today",
-              "visit_tomorrow",
-            ])
-            .nullish()
-            .default(null),
-          metric: z.string().nullish().default(null),
-          groupings: z
-            .array(
-              z.strictObject({
-                key: z.string(),
-                value: z.string(),
-              }),
-            )
-            .nullish()
-            .default(null),
-          filters: z.record(z.string(), z.any()).nullish().default(null),
-          pagination: z
-            .strictObject({
-              current_page: z.number().int().min(1).default(1),
-              per_page: z.number().int().min(1).max(100).default(15),
-            })
-            .optional(),
-        })
-        .optional(),
       response: {
         200: z.strictObject({
           success: z.boolean(),

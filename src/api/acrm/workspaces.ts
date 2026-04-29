@@ -79,7 +79,7 @@ export const workspaces = new Elysia()
                 label: "Updated At",
               },
             ],
-            grouping_list: [
+            dimension_list: [
               {
                 id: "region_id",
                 treeType: "leaf" as const,
@@ -114,7 +114,7 @@ export const workspaces = new Elysia()
             pipeline_status_list: z.array(PipelineStatusSchema),
             report_settings: z.strictObject({
               date_field_list: BaseListSchema,
-              grouping_list: z.array(
+              dimension_list: z.array(
                 z.discriminatedUnion("treeType", [
                   z.strictObject({
                     id: z.string(),
@@ -127,7 +127,6 @@ export const workspaces = new Elysia()
                     treeType: z.literal("leaf"),
                     parent_id: z.nullable(z.string()),
                     label: z.string(),
-                    key: z.string(),
                     value: z.string(),
                   }),
                 ]),
@@ -145,7 +144,6 @@ export const workspaces = new Elysia()
                     treeType: z.literal("leaf"),
                     parent_id: z.nullable(z.string()),
                     label: z.string(),
-                    key: z.string(),
                     value: z.string(),
                   }),
                 ]),

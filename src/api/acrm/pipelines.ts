@@ -114,6 +114,121 @@ export const pipelines = new Elysia()
     },
   )
   .post(
+    "/api/v2/pipeline-list/report/get",
+    () => {
+      return {
+        success: true,
+        data: [
+          {
+            groupings: {
+              region: {
+                id: "region",
+                label: "Самара",
+                value: "1_id",
+              },
+            },
+            metrics: {
+              count: {
+                id: "count",
+                value: 10,
+              },
+            },
+          },
+        ],
+      };
+    },
+    {
+      tags: ["Pipelines"],
+      body: z.strictObject({
+        metrics: z.array(z.string()),
+        dimensions: z.array(z.string()),
+      }),
+      response: {
+        200: z.strictObject({
+          success: z.boolean(),
+          data: z.array(
+            z.strictObject({
+              groupings: z.record(
+                z.string(),
+                z.strictObject({
+                  id: z.string(),
+                  label: z.string(),
+                  value: z.any(),
+                }),
+              ),
+              metrics: z.record(
+                z.string(),
+                z.strictObject({
+                  id: z.string(),
+                  value: z.number(),
+                }),
+              ),
+            }),
+          ),
+        }),
+      },
+    },
+  )
+  .post(
+    "/api/v2/pipeline-list/metric-trend/get",
+    () => {
+      return {
+        success: true,
+        data: [
+          {
+            datetime: "2023-01-01T00:00:00Z",
+            groupings: {
+              region: {
+                id: "region",
+                label: "Самара",
+                value: "1_id",
+              },
+            },
+            metrics: {
+              count: {
+                id: "count",
+                value: 10,
+              },
+            },
+          },
+        ],
+      };
+    },
+    {
+      tags: ["Pipelines"],
+      body: z.strictObject({
+        periodGroup: z.string(),
+        metric: z.array(z.string()),
+        dimensions: z.array(z.string()),
+      }),
+      response: {
+        200: z.strictObject({
+          success: z.boolean(),
+          data: z.array(
+            z.strictObject({
+              datetime: z.iso.datetime(),
+              groupings: z.record(
+                z.string(),
+                z.strictObject({
+                  id: z.string(),
+                  label: z.string(),
+                  value: z.any(),
+                }),
+              ),
+              metrics: z.record(
+                z.string(),
+                z.strictObject({
+                  id: z.string(),
+                  value: z.number(),
+                }),
+              ),
+            }),
+          ),
+        }),
+      },
+    },
+  )
+  .post(
     "/api/v2/pipeline-list/filter-options/get",
     () => {
       return {
@@ -139,10 +254,10 @@ export const pipelines = new Elysia()
             .nullish()
             .default(null),
           metric: z.string().nullish().default(null),
-          groupings: z
+          dimensions: z
             .array(
               z.strictObject({
-                key: z.string(),
+                id: z.string(),
                 value: z.string(),
               }),
             )

@@ -8,7 +8,7 @@ import {
 
 export const workspaces = new Elysia()
   .post(
-    "/api/v2/workspaces/get",
+    "/api/v2/workspace-list/get",
     () => {
       return {
         success: true,
@@ -33,7 +33,7 @@ export const workspaces = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspaces/:workspaceid/settings/get",
+    "/api/v2/workspace/:workspaceId/settings/get",
     () => {
       return {
         success: true,

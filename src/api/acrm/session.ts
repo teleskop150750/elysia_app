@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const session = new Elysia()
   .post(
-    "/api/v2/sessions/me/get",
+    "/api/v2/me/get",
     () => {
       return {
         success: true,
@@ -29,7 +29,7 @@ export const session = new Elysia()
     },
   )
   .post(
-    "/api/v2/sessions/create",
+    "/api/v2/current-session/create",
     () => {
       return {
         success: true,
@@ -49,7 +49,7 @@ export const session = new Elysia()
     },
   )
   .delete(
-    "/api/v2/sessions/current/delete",
+    "/api/v2/current-session/delete",
     () => {
       return {
         success: true,

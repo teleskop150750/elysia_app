@@ -9,7 +9,7 @@ import {
 
 export const pipelines = new Elysia()
   .post(
-    "/api/v2/pipelines/get",
+    "/api/v2/pipeline-list/get",
     () => {
       return {
         success: true,
@@ -114,7 +114,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/pipelines/filter-options/get",
+    "/api/v2/pipeline-list/filter-options/get",
     () => {
       return {
         success: true,
@@ -166,7 +166,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/pipelines/:pipelineId/get",
+    "/api/v2/pipeline/:pipelineId/get",
     () => {
       return {
         success: true,
@@ -257,7 +257,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/pipelines/:pipelineId/client/feed/get",
+    "/api/v2/pipeline/:pipelineId/client/feed/get",
     () => {
       return {
         success: true,

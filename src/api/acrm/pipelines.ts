@@ -4,6 +4,8 @@ import {
   BasePaginationSchema,
   BasePipelineMock,
   objOmit,
+  OperatorMock,
+  OperatorSchema,
   PipelineSchema,
 } from "./schemas";
 
@@ -313,10 +315,7 @@ export const pipelines = new Elysia()
           {
             id: "123",
             type: "comment",
-            operator: {
-              id: "789",
-              name: "John Smith",
-            },
+            operator: OperatorMock,
             pyaload: {
               text: "This is a comment",
             },
@@ -336,14 +335,7 @@ export const pipelines = new Elysia()
               z.strictObject({
                 id: z.string(),
                 type: z.literal("comment"),
-                operator: z
-                  .nullish(
-                    z.strictObject({
-                      id: z.string(),
-                      name: z.string(),
-                    }),
-                  )
-                  .default(null),
+                operator: z.nullish(OperatorSchema).default(null),
                 pyaload: z.strictObject({
                   text: z.string(),
                 }),
@@ -361,21 +353,6 @@ export const pipelines = new Elysia()
     () => {
       return {
         success: true,
-        data: [
-          {
-            id: "123",
-            type: "comment",
-            operator: {
-              id: "789",
-              name: "John Smith",
-            },
-            pyaload: {
-              text: "This is a comment",
-            },
-            order_id: 1,
-            created_at: "2023-01-01T00:00:00Z",
-          } as const,
-        ],
       };
     },
     {

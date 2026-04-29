@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const handsets = new Elysia()
   .post(
-    "/api/v2/workspace/:workspaceIdhandset-list/get",
+    "/api/v2/workspace/:workspaceId/handset-list/get",
     () => {
       return {
         success: true,
@@ -41,7 +41,7 @@ export const handsets = new Elysia()
     },
   )
   .put(
-    "/api/v2/workspace/:workspaceIdhandset/:handsetId/owner/update",
+    "/api/v2/workspace/:workspaceId/handset/:handsetId/owner/update",
     () => {
       return {
         success: true,
@@ -57,7 +57,7 @@ export const handsets = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceIdcurrent-handset/get",
+    "/api/v2/workspace/:workspaceId/current-handset/get",
     () => {
       return {
         success: true,
@@ -79,7 +79,7 @@ export const handsets = new Elysia()
     },
   )
   .delete(
-    "/api/v2/workspace/:workspaceIdcurrent-handset/delete",
+    "/api/v2/workspace/:workspaceId/current-handset/delete",
     () => {
       return {
         success: true,

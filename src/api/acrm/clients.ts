@@ -2,7 +2,7 @@ import Elysia from "elysia";
 import { z } from "zod";
 
 export const clients = new Elysia().post(
-  "/api/v2/workspace/:workspaceIdclient-list/get",
+  "/api/v2/workspace/:workspaceId/client-list/get",
   () => {
     return {
       success: true,

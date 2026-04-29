@@ -9,7 +9,7 @@ import {
 
 export const pipelines = new Elysia()
   .post(
-    "/api/v2/workspace/:workspaceIdpipeline-list/get",
+    "/api/v2/workspace/:workspaceId/pipeline-list/get",
     () => {
       return {
         success: true,
@@ -114,7 +114,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceIdpipeline-list/report/get",
+    "/api/v2/workspace/:workspaceId/pipeline-list/report/get",
     () => {
       return {
         success: true,
@@ -170,7 +170,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceIdpipeline-list/metric-trend/get",
+    "/api/v2/workspace/:workspaceId/pipeline-list/metric-trend/get",
     () => {
       return {
         success: true,
@@ -229,7 +229,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceIdpipeline-list/filter-options/get",
+    "/api/v2/workspace/:workspaceId/pipeline-list/filter-options/get",
     () => {
       return {
         success: true,
@@ -281,7 +281,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceIdpipeline/:pipelineId/get",
+    "/api/v2/workspace/:workspaceId/pipeline/:pipelineId/get",
     () => {
       return {
         success: true,
@@ -372,7 +372,7 @@ export const pipelines = new Elysia()
     },
   )
   .put(
-    "/api/v2/workspace/:workspaceIdpipeline/:pipelineId/client/update",
+    "/api/v2/workspace/:workspaceId/pipeline/:pipelineId/client/update",
     () => {
       return {
         success: true,
@@ -391,7 +391,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceIdpipeline/:pipelineId/client/feed/get",
+    "/api/v2/workspace/:workspaceId/pipeline/:pipelineId/client/feed/get",
     () => {
       return {
         success: true,

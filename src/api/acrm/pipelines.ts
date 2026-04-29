@@ -371,6 +371,25 @@ export const pipelines = new Elysia()
       },
     },
   )
+  .put(
+    "/api/v2/pipeline/:pipelineId/client/update",
+    () => {
+      return {
+        success: true,
+      };
+    },
+    {
+      tags: ["Pipelines"],
+      body: z.strictObject({
+        id: z.string(),
+      }),
+      response: {
+        200: z.strictObject({
+          success: z.boolean(),
+        }),
+      },
+    },
+  )
   .post(
     "/api/v2/pipeline/:pipelineId/client/feed/get",
     () => {

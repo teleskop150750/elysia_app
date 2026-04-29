@@ -76,7 +76,7 @@ export const pipelines = new Elysia()
           .nullish()
           .default(null),
         metric: z.string().nullish().default(null),
-        groupings: z
+        dimensions: z
           .array(
             z.strictObject({
               key: z.string(),

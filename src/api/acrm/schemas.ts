@@ -167,8 +167,10 @@ export const PipelineSchema = z.strictObject({
   source_id: z.nullable(z.string()),
   source: z.nullable(SourceSchema),
 
-  offer_id: z.nullable(z.string()),
-  offer: z.nullable(OfferSchema),
+  ad_url: z.url().nullable(),
+
+  target_vehicle_id: z.nullable(z.string()),
+  target_vehicle: z.nullable(OfferSchema),
 
   desired_vehicle_id: z.nullable(z.string()),
   desired_vehicle: z.nullable(DesiredVehicle),
@@ -212,11 +214,13 @@ export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
 
   lead_type: "organic",
 
+  ad_url: "https://example.com/offer/555",
+
   source_id: SourceMock.id,
   source: SourceMock,
 
-  offer_id: OfferMock.id,
-  offer: OfferMock,
+  target_vehicle_id: OfferMock.id,
+  target_vehicle: OfferMock,
 
   desired_vehicle_id: DesiredVehicleMock.id,
   desired_vehicle: DesiredVehicleMock,

@@ -48,7 +48,7 @@ export const session = new Elysia()
       tags: ["Sessions"],
     },
   )
-  .post(
+  .delete(
     "/api/v2/sessions/current/delete",
     () => {
       return {

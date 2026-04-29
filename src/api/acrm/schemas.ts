@@ -178,6 +178,7 @@ export const PipelineSchema = z.strictObject({
 
   offer_price: z.nullable(z.number().min(0)),
   desired_price: z.nullable(z.number().min(0)),
+  list_price: z.nullable(z.number().min(0)),
   selling_price: z.nullable(z.number().min(0)),
 
   call_at: z.nullable(z.string()),
@@ -225,6 +226,7 @@ export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
 
   offer_price: 30000,
   desired_price: 25000,
+  list_price: 26000,
   selling_price: 24000,
 
   call_at: null,

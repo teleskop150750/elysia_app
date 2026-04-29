@@ -305,7 +305,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceId/pipeline/:pipelineId/customer/history/get",
+    "/api/v2/workspace/:workspaceId/pipeline/:pipelineId/customer/feed/get",
     () => {
       return {
         success: true,
@@ -357,7 +357,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceId/pipeline/:pipelineId/history/create",
+    "/api/v2/workspace/:workspaceId/pipeline/:pipelineId/feed/create",
     () => {
       return {
         success: true,

@@ -183,6 +183,7 @@ export const PipelineSchema = z.strictObject({
   call_at: z.nullable(z.string()),
   visit_at: z.nullable(z.string()),
   closed_at: z.nullable(z.string()),
+  deleted_at: z.nullable(z.string()),
   created_at: z.string(),
   updated_at: z.string(),
 });
@@ -229,6 +230,7 @@ export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
   call_at: null,
   visit_at: null,
   closed_at: null,
+  deleted_at: null,
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
 };

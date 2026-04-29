@@ -115,29 +115,17 @@ export const OfferMock: z.infer<typeof OfferSchema> = {
   id: "777",
   name: "Special Offer",
 };
-export const DesiredVehicle = z.strictObject({
+export const VehicleSchema = z.strictObject({
   id: z.string(),
   make: z.string(),
   model: z.string(),
   year: z.number().int().min(1900).max(new Date().getFullYear()),
 });
-export const DesiredVehicleMock: z.infer<typeof DesiredVehicle> = {
+export const VehicleMock: z.infer<typeof VehicleSchema> = {
   id: "888",
   make: "Toyota",
   model: "Camry",
   year: 2020,
-};
-export const SoldVehicle = z.strictObject({
-  id: z.string(),
-  make: z.string(),
-  model: z.string(),
-  year: z.number().int().min(1900).max(new Date().getFullYear()),
-});
-export const SoldVehicleMock: z.infer<typeof SoldVehicle> = {
-  id: "999",
-  make: "Honda",
-  model: "Civic",
-  year: 2018,
 };
 
 export const PipelineSchema = z.strictObject({
@@ -174,10 +162,10 @@ export const PipelineSchema = z.strictObject({
   target_vehicle: z.nullable(OfferSchema),
 
   desired_vehicle_id: z.nullable(z.string()),
-  desired_vehicle: z.nullable(DesiredVehicle),
+  desired_vehicle: z.nullable(VehicleSchema),
 
   sold_vehicle_id: z.nullable(z.string()),
-  sold_vehicle: z.nullable(SoldVehicle),
+  sold_vehicle: z.nullable(VehicleSchema),
 
   advertised_price: z.nullable(z.number().min(0)),
   desired_price: z.nullable(z.number().min(0)),
@@ -224,11 +212,11 @@ export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
   target_vehicle_id: OfferMock.id,
   target_vehicle: OfferMock,
 
-  desired_vehicle_id: DesiredVehicleMock.id,
-  desired_vehicle: DesiredVehicleMock,
+  desired_vehicle_id: VehicleMock.id,
+  desired_vehicle: VehicleMock,
 
-  sold_vehicle_id: SoldVehicleMock.id,
-  sold_vehicle: SoldVehicleMock,
+  sold_vehicle_id: VehicleMock.id,
+  sold_vehicle: VehicleMock,
 
   advertised_price: 30000,
   desired_price: 25000,

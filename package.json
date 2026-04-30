@@ -10,7 +10,10 @@
     "eslint:fix": "eslint --fix",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "docs:dev": "npm run --prefix docs dev",
+    "docs:build": "npm run --prefix docs build",
+    "docs:start": "npm run --prefix docs start"
   },
   "dependencies": {
     "@elysiajs/openapi": "^1.4.15",

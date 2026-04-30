@@ -578,7 +578,7 @@ components:
           type: string
         owner:
           anyOf:
-            - $ref: '#/components/schemas/HandsetOwner'
+            - $ref: '#/components/schemas/Operator'
             - type: 'null'
     HandsetListResponse:
       type: object
@@ -592,16 +592,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Handset'
-    HandsetOwner:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: number
-        name:
-          type: string
     ListRequest:
       type: object
       properties:

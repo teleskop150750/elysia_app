@@ -1,6 +1,6 @@
-import { DocsLayout } from 'fumadocs-ui/layouts/docs';
-import type { ReactNode } from 'react';
 import type { Root } from 'fumadocs-core/page-tree';
+import type { ReactNode } from 'react';
+import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 
 const tree: Root = {
   name: 'ACRM API',

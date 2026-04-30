@@ -1,5 +1,5 @@
-import Elysia from "elysia";
-import { z } from "zod";
+import Elysia from 'elysia';
+import { z } from 'zod';
 import {
   BasePaginationSchema,
   BasePipelineMock,
@@ -7,23 +7,23 @@ import {
   OperatorMock,
   OperatorSchema,
   PipelineSchema,
-} from "./schemas";
+} from './schemas';
 
 export const pipelines = new Elysia()
   .post(
-    "/api/v2/workspace/:workspaceId/pipeline-list/get",
+    '/api/v2/workspace/:workspaceId/pipeline-list/get',
     () => {
       return {
         success: true,
         data: [
           {
             ...objOmit(BasePipelineMock, [
-              "tag_list",
-              "sale_type",
-              "trade_in",
-              "disposal",
+              'tag_list',
+              'sale_type',
+              'trade_in',
+              'disposal',
             ]),
-            comment: "",
+            comment: '',
           },
         ],
         pagination: {
@@ -37,18 +37,18 @@ export const pipelines = new Elysia()
       };
     },
     {
-      tags: ["Pipelines"],
+      tags: ['Pipelines'],
       body: z.object({
         search: z.string().nullish().default(null),
         category: z
           .enum([
-            "hot",
-            "new_no_answer",
-            "burned_my",
-            "burned",
-            "urgent",
-            "visit_today",
-            "visit_tomorrow",
+            'hot',
+            'new_no_answer',
+            'burned_my',
+            'burned',
+            'urgent',
+            'visit_today',
+            'visit_tomorrow',
           ])
           .nullish()
           .default(null),
@@ -76,10 +76,10 @@ export const pipelines = new Elysia()
           data: z.array(
             z.strictObject({
               ...objOmit(PipelineSchema.shape, [
-                "tag_list",
-                "sale_type",
-                "trade_in",
-                "disposal",
+                'tag_list',
+                'sale_type',
+                'trade_in',
+                'disposal',
               ]),
               comment: z.nullable(z.string()),
             }),
@@ -90,7 +90,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceId/pipeline-list/report/get",
+    '/api/v2/workspace/:workspaceId/pipeline-list/report/get',
     () => {
       return {
         success: true,
@@ -98,14 +98,14 @@ export const pipelines = new Elysia()
           {
             groupings: {
               region: {
-                id: "region",
-                label: "Самара",
-                value: "1_id",
+                id: 'region',
+                label: 'Самара',
+                value: '1_id',
               },
             },
             metrics: {
               count: {
-                id: "count",
+                id: 'count',
                 value: 10,
               },
             },
@@ -114,7 +114,7 @@ export const pipelines = new Elysia()
       };
     },
     {
-      tags: ["Pipelines"],
+      tags: ['Pipelines'],
       body: z.strictObject({
         metrics: z.array(z.string()),
         dimensions: z.array(z.string()),
@@ -146,23 +146,23 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceId/pipeline-list/metric-trend/get",
+    '/api/v2/workspace/:workspaceId/pipeline-list/metric-trend/get',
     () => {
       return {
         success: true,
         data: [
           {
-            datetime: "2023-01-01T00:00:00Z",
+            datetime: '2023-01-01T00:00:00Z',
             groupings: {
               region: {
-                id: "region",
-                label: "Самара",
-                value: "1_id",
+                id: 'region',
+                label: 'Самара',
+                value: '1_id',
               },
             },
             metrics: {
               count: {
-                id: "count",
+                id: 'count',
                 value: 10,
               },
             },
@@ -171,7 +171,7 @@ export const pipelines = new Elysia()
       };
     },
     {
-      tags: ["Pipelines"],
+      tags: ['Pipelines'],
       body: z.strictObject({
         periodGroup: z.string(),
         metric: z.array(z.string()),
@@ -205,7 +205,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceId/pipeline-list/filter-options/get",
+    '/api/v2/workspace/:workspaceId/pipeline-list/filter-options/get',
     () => {
       return {
         success: true,
@@ -213,19 +213,19 @@ export const pipelines = new Elysia()
       };
     },
     {
-      tags: ["Pipelines"],
+      tags: ['Pipelines'],
       body: z
         .object({
           search: z.string().nullish().default(null),
           category: z
             .enum([
-              "hot",
-              "new_no_answer",
-              "burned_my",
-              "burned",
-              "urgent",
-              "visit_today",
-              "visit_tomorrow",
+              'hot',
+              'new_no_answer',
+              'burned_my',
+              'burned',
+              'urgent',
+              'visit_today',
+              'visit_tomorrow',
             ])
             .nullish()
             .default(null),
@@ -257,7 +257,7 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceId/pipeline/:pipelineId/get",
+    '/api/v2/workspace/:workspaceId/pipeline/:pipelineId/get',
     () => {
       return {
         success: true,
@@ -269,7 +269,7 @@ export const pipelines = new Elysia()
       };
     },
     {
-      tags: ["Pipelines"],
+      tags: ['Pipelines'],
       response: {
         200: z.strictObject({
           success: z.boolean(),
@@ -288,14 +288,14 @@ export const pipelines = new Elysia()
     },
   )
   .put(
-    "/api/v2/workspace/:workspaceId/pipeline/:pipelineId/customer/update",
+    '/api/v2/workspace/:workspaceId/pipeline/:pipelineId/customer/update',
     () => {
       return {
         success: true,
       };
     },
     {
-      tags: ["Pipelines"],
+      tags: ['Pipelines'],
       body: z.strictObject({
         id: z.string(),
       }),
@@ -307,34 +307,34 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceId/pipeline/:pipelineId/customer/feed/get",
+    '/api/v2/workspace/:workspaceId/pipeline/:pipelineId/customer/feed/get',
     () => {
       return {
         success: true,
         data: [
           {
-            id: "123",
-            type: "comment",
+            id: '123',
+            type: 'comment',
             operator: OperatorMock,
             pyaload: {
-              text: "This is a comment",
+              text: 'This is a comment',
             },
             order_id: 1,
-            created_at: "2023-01-01T00:00:00Z",
+            created_at: '2023-01-01T00:00:00Z',
           } as const,
         ],
       };
     },
     {
-      tags: ["Pipelines"],
+      tags: ['Pipelines'],
       response: {
         200: z.strictObject({
           success: z.boolean(),
           data: z.array(
-            z.discriminatedUnion("type", [
+            z.discriminatedUnion('type', [
               z.strictObject({
                 id: z.string(),
-                type: z.literal("comment"),
+                type: z.literal('comment'),
                 operator: z.nullish(OperatorSchema).default(null),
                 pyaload: z.strictObject({
                   text: z.string(),
@@ -349,17 +349,17 @@ export const pipelines = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceId/pipeline/:pipelineId/feed/create",
+    '/api/v2/workspace/:workspaceId/pipeline/:pipelineId/feed/create',
     () => {
       return {
         success: true,
       };
     },
     {
-      tags: ["Pipelines"],
-      body: z.discriminatedUnion("type", [
+      tags: ['Pipelines'],
+      body: z.discriminatedUnion('type', [
         z.strictObject({
-          type: z.literal("comment"),
+          type: z.literal('comment'),
           pyaload: z.strictObject({
             text: z.string(),
           }),

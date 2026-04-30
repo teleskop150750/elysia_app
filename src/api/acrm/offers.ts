@@ -1,10 +1,10 @@
-import Elysia from "elysia";
-import { z } from "zod";
-import { BasePaginationSchema } from "./schemas";
+import Elysia from 'elysia';
+import { z } from 'zod';
+import { BasePaginationSchema } from './schemas';
 
 export const offers = new Elysia()
   .post(
-    "/api/v2/workspace/:workspaceId/offer-list/get",
+    '/api/v2/workspace/:workspaceId/offer-list/get',
     () => {
       return {
         success: true,
@@ -20,7 +20,7 @@ export const offers = new Elysia()
       };
     },
     {
-      tags: ["Offers"],
+      tags: ['Offers'],
       body: z.object({
         search: z.string().nullish().default(null),
         filters: z.record(z.string(), z.any()).nullish().default(null),
@@ -41,7 +41,7 @@ export const offers = new Elysia()
     },
   )
   .post(
-    "/api/v2/workspace/:workspaceId/offer-list/filter-options/get",
+    '/api/v2/workspace/:workspaceId/offer-list/filter-options/get',
     () => {
       return {
         success: true,
@@ -49,7 +49,7 @@ export const offers = new Elysia()
       };
     },
     {
-      tags: ["Offers"],
+      tags: ['Offers'],
       response: {
         200: z.strictObject({
           success: z.boolean(),

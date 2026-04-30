@@ -4,9 +4,9 @@
  */
 const config = {
   printWidth: 80,
-  trailingComma: "all",
+  trailingComma: 'all',
   semi: true,
-  singleQuote: false,
+  singleQuote: true,
 };
 
 export default config;

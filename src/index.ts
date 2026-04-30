@@ -1,13 +1,11 @@
-import { openapi } from "@elysiajs/openapi";
-import { Elysia } from "elysia";
-import { z } from "zod";
-import { customers } from "./api/acrm/customers";
-import { handsets } from "./api/acrm/handsets";
-import { offers } from "./api/acrm/offers";
-import { pipelines } from "./api/acrm/pipelines";
-import { session } from "./api/acrm/session";
-import { vehicles } from "./api/acrm/vehicles";
-import { workspaces } from "./api/acrm/workspaces";
+import { Elysia } from 'elysia';
+import { customers } from './api/acrm/customers';
+import { handsets } from './api/acrm/handsets';
+import { offers } from './api/acrm/offers';
+import { pipelines } from './api/acrm/pipelines';
+import { session } from './api/acrm/session';
+import { vehicles } from './api/acrm/vehicles';
+import { workspaces } from './api/acrm/workspaces';
 // import { auto } from "./api/auto/index.ts";
 // import { filter } from "./api/filters/index.ts";
 
@@ -63,10 +61,10 @@ const app = new Elysia()
   .use(customers)
   .use(handsets)
   .use(offers)
-  .use(vehicles)
-  // .get("/openapi/json", () => Bun.file("./api/openapi/openapi.json"))
-  // // .use(filter)
-  // .get("/", () => Bun.file("./api/openapi/openapi.html"));
+  .use(vehicles);
+// .get("/openapi/json", () => Bun.file("./api/openapi/openapi.json"))
+// // .use(filter)
+// .get("/", () => Bun.file("./api/openapi/openapi.html"));
 
 // eslint-disable-next-line no-console
 console.log(

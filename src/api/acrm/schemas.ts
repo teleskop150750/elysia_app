@@ -1,4 +1,4 @@
-import z from "zod";
+import z from 'zod';
 
 export const BasePaginationSchema = z.strictObject({
   total: z.number().int().min(0),
@@ -24,8 +24,8 @@ export const WorkspaceSchema = z.strictObject({
   parent_id: z.nullable(z.string()),
 });
 export const WorkspaceMock: z.infer<typeof WorkspaceSchema> = {
-  id: "1",
-  name: "Workspace 1",
+  id: '1',
+  name: 'Workspace 1',
   disabled: false,
   parent_id: null,
 };
@@ -35,15 +35,15 @@ export const OperatorSchema = z.strictObject({
   name: z.string(),
 });
 export const OperatorMock: z.infer<typeof OperatorSchema> = {
-  id: "789",
-  name: "Alice Smith",
+  id: '789',
+  name: 'Alice Smith',
 };
 export const HandsetSchema = z.strictObject({
   id: z.string(),
   owner: z.nullish(OperatorSchema),
 });
 export const HandsetMock: z.infer<typeof HandsetSchema> = {
-  id: "handset1",
+  id: 'handset1',
   owner: OperatorMock,
 };
 
@@ -55,9 +55,9 @@ export const PipelineStatusSchema = z.strictObject({
   parent_id: z.nullable(z.string()),
 });
 export const PipelineStatusMock: z.infer<typeof PipelineStatusSchema> = {
-  id: "123",
-  label: "New",
-  color: "#00ff00",
+  id: '123',
+  label: 'New',
+  color: '#00ff00',
   disabled: false,
   parent_id: null,
 };
@@ -67,24 +67,24 @@ export const RegionSchema = z.strictObject({
   name: z.string(),
 });
 export const RegionMock: z.infer<typeof RegionSchema> = {
-  id: "987",
-  name: "Moscow",
+  id: '987',
+  name: 'Moscow',
 };
 export const SourceSchema = z.strictObject({
   id: z.string(),
   name: z.string(),
 });
 export const SourceMock: z.infer<typeof SourceSchema> = {
-  id: "456",
-  name: "Facebook Ads",
+  id: '456',
+  name: 'Facebook Ads',
 };
 export const CustomerPhoneSchema = z.strictObject({
   id: z.string(),
   label: z.string(),
 });
 export const CustomerPhoneMock: z.infer<typeof CustomerPhoneSchema> = {
-  id: "555-1234",
-  label: "+1 (555) 123-4567",
+  id: '555-1234',
+  label: '+1 (555) 123-4567',
 };
 export const CustomerSchema = z.strictObject({
   id: z.string(),
@@ -95,8 +95,8 @@ export const CustomerSchema = z.strictObject({
   phones: z.array(CustomerPhoneSchema),
 });
 export const CustomerMock: z.infer<typeof CustomerSchema> = {
-  id: "321",
-  name: "Jane Doe",
+  id: '321',
+  name: 'Jane Doe',
   rating: 8,
   region_id: RegionMock.id,
   region: RegionMock,
@@ -108,8 +108,8 @@ export const OfferSchema = z.strictObject({
   name: z.string(),
 });
 export const OfferMock: z.infer<typeof OfferSchema> = {
-  id: "777",
-  name: "Special Offer",
+  id: '777',
+  name: 'Special Offer',
 };
 export const VehicleSchema = z.strictObject({
   id: z.string(),
@@ -118,9 +118,9 @@ export const VehicleSchema = z.strictObject({
   year: z.number().int().min(1900).max(new Date().getFullYear()),
 });
 export const VehicleMock: z.infer<typeof VehicleSchema> = {
-  id: "888",
-  make: "Toyota",
-  model: "Camry",
+  id: '888',
+  make: 'Toyota',
+  model: 'Camry',
   year: 2020,
 };
 export const PipelineTagSchema = z.strictObject({
@@ -128,8 +128,8 @@ export const PipelineTagSchema = z.strictObject({
   label: z.string(),
 });
 export const PipelineTagMock: z.infer<typeof PipelineTagSchema> = {
-  id: "tag1",
-  label: "Tag 1",
+  id: 'tag1',
+  label: 'Tag 1',
 };
 
 export const PipelineSchema = z.strictObject({
@@ -184,7 +184,7 @@ export const PipelineSchema = z.strictObject({
   updated_at: z.string(),
 });
 export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
-  id: "555",
+  id: '555',
   active_pipeline_id: null,
 
   is_spam: false,
@@ -201,14 +201,14 @@ export const BasePipelineMock: z.infer<typeof PipelineSchema> = {
 
   tag_list: [PipelineTagMock],
 
-  sale_type: "new",
+  sale_type: 'new',
   trade_in: false,
   disposal: false,
 
-  lead_type: "organic",
+  lead_type: 'organic',
 
-  ad_url: "https://example.com/offer/555",
-  ad_external_id: "555",
+  ad_url: 'https://example.com/offer/555',
+  ad_external_id: '555',
 
   source_id: SourceMock.id,
   source: SourceMock,

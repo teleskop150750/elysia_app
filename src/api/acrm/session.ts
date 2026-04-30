@@ -1,21 +1,21 @@
-import Elysia from "elysia";
-import { z } from "zod";
+import Elysia from 'elysia';
+import { z } from 'zod';
 
 export const session = new Elysia()
   .post(
-    "/api/v2/me/get",
+    '/api/v2/me/get',
     () => {
       return {
         success: true,
         data: {
-          id: "123",
-          name: "John Doe",
-          email: "john.doe@example.com",
+          id: '123',
+          name: 'John Doe',
+          email: 'john.doe@example.com',
         },
       };
     },
     {
-      tags: ["Sessions"],
+      tags: ['Sessions'],
       response: {
         200: z.object({
           success: z.boolean(),
@@ -29,7 +29,7 @@ export const session = new Elysia()
     },
   )
   .post(
-    "/api/v2/current-session/create",
+    '/api/v2/current-session/create',
     () => {
       return {
         success: true,
@@ -45,17 +45,17 @@ export const session = new Elysia()
           success: z.boolean(),
         }),
       },
-      tags: ["Sessions"],
+      tags: ['Sessions'],
     },
   )
   .delete(
-    "/api/v2/current-session/delete",
+    '/api/v2/current-session/delete',
     () => {
       return {
         success: true,
       };
     },
     {
-      tags: ["Sessions"],
+      tags: ['Sessions'],
     },
   );

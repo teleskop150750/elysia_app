@@ -1,9 +1,9 @@
-import Elysia from "elysia";
-import { z } from "zod";
-import { CustomerMock, CustomerSchema } from "./schemas";
+import Elysia from 'elysia';
+import { z } from 'zod';
+import { CustomerMock, CustomerSchema } from './schemas';
 
 export const customers = new Elysia().post(
-  "/api/v2/workspace/:workspaceId/customer-list/get",
+  '/api/v2/workspace/:workspaceId/customer-list/get',
   () => {
     return {
       success: true,
@@ -11,7 +11,7 @@ export const customers = new Elysia().post(
     };
   },
   {
-    tags: ["Customers"],
+    tags: ['Customers'],
     response: {
       200: z.strictObject({
         success: z.boolean(),
